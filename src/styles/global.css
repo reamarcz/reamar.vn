@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: 'Yellix';
+    src: url('/fonts/Yellix-Regular.woff2') format('woff2'),
+         url('/fonts/Yellix-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Yellix';
+    src: url('/fonts/Yellix-Medium.woff2') format('woff2'),
+         url('/fonts/Yellix-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Yellix';
+    src: url('/fonts/Yellix-SemiBold.woff2') format('woff2'),
+         url('/fonts/Yellix-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Yellix';
+    src: url('/fonts/Yellix-Bold.woff2') format('woff2'),
+         url('/fonts/Yellix-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Yellix';
+    src: url('/fonts/Yellix-Light.woff2') format('woff2'),
+         url('/fonts/Yellix-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  html {
+    @apply scroll-smooth overflow-x-hidden;
+    width: 100%;
+    max-width: 100%;
+  }
+  body {
+    @apply font-yellix font-medium text-black antialiased bg-white overflow-x-hidden;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+  #developery,
+  #klienty {
+    scroll-margin-top: 100px;
+  }
+  /* Zahraničí: kotva na začátku bílé sekce; velký margin = v záběru hero obrázek i „Nemovitosti v zahraničí“ */
+  #zahranici {
+    scroll-margin-top: 55vh;
+  }
+}
+
+/* Solidpixels overlay: image__background ~ 0.33–0.38 opacity black */
+.overlay-dark {
+  background: linear-gradient(hsla(0, 0%, 0%, 0.33), hsla(0, 0%, 0%, 0.33));
+}
+
+[aria-expanded="true"] .accordion-icon-vertical {
+  opacity: 0;
+}
+
+/* Dekorativní autoplay videa (mobil / iOS): poster nad videem dokud neproběhne přehrávání — zakryje systémovou ikonku play */
+.video-decorative-wrap {
+  position: relative;
+}
+.video-decorative-cover {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+@media (min-width: 768px) {
+  .video-decorative-cover {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+@media (max-width: 767px) {
+  .video-decorative-wrap.is-playing .video-decorative-cover {
+    opacity: 0;
+    visibility: hidden;
+  }
+  video[data-decorative-autoplay] {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+    pointer-events: none;
+  }
+  .video-decorative-wrap.is-playing video[data-decorative-autoplay] {
+    opacity: 1;
+    visibility: visible;
+  }
+  video[data-decorative-autoplay]::-webkit-media-controls,
+  video[data-decorative-autoplay]::-webkit-media-controls-enclosure {
+    display: none !important;
+  }
+}

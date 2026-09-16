@@ -1,0 +1,373 @@
+---
+type NavLink = { href: string; label: string; external?: boolean };
+
+const navLinks: NavLink[] = [
+  { href: '#koncept', label: 'Co děláme' },
+  { href: '#specializace', label: 'Specializace' },
+  { href: 'https://www.reamar.cz/', label: 'O nás', external: true },
+  { href: '#nejcastejsi-otazky', label: 'FAQ' },
+];
+
+const sluzbyHref = '#vyber-sluzeb';
+const isCurrent = (_href: string) => false;
+---
+
+<header
+  id="header"
+  class="sticky inset-x-0 top-0 z-[70] w-full bg-white"
+  role="banner"
+  data-nav
+>
+  <div class="nav-bar-inner mx-auto flex h-[80px] w-full max-w-[1440px] items-center justify-between px-5 md:h-[108px] md:px-10 xl:px-14">
+    <div class="flex min-w-0 items-center gap-5 md:gap-8">
+      <a href="/" class="relative flex shrink-0 items-center" title="Reamar">
+        <img
+          src="/images/logo-rig-b.svg"
+          alt="Reamar"
+          width="140"
+          height="36"
+          class="nav-logo nav-logo-b h-10 w-auto object-contain md:h-12"
+        />
+        <img
+          src="/images/logo-rig-w.svg"
+          alt=""
+          width="140"
+          height="36"
+          class="nav-logo nav-logo-w h-10 w-auto object-contain md:h-12"
+          aria-hidden="true"
+        />
+      </a>
+      <div class="nav-aside hidden min-w-0 md:block" data-nav-aside>
+          <div class="nav-live" data-nav-live>
+            <p class="nav-muted font-yellix text-[10px] font-medium leading-none text-black/50">Aktuální nabídka v Praze a okolí</p>
+            <p class="nav-fg mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 font-yellix text-[13px] leading-none text-black">
+              <span class="nav-live-dot" aria-hidden="true"></span>
+              <span class="font-medium">562 projektů</span>
+              <span class="nav-muted font-medium text-black/55">9 689 jednotek</span>
+            </p>
+          </div>
+          <p class="nav-title nav-fg font-yellix text-[13px] font-medium leading-[1.2] text-black" data-nav-title aria-hidden="true">
+            Zastupujeme kupující<br />
+            na developerském trhu
+          </p>
+        </div>
+    </div>
+
+    <nav class="hidden items-center gap-5 xl:gap-9 lg:flex" aria-label="Hlavní">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class:list={[
+            'nav-fg font-yellix text-[14px] text-black no-underline whitespace-nowrap transition-opacity hover:opacity-70',
+            isCurrent(link.href) ? 'font-semibold' : 'font-medium',
+          ]}
+          aria-current={isCurrent(link.href) ? 'page' : undefined}
+          target={link.external ? '_blank' : undefined}
+          rel={link.external ? 'noopener noreferrer' : undefined}
+        >
+          {link.label}
+        </a>
+      ))}
+
+      <a
+        href={sluzbyHref}
+        class:list={[
+          'nav-cta inline-flex items-center gap-1.5 bg-black px-3 py-1.5 font-yellix text-[13px] text-white no-underline whitespace-nowrap transition-opacity hover:opacity-85',
+          isCurrent('/sluzby') ? 'font-semibold' : 'font-medium',
+        ]}
+        aria-current={isCurrent('/sluzby') ? 'page' : undefined}
+      >
+        <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0" width="12" height="12" />
+        Vybrat službu
+      </a>
+    </nav>
+
+    <button
+      type="button"
+      class="nav-fg flex h-10 w-10 items-center justify-center border-0 bg-transparent p-0 text-black lg:hidden"
+      aria-expanded="false"
+      aria-controls="menu-drawer"
+      aria-label="Menu"
+      data-nav-toggle
+    >
+      <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" aria-hidden="true">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<div
+  id="menu-drawer"
+  class="fixed inset-0 z-[60] pointer-events-none transition-opacity duration-300 lg:hidden"
+  aria-hidden="true"
+  data-menu-drawer
+>
+  <button
+    type="button"
+    class="absolute inset-0 bg-black/85 opacity-0 transition-opacity duration-300 data-[open]:opacity-100 pointer-events-none data-[open]:pointer-events-auto"
+    data-drawer-backdrop
+    aria-label="Zavřít menu"
+  ></button>
+  <div
+    class="absolute right-0 top-0 bottom-0 flex w-full max-w-[360px] min-h-0 flex-col bg-white opacity-0 translate-x-full transition-all duration-300 pointer-events-auto data-[open]:opacity-100 data-[open]:translate-x-0 z-10"
+    data-drawer-panel
+  >
+    <button
+      type="button"
+      class="flex shrink-0 items-center justify-end gap-2 px-6 pt-6 pb-4 w-full border-0 bg-transparent cursor-pointer hover:opacity-80"
+      aria-label="Zavřít menu"
+      data-drawer-close
+    >
+      <span class="font-yellix text-[14px] font-medium text-black">Zavřít</span>
+      <span class="relative flex h-10 w-10 shrink-0 items-center justify-center">
+        <span class="absolute left-1/2 top-1/2 h-px w-5 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-current"></span>
+        <span class="absolute left-1/2 top-1/2 h-px w-5 -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-current"></span>
+      </span>
+    </button>
+
+    <nav class="flex flex-1 flex-col gap-5 overflow-y-auto px-8 pb-10 pt-2" aria-label="Hlavní">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class:list={[
+            'font-yellix text-[21px] leading-tight text-black no-underline hover:opacity-70',
+            isCurrent(link.href) ? 'font-semibold' : 'font-medium',
+          ]}
+          aria-current={isCurrent(link.href) ? 'page' : undefined}
+          target={link.external ? '_blank' : undefined}
+          rel={link.external ? 'noopener noreferrer' : undefined}
+          data-drawer-close
+        >
+          {link.label}
+        </a>
+      ))}
+
+      <a
+        href={sluzbyHref}
+        class:list={[
+          'mt-4 inline-flex w-fit items-center gap-1.5 bg-black px-3 py-1.5 font-yellix text-[13px] text-white no-underline',
+          isCurrent('/sluzby') ? 'font-semibold' : 'font-medium',
+        ]}
+        aria-current={isCurrent('/sluzby') ? 'page' : undefined}
+        data-drawer-close
+      >
+        <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0" width="12" height="12" />
+        Vybrat službu
+      </a>
+    </nav>
+  </div>
+</div>
+
+<style>
+  .nav-logo-w {
+    display: none;
+  }
+  [data-nav-overlay]:not([data-nav-solid]) {
+    background: transparent;
+  }
+  [data-nav-overlay]:not([data-nav-solid]) .nav-logo-b {
+    display: none;
+  }
+  [data-nav-overlay]:not([data-nav-solid]) .nav-logo-w {
+    display: block;
+  }
+  [data-nav-overlay]:not([data-nav-solid]) .nav-fg,
+  [data-nav-overlay]:not([data-nav-solid]) .nav-title {
+    color: #fff;
+  }
+  [data-nav-overlay]:not([data-nav-solid]) .nav-muted {
+    color: rgba(255, 255, 255, 0.68);
+  }
+  [data-nav-overlay]:not([data-nav-solid]) .nav-aside {
+    border-left-color: rgba(255, 255, 255, 0.28);
+  }
+  [data-nav-overlay]:not([data-nav-solid]) .nav-cta {
+    background: #fff;
+    color: #000;
+  }
+  [data-nav-overlay]:not([data-nav-solid]) .nav-cta img {
+    filter: brightness(0);
+  }
+  [data-nav-overlay][data-nav-solid] {
+    background: #fff;
+  }
+  .nav-aside {
+    position: relative;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 2rem;
+    transition: border-color 0.6s ease, padding-left 0.6s ease;
+  }
+  [data-nav-compact] .nav-aside {
+    border-left-color: transparent;
+    padding-left: 0;
+  }
+  .nav-title {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
+  .nav-live {
+    transition: opacity 0.5s ease 0.12s;
+  }
+  [data-nav-compact] .nav-live {
+    opacity: 0;
+    pointer-events: none;
+    transition-delay: 0s;
+  }
+  [data-nav-compact] .nav-title {
+    opacity: 1;
+    pointer-events: auto;
+    transition-delay: 0.16s;
+  }
+  [data-nav] {
+    transition: box-shadow 0.6s ease, background-color 0.35s ease;
+  }
+  [data-nav-compact] {
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .nav-live,
+    .nav-title {
+      transition: none;
+    }
+  }
+  .nav-live-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #16a34a;
+    box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.45);
+    animation: nav-live-pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes nav-live-pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.45); }
+    50% { opacity: 0.7; box-shadow: 0 0 0 4px rgba(22, 163, 74, 0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .nav-live-dot { animation: none; }
+  }
+</style>
+
+<script>
+  (function () {
+    if (!document.querySelector('[data-nav]')) return;
+
+    function openDrawer() {
+      var drawer = document.querySelector('[data-menu-drawer]');
+      var backdrop = document.querySelector('[data-drawer-backdrop]');
+      var panel = document.querySelector('[data-drawer-panel]');
+      var toggle = document.querySelector('[data-nav-toggle]');
+      if (!drawer || !backdrop) return;
+      drawer.setAttribute('data-open', '');
+      drawer.classList.remove('pointer-events-none');
+      drawer.setAttribute('aria-hidden', 'false');
+      backdrop.setAttribute('data-open', '');
+      if (panel) panel.setAttribute('data-open', '');
+      document.body.style.overflow = 'hidden';
+      if (toggle) toggle.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeDrawer() {
+      var drawer = document.querySelector('[data-menu-drawer]');
+      var backdrop = document.querySelector('[data-drawer-backdrop]');
+      var panel = document.querySelector('[data-drawer-panel]');
+      var toggle = document.querySelector('[data-nav-toggle]');
+      if (!drawer || !backdrop) return;
+      drawer.removeAttribute('data-open');
+      drawer.classList.add('pointer-events-none');
+      drawer.setAttribute('aria-hidden', 'true');
+      backdrop.removeAttribute('data-open');
+      if (panel) panel.removeAttribute('data-open');
+      document.body.style.overflow = '';
+      if (toggle) toggle.setAttribute('aria-expanded', 'false');
+    }
+
+    document.addEventListener('click', function (e) {
+      if (e.target.closest('[data-nav-toggle]')) {
+        e.preventDefault();
+        var toggle = document.querySelector('[data-nav-toggle]');
+        if (toggle?.getAttribute('aria-expanded') === 'true') closeDrawer();
+        else openDrawer();
+        return;
+      }
+      if (e.target.closest('[data-drawer-backdrop]')) { closeDrawer(); return; }
+      if (e.target.closest('[data-drawer-close]')) { closeDrawer(); return; }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      var drawer = document.querySelector('[data-menu-drawer]');
+      if (drawer?.hasAttribute('data-open')) closeDrawer();
+    });
+
+    document.addEventListener('astro:after-swap', function () {
+      var drawer = document.querySelector('[data-menu-drawer]');
+      if (drawer?.hasAttribute('data-open')) closeDrawer();
+    });
+
+    var compactOnScroll = null;
+    function setNavCompact(on) {
+      var header = document.querySelector('[data-nav]');
+      var live = document.querySelector('[data-nav-live]');
+      var title = document.querySelector('[data-nav-title]');
+      if (!header) return;
+      if (on) header.setAttribute('data-nav-compact', '');
+      else header.removeAttribute('data-nav-compact');
+      if (live) live.setAttribute('aria-hidden', on ? 'true' : 'false');
+      if (title) title.setAttribute('aria-hidden', on ? 'false' : 'true');
+    }
+    function setNavSolid(on) {
+      var header = document.querySelector('[data-nav]');
+      if (!header) return;
+      if (on) header.setAttribute('data-nav-solid', '');
+      else header.removeAttribute('data-nav-solid');
+    }
+    function initNavCompact() {
+      if (compactOnScroll) {
+        window.removeEventListener('scroll', compactOnScroll);
+        compactOnScroll = null;
+      }
+      var header = document.querySelector('[data-nav]');
+      var aside = document.querySelector('[data-nav-aside]');
+      if (!header) {
+        setNavCompact(false);
+        setNavSolid(false);
+        return;
+      }
+      compactOnScroll = function () {
+        var y = window.scrollY;
+        var overlay = header.hasAttribute('data-nav-overlay');
+
+        if (overlay || !aside) {
+          setNavCompact(false);
+        } else {
+          var on = header.hasAttribute('data-nav-compact');
+          if (!on && y > 48) setNavCompact(true);
+          else if (on && y < 16) setNavCompact(false);
+        }
+
+        if (overlay) {
+          var banner = document.querySelector('[data-agent-banner]');
+          if (banner) {
+            setNavSolid(banner.getBoundingClientRect().bottom <= header.offsetHeight + 4);
+          }
+        } else {
+          setNavSolid(false);
+        }
+      };
+      compactOnScroll();
+      window.addEventListener('scroll', compactOnScroll, { passive: true });
+    }
+    initNavCompact();
+    document.addEventListener('astro:page-load', initNavCompact);
+  })();
+</script>

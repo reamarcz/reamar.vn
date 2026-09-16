@@ -1,0 +1,111 @@
+---
+const logo = '/images/logo-rig-w.svg';
+---
+
+<section class="bg-black" aria-label="Zastoupení kupujícího" data-zastoupeni>
+  <div class="mx-auto max-w-[1440px] px-5 py-20 md:px-10 md:py-28 xl:px-14 xl:py-32">
+    <p class="font-yellix text-[22px] font-medium leading-[1.4] tracking-[-0.02em] text-white md:text-[26px] xl:text-[28px]">
+      <span class="zast-line block lg:whitespace-nowrap" style="--i: 0">
+        Prodej developerských projektů je profesionálně řízený proces.
+      </span>
+      <span class="zast-line block lg:whitespace-nowrap" style="--i: 1">
+        Na straně prodávajícího stojí zkušený tým, přesná data a jasná obchodní strategie.
+      </span>
+    </p>
+    <p class="zast-punch mt-8 flex flex-col items-end gap-3 text-right md:mt-10 md:ml-[22%] md:flex-row md:items-center md:gap-4 md:text-left lg:ml-[28%] xl:ml-[32%]">
+      <img
+        src={logo}
+        alt="REAMAR"
+        width="280"
+        height="72"
+        class="zast-logo h-10 w-auto shrink-0 md:h-14 md:-mr-7 xl:h-[4.25rem] xl:-mr-9"
+      />
+      <span class="zast-sentence font-yellix text-[22px] font-medium leading-[1.3] tracking-[-0.02em] text-white md:text-[26px] xl:text-[28px] xl:whitespace-nowrap">
+        přináší odborné zastoupení i na stranu kupujícího.
+      </span>
+    </p>
+  </div>
+</section>
+
+<style>
+  .zast-line {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  .zast-line.is-in {
+    animation: zast-line-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: calc(var(--i) * 240ms);
+  }
+  @keyframes zast-line-in {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .zast-logo {
+    display: block;
+  }
+
+  .zast-punch {
+    opacity: 0;
+    transform: translate3d(56px, 10px, 0);
+  }
+  .zast-punch.is-in {
+    animation: zast-fly 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.72s forwards;
+  }
+  @keyframes zast-fly {
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .zast-line,
+    .zast-punch {
+      opacity: 1;
+      transform: none;
+    }
+    .zast-line.is-in,
+    .zast-punch.is-in {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  function initZastoupeni() {
+    const wrap = document.querySelector('[data-zastoupeni]');
+    if (!wrap) return;
+    if (wrap._zastCleanup) wrap._zastCleanup();
+
+    const lines = [...wrap.querySelectorAll('.zast-line')];
+    const punch = wrap.querySelector('.zast-punch');
+    if (!lines.length || !punch) return;
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) {
+      lines.forEach((el) => el.classList.add('is-in'));
+      punch.classList.add('is-in');
+      return;
+    }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        lines.forEach((el) => el.classList.add('is-in'));
+        punch.classList.add('is-in');
+        io.disconnect();
+      },
+      { threshold: 0.32 }
+    );
+
+    io.observe(wrap);
+
+    wrap._zastCleanup = () => {
+      io.disconnect();
+      wrap._zastCleanup = null;
+    };
+  }
+
+  initZastoupeni();
+  document.addEventListener('astro:page-load', initZastoupeni);
+</script>

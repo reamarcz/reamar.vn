@@ -1,0 +1,350 @@
+---
+interface Props {
+  ctaHref?: string;
+}
+
+const { ctaHref = '/sluzby' } = Astro.props;
+const columns = [
+  {
+    featured: true,
+    title: 'Nákupní agentura',
+    intro:
+      'Nákupní agentura neprodává konkrétní projekt ani jednu vybranou nabídku. Pomáhá klientovi porovnat možnosti a vybrat nemovitost podle jeho zadání, rozpočtu a důvodu nákupu.',
+    points: [
+      'hledá podle vašeho cíle',
+      'porovnává nabídky napříč trhem',
+      'prověřuje cenu, dispozici, lokalitu i rizika',
+      'upozorní na slabá místa nabídky',
+      'pomáhá s rezervací, jednáním a smlouvami',
+    ],
+  },
+  {
+    featured: false,
+    title: 'Developer',
+    intro:
+      'Developer zná svůj projekt nejlépe. Umí vysvětlit standard, harmonogram, financování i dostupné jednotky. Jeho cílem je ale prodat vlastní nabídku.',
+    points: [
+      'představuje vlastní projekt',
+      'doporučuje jednotky ze svého ceníku',
+      'vysvětluje parametry a podmínky koupě',
+      'zdůrazňuje silné stránky projektu',
+      'neporovnává nezávisle celý trh',
+    ],
+  },
+  {
+    featured: false,
+    title: 'Realitní kancelář',
+    intro:
+      'Realitní kancelář pracuje s nemovitostmi, které má v portfoliu. Pomáhá s prohlídkami, komunikací a transakcí, ale obvykle nevychází z nezávislého výběru napříč novostavbami.',
+    points: [
+      'nabízí své nemovitosti',
+      'řeší konkrétní byt nebo projekt',
+      'pomáhá s prohlídkou a transakcí',
+      'často zastupuje prodávajícího',
+      'nemusí hledat napříč celým trhem',
+    ],
+  },
+];
+---
+
+<section id="porovnani" class="bg-white" aria-labelledby="porovnani-heading">
+  <div class="mx-auto max-w-[1440px] px-5 py-16 md:px-10 md:py-24 xl:px-14 xl:py-28">
+    <div class="flex flex-col items-center gap-5 text-center md:gap-6" data-porov-cite>
+      <blockquote class="porov-cite m-0">
+        <p class="m-0 font-yellix text-[24px] font-medium leading-[1.22] tracking-[-0.02em] text-black md:text-[30px] xl:text-[34px]">
+          <span class="porov-cite-line md:whitespace-nowrap" style="--i: 0">„Developer vám nabídne svůj projekt,</span>
+          <span class="porov-cite-line md:whitespace-nowrap" style="--i: 1">realitní kancelář svoje nemovitosti.“</span>
+        </p>
+      </blockquote>
+      <div class="porov-cite-rule" aria-hidden="true"></div>
+      <p class="porov-cite-late font-yellix text-[14px] font-medium leading-[1.7] text-black md:text-[15px]">
+        <span class="block md:whitespace-nowrap">My jsme se rozhodli postavit službu, která začíná u kupujícího.</span>
+        <span class="block md:whitespace-nowrap">Ne u nabídky, kterou je potřeba prodat.</span>
+      </p>
+    </div>
+
+    <h2
+      id="porovnani-heading"
+      class="porov-piece mt-20 flex items-center gap-3 font-yellix text-[28px] font-medium leading-[1.12] tracking-[-0.02em] text-black md:mt-24 md:gap-3.5 md:text-[36px] xl:text-[40px]"
+      style="--col: 0; --p: 0"
+    >
+      <img
+        src="/images/arrow-1.svg"
+        alt=""
+        class="h-5 w-5 shrink-0 brightness-0 md:h-6 md:w-6"
+        width="20"
+        height="20"
+      />
+      Porovnání
+    </h2>
+
+    <div class="porov-grid mt-10 md:mt-14" data-porov-grid>
+      {columns.map((col, colIndex) => (
+        <article class:list={['porov-col', col.featured && 'is-featured']} style={`--col: ${colIndex}`}>
+          <h3 class="porov-piece font-yellix text-[22px] font-semibold leading-[1.15] tracking-[-0.02em] text-black md:text-[26px]" style="--p: 0">
+            {col.title}
+          </h3>
+          <div class="porov-rule porov-piece" style="--p: 1" aria-hidden="true"></div>
+          <p class="porov-piece font-yellix text-[14px] font-semibold leading-[1.65] text-black md:text-[15px]" style="--p: 2">
+            {col.intro}
+          </p>
+          <div class="porov-rule porov-piece" style="--p: 3" aria-hidden="true"></div>
+          <ul class="porov-list">
+            {col.points.map((point, pointIndex) => (
+              <li class="porov-piece" style={`--p: ${4 + pointIndex}`}>
+                <span class="porov-mark" aria-hidden="true"></span>
+                <span>{point}</span>
+              </li>
+            ))}
+          </ul>
+          {col.featured && (
+            <a
+              href={ctaHref}
+              class="porov-piece mt-8 inline-flex w-fit items-center gap-1.5 bg-black px-3 py-1.5 font-yellix text-[13px] font-medium leading-none text-white no-underline transition-opacity hover:opacity-85"
+              style="--p: 9"
+            >
+              <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0" width="12" height="12" />
+              Vybrat službu
+            </a>
+          )}
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .porov-cite-line {
+    display: block;
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  .porov-cite-line.is-in {
+    animation: porov-cite-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: calc(var(--i) * 220ms);
+  }
+  .porov-cite-late {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  .porov-cite-late.is-in {
+    animation: porov-cite-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.52s forwards;
+  }
+  .porov-cite-rule {
+    width: 2.5rem;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.18);
+    transform: scaleX(0);
+    transform-origin: center;
+  }
+  .porov-cite-rule.is-in {
+    animation: porov-rule-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.38s forwards;
+  }
+  @keyframes porov-cite-in {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .porov-piece {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  .porov-rule.porov-piece {
+    opacity: 1;
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  .porov-piece.is-in {
+    animation: porov-cite-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: calc(var(--col, 0) * 140ms + var(--p) * 70ms);
+  }
+  .porov-grid .porov-piece.is-in {
+    animation-delay: calc(180ms + var(--col) * 140ms + var(--p) * 70ms);
+  }
+  .porov-rule.porov-piece.is-in {
+    animation-name: porov-rule-in;
+  }
+  @keyframes porov-rule-in {
+    to { transform: scaleX(1); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .porov-cite-line,
+    .porov-cite-late,
+    .porov-cite-rule,
+    .porov-piece {
+      opacity: 1;
+      transform: none;
+    }
+    .porov-cite-line.is-in,
+    .porov-cite-late.is-in,
+    .porov-cite-rule.is-in,
+    .porov-piece.is-in {
+      animation: none;
+    }
+  }
+  .porov-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.75rem;
+  }
+  .porov-col {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+  }
+  .porov-col.is-featured {
+    background: var(--color-muted);
+    padding: 2rem 1.5rem 2.15rem;
+  }
+  .porov-rule {
+    height: 1px;
+    margin: 1.35rem 0;
+    background: rgba(0, 0, 0, 0.16);
+  }
+  .porov-col.is-featured .porov-rule {
+    background: rgba(0, 0, 0, 0.16);
+  }
+  .porov-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .porov-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.45;
+    color: #000;
+  }
+  .porov-list li + li {
+    margin-top: 1.05rem;
+  }
+  @media (min-width: 768px) {
+    .porov-list li { font-size: 15px; }
+  }
+  .porov-mark {
+    display: block;
+    width: 5px;
+    height: 5px;
+    margin-top: 0.48em;
+    flex-shrink: 0;
+    background: #000;
+  }
+  @media (min-width: 900px) {
+    .porov-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-rows: auto auto auto auto 1fr auto;
+      gap: 0 3.25rem;
+      align-items: stretch;
+    }
+    .porov-col {
+      display: grid;
+      grid-template-rows: subgrid;
+      grid-row: span 6;
+      padding: 2.25rem 2rem 2.35rem;
+    }
+    .porov-col:nth-child(3) {
+      position: relative;
+    }
+    .porov-col:nth-child(3)::before {
+      content: '';
+      position: absolute;
+      top: 2.25rem;
+      bottom: 2.35rem;
+      left: calc(-3.25rem / 2);
+      width: 1px;
+      background: rgba(0, 0, 0, 0.12);
+      opacity: 0;
+    }
+    .porov-grid.is-in .porov-col:nth-child(3)::before {
+      animation: porov-cite-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.45s forwards;
+    }
+  }
+</style>
+
+<script>
+  function initPorovCite() {
+    const wrap = document.querySelector('[data-porov-cite]');
+    if (!wrap) return;
+    if (wrap._porovCiteCleanup) wrap._porovCiteCleanup();
+
+    const cite = wrap.querySelector('.porov-cite');
+    const lines = [...wrap.querySelectorAll('.porov-cite-line')];
+    const rule = wrap.querySelector('.porov-cite-rule');
+    const late = wrap.querySelector('.porov-cite-late');
+    if (!cite || !lines.length || !late) return;
+
+    const play = () => {
+      cite.classList.add('is-in');
+      lines.forEach((el) => el.classList.add('is-in'));
+      if (rule) rule.classList.add('is-in');
+      late.classList.add('is-in');
+    };
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) {
+      play();
+      return;
+    }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        play();
+        io.disconnect();
+      },
+      { threshold: 0.35 }
+    );
+
+    io.observe(wrap);
+
+    wrap._porovCiteCleanup = () => {
+      io.disconnect();
+      wrap._porovCiteCleanup = null;
+    };
+  }
+
+  function initPorovGrid() {
+    const grid = document.querySelector('[data-porov-grid]');
+    const head = document.querySelector('#porovnani-heading');
+    if (!grid || !head) return;
+    if (grid._porovGridCleanup) grid._porovGridCleanup();
+
+    const pieces = [head, ...grid.querySelectorAll('.porov-piece')];
+
+    const play = () => {
+      grid.classList.add('is-in');
+      pieces.forEach((el) => el.classList.add('is-in'));
+    };
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) {
+      play();
+      return;
+    }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        play();
+        io.disconnect();
+      },
+      { threshold: 0.16 }
+    );
+
+    io.observe(grid);
+
+    grid._porovGridCleanup = () => {
+      io.disconnect();
+      grid._porovGridCleanup = null;
+    };
+  }
+
+  initPorovCite();
+  initPorovGrid();
+  document.addEventListener('astro:page-load', () => {
+    initPorovCite();
+    initPorovGrid();
+  });
+</script>

@@ -1,0 +1,16 @@
+/* Tokeny a scroll jen pro onepager — globální CSS reamar.cz se nemění */
+html.onepager {
+  overflow-x: clip;
+  --color-muted: #f1f1f1;
+  --nav-h: 80px;
+  scroll-padding-top: var(--nav-h);
+}
+@media (min-width: 768px) {
+  html.onepager {
+    --nav-h: 108px;
+  }
+}
+html.onepager body,
+html.onepager #main {
+  overflow-x: clip;
+}

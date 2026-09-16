@@ -1,0 +1,962 @@
+---
+const monitorFeatures = [
+  {
+    text: 'zasílání vybraných projektů',
+    icon: 'send',
+  },
+  {
+    text: 'zařazení do předprodeje',
+    icon: 'building',
+  },
+];
+
+const features = [
+  {
+    text: 'osobní konzultant na 3 měsíce',
+    icon: 'user',
+  },
+  {
+    text: 'přednostní přístup k projektům',
+    icon: 'building',
+  },
+  {
+    text: 'vstupenka do portálu',
+    icon: 'screen',
+  },
+  {
+    text: 'právní tým a vyjednávání s developerem',
+    icon: 'scales',
+  },
+];
+
+const steps = [
+  {
+    icon: 'chat',
+    title: 'Určení preferencí',
+    text: 'Na osobní konzultaci nebo v online dotazníku si ujasníme, co hledáte, v jakém rozpočtu a podle čeho pro vás nemovitost dává smysl.',
+  },
+  {
+    icon: 'sign',
+    title: 'Souhlas se zasíláním',
+    text: 'Potvrdíme si rozsah služby, pravidla doporučení a odměnu v případě pořízení nemovitosti z našeho výběru.',
+    badge: 'Zdarma',
+  },
+  {
+    icon: 'grid',
+    title: 'Zasílání nemovitostí',
+    text: 'Otevřeme vám výběr relevantních projektů z naší databáze, včetně neveřejných nabídek.',
+  },
+  {
+    icon: 'deal',
+    title: 'Nákup nemovitosti',
+    text: 'Pokud si vyberete nemovitost z našeho doporučení, pomůžeme vám zajistit rezervaci vybrané jednotky u developera.',
+    badge: 'Provize',
+  },
+];
+
+const paidSteps = [
+  {
+    icon: 'chat',
+    title: 'Úvodní konzultace',
+    text: 'Projdeme vaše zadání, rozpočet, motivaci nákupu a preference. Ujasníme si, co hledáte a podle čeho budeme vhodné jednotky vybírat.',
+  },
+  {
+    icon: 'sign',
+    title: 'Objednávka služeb',
+    text: 'Potvrdíme rozsah služby, pravidla spolupráce a odměnu za osobní vyhledávání a zastoupení při nákupu.',
+    badge: '15 000 Kč',
+    badgePlain: true,
+  },
+  {
+    icon: 'search',
+    title: 'Osobní vyhledávání',
+    text: 'Získáte přístup do našeho portálu a my pro vás aktivně vyhledáváme a doporučujeme nemovitosti podle vašeho zadání.',
+  },
+  {
+    icon: 'talk',
+    title: 'Vyjednávání podmínek',
+    text: 'Zastupujeme vás při jednání s developerem, řešíme rezervaci, platební režim, cenu a další podmínky nákupu.',
+  },
+  {
+    icon: 'scales',
+    title: 'Právní servis při podpisu',
+    text: 'Zkontrolujeme smluvní dokumentaci a pohlídáme, abyste před podpisem rozuměli podmínkám, závazkům i termínům.',
+    badge: 'Provize',
+  },
+];
+
+interface Props {
+  headingAs?: 'h1' | 'h2';
+  compactTop?: boolean;
+  showSubline?: boolean;
+}
+
+const { headingAs = 'h1', compactTop = true, showSubline = true } = Astro.props;
+const Heading = headingAs;
+---
+
+<section id="vyber-sluzeb" class="bg-white" aria-labelledby="vyber-heading" data-sluzby-vyber>
+  <div class:list={['mx-auto max-w-[1440px] px-5 md:px-10 xl:px-14', compactTop ? 'pb-12 pt-8 md:pb-16 md:pt-10' : 'py-16 md:py-24 xl:py-28']}>
+    <div class="sluzby-in flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-8" style="--i: 0">
+      <Heading
+        id="vyber-heading"
+        class="flex shrink-0 items-center gap-2.5 font-yellix text-[22px] font-medium leading-none tracking-[-0.02em] text-black md:gap-3 md:text-[26px] xl:text-[28px]"
+      >
+        <img
+          src="/images/arrow-1.svg"
+          alt=""
+          class="h-4 w-4 shrink-0 brightness-0 md:h-5 md:w-5"
+          width="20"
+          height="20"
+        />
+        Výběr služeb
+      </Heading>
+      {showSubline && (
+        <p class="font-yellix text-[15px] font-medium leading-none text-black/55 md:text-[16px] sm:text-right lg:whitespace-nowrap">
+          Zastupujeme kupující na trhu novostaveb
+        </p>
+      )}
+    </div>
+
+    <div class="sluzby-grid mt-8 md:mt-10">
+      <div class="sluzba-pair sluzba-pair--free sluzby-in" style="--i: 1">
+      <article class="sluzba-card text-black">
+        <div class="sluzba-monitor">
+        <p class="font-yellix text-[12px] font-medium uppercase tracking-[0.07em] text-black/50">
+          Tipy na nové projekty
+        </p>
+        <h2 class="sluzba-title mt-3 font-semibold">
+          Monitoring<br />nových projektů
+        </h2>
+        <p class="mt-2 font-yellix text-[14px] font-medium leading-[1.45] text-black/70 md:text-[15px]">
+          <span class="block">Jednorázová upozornění na vybrané</span>
+          <span class="block">příležitosti z naší databáze.</span>
+        </p>
+        <ul class="mt-5 flex flex-col gap-2.5">
+          {monitorFeatures.map((item) => (
+            <li class="flex items-center gap-3 font-yellix text-[14px] font-medium leading-[1.3] text-black">
+              <span class="flex h-5 w-5 shrink-0 items-center justify-center text-black" aria-hidden="true">
+                {item.icon === 'send' && (
+                  <svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 6.5h16v11H4z"/>
+                    <path d="m4 6.5 8 6.2 8-6.2"/>
+                  </svg>
+                )}
+                {item.icon === 'building' && (
+                  <svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4.5 21V5.5h11V21"/>
+                    <path d="M15.5 10.5H20.5V21"/>
+                    <path d="M4.5 21h16"/>
+                    <path d="M7.5 8.5h2M7.5 12h2M7.5 15.5h2"/>
+                    <path d="M17.5 14h1.2M17.5 17h1.2"/>
+                    <path d="M9.2 21v-3.2h2.6V21"/>
+                  </svg>
+                )}
+              </span>
+              {item.text}
+            </li>
+          ))}
+        </ul>
+        <button type="button" class="sluzba-how-hint sluzba-how-hint--desk" aria-expanded="false">
+          Jak to funguje
+          <span aria-hidden="true">→</span>
+        </button>
+        <div class="sluzba-foot">
+          <p class="sluzba-price">
+            <span class="sluzba-price-num">ZDARMA</span>
+            <span class="sluzba-price-note">/ bez asistence</span>
+          </p>
+          <button type="button" class="sluzba-provize" data-provize-open aria-haspopup="dialog" aria-controls="provize-modal">
+            <span class="underline underline-offset-[3px] decoration-black/35">+ provize z nákupu</span>
+            <span class="sluzba-info" aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none">
+                <circle cx="8" cy="8" r="6.25" stroke="currentColor" stroke-width="1.2"/>
+                <path d="M8 7.2V11.2M8 5.35v.01" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <span class="sr-only">Podrobnosti k provizi z nákupu</span>
+          </button>
+          <div class="sluzba-cta-row">
+            <button
+              type="button"
+              class="sluzba-cta inline-flex items-center gap-1.5 bg-black px-3 py-1.5 font-yellix text-[13px] font-medium leading-none text-white transition-opacity hover:opacity-85"
+              data-smart-contact-open
+              data-smart-contact-type="client"
+              data-smart-contact-service="Monitoring projektů"
+            >
+              <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0 brightness-0 invert" width="12" height="12" />
+              Začít zdarma
+            </button>
+            <button type="button" class="sluzba-how-hint sluzba-how-hint--mobile" aria-expanded="false">
+              Jak to funguje
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </div>
+        </div>
+      </article>
+
+      <article class="sluzba-how text-black">
+        <div class="sluzba-how-inner">
+        <p class="font-yellix text-[12px] font-medium uppercase tracking-[0.07em] text-black/50">
+          Jak to funguje
+        </p>
+        <ol class="sluzba-axis">
+          {steps.map((step) => (
+            <li class="sluzba-step">
+              <span class="sluzba-step-rail" aria-hidden="true">
+                <span class="sluzba-step-icon">
+                {step.icon === 'chat' && (
+                  <svg class="h-7 w-7 md:h-8 md:w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 6.2h9.2A1.8 1.8 0 0 1 15 8v5.2a1.8 1.8 0 0 1-1.8 1.8H9.4L6.2 18v-3H4A1.8 1.8 0 0 1 2.2 13.2V8A1.8 1.8 0 0 1 4 6.2Z"/>
+                    <path d="M15.4 9.2H19A1.8 1.8 0 0 1 20.8 11v5.2A1.8 1.8 0 0 1 19 18h-2.2V20l-2.6-2"/>
+                  </svg>
+                )}
+                {step.icon === 'sign' && (
+                  <svg class="h-7 w-7 md:h-8 md:w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 3.5h8.5L19 7v13.5H7V3.5Z"/>
+                    <path d="M15.5 3.5V7H19"/>
+                    <path d="M12.2 16.2c1.7-1.8 3.6-2.2 5.3-1.2"/>
+                    <path d="M12.2 16.2l-.4 1.8 1.8-.4"/>
+                  </svg>
+                )}
+                {step.icon === 'grid' && (
+                  <svg class="h-7 w-7 md:h-8 md:w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4.5" width="18" height="15" rx="0"/>
+                    <path d="M3 8.5h18"/>
+                    <path d="M8 4.5v4M12 11v8.5M8 11h8M8 15.5h8"/>
+                  </svg>
+                )}
+                {step.icon === 'deal' && (
+                  <svg class="h-7 w-7 md:h-8 md:w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2.6" y="7" width="10" height="10" rx="2.1"/>
+                    <circle cx="7.6" cy="12" r="1.55"/>
+                    <path d="M12.6 10.55h9.1v2.9h-2.15v2.15h-1.8v-2.15h-1.65v1.55h-1.7v-1.55H12.6"/>
+                  </svg>
+                )}
+                </span>
+              </span>
+              <div class="min-w-0">
+                <p class="sluzba-step-title">
+                  {step.title}
+                  {step.badge && (
+                    <span class="sluzba-badge">{step.badge}</span>
+                  )}
+                </p>
+                <p class="sluzba-step-text text-black/70">
+                  {step.text}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        </div>
+      </article>
+      </div>
+
+      <div class="sluzba-pair sluzba-pair--paid sluzby-in" style="--i: 2">
+      <article class="sluzba-how sluzba-how--dark text-white">
+        <div class="sluzba-how-inner">
+        <p class="font-yellix text-[12px] font-medium uppercase tracking-[0.07em] text-white/50">
+          Jak to funguje
+        </p>
+        <ol class="sluzba-axis">
+          {paidSteps.map((step) => (
+            <li class="sluzba-step">
+              <span class="sluzba-step-rail" aria-hidden="true">
+                <span class="sluzba-step-icon">
+                {step.icon === 'chat' && (
+                  <svg class="h-7 w-7 md:h-8 md:w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 6.2h9.2A1.8 1.8 0 0 1 15 8v5.2a1.8 1.8 0 0 1-1.8 1.8H9.4L6.2 18v-3H4A1.8 1.8 0 0 1 2.2 13.2V8A1.8 1.8 0 0 1 4 6.2Z"/>
+                    <path d="M15.4 9.2H19A1.8 1.8 0 0 1 20.8 11v5.2A1.8 1.8 0 0 1 19 18h-2.2V20l-2.6-2"/>
+                  </svg>
+                )}
+                {step.icon === 'sign' && (
+                  <svg class="h-7 w-7 md:h-8 md:w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 3.5h8.5L19 7v13.5H7V3.5Z"/>
+                    <path d="M15.5 3.5V7H19"/>
+                    <path d="M12.2 16.2c1.7-1.8 3.6-2.2 5.3-1.2"/>
+                    <path d="M12.2 16.2l-.4 1.8 1.8-.4"/>
+                  </svg>
+                )}
+                {step.icon === 'search' && (
+                  <svg class="h-7 w-7 md:h-8 md:w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="6.2"/>
+                    <path d="M16.2 16.2 21 21"/>
+                  </svg>
+                )}
+                {step.icon === 'talk' && (
+                  <svg class="h-7 w-7 md:h-8 md:w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M8.2 12.2 4.8 8.8a2 2 0 0 1 2.8-2.8l3.2 3.2"/>
+                    <path d="M15.8 12.2 19.2 8.8a2 2 0 1 0-2.8-2.8l-3.2 3.2"/>
+                    <path d="M7.5 13h9v2.4a3 3 0 0 1-3 3h-3a3 3 0 0 1-3-3V13Z"/>
+                  </svg>
+                )}
+                {step.icon === 'scales' && (
+                  <svg class="h-7 w-7 md:h-8 md:w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3v18M8 21h8M12 5l-6.5 8h13L12 5Z"/>
+                    <path d="M5.5 13v.5a2.5 2.5 0 1 0 5 0V13M13.5 13v.5a2.5 2.5 0 1 0 5 0V13"/>
+                  </svg>
+                )}
+                </span>
+              </span>
+              <div class="min-w-0">
+                <p class="sluzba-step-title">
+                  {step.title}
+                  {step.badge && (
+                    <span class:list={['sluzba-badge', step.badgePlain && 'sluzba-badge--plain']}>{step.badge}</span>
+                  )}
+                </p>
+                <p class="sluzba-step-text text-white/70">
+                  {step.text}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        </div>
+      </article>
+
+      <article class="sluzba-card bg-black text-white">
+        <div class="sluzba-paid">
+        <p class="font-yellix text-[12px] font-medium uppercase tracking-[0.07em] text-white/50">
+          Aktivní spolupráce
+        </p>
+        <h2 class="sluzba-title mt-3 max-w-[22ch] font-semibold">
+          Vyhledání nemovitosti a zastoupení při nákupu
+        </h2>
+        <p class="mt-2 max-w-[38ch] font-yellix text-[14px] font-medium leading-[1.45] text-white/75 md:text-[15px]">
+          Kompletní nákupní servis od výběru jednotky po podpis smluv.
+        </p>
+        <ul class="mt-5 flex flex-col gap-2.5">
+          {features.map((item) => (
+            <li class="flex items-center gap-3 font-yellix text-[14px] font-medium leading-[1.3] text-white">
+              <span class="flex h-5 w-5 shrink-0 items-center justify-center text-white" aria-hidden="true">
+                {item.icon === 'user' && (
+                  <svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="8" r="3.2"/>
+                    <path d="M5.4 19.2c.7-3.3 3.3-5.1 6.6-5.1s5.9 1.8 6.6 5.1"/>
+                  </svg>
+                )}
+                {item.icon === 'screen' && (
+                  <svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="13" rx="0"/>
+                    <path d="M8 21h8M12 17v4"/>
+                  </svg>
+                )}
+                {item.icon === 'building' && (
+                  <svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4.5 21V5.5h11V21"/>
+                    <path d="M15.5 10.5H20.5V21"/>
+                    <path d="M4.5 21h16"/>
+                    <path d="M7.5 8.5h2M7.5 12h2M7.5 15.5h2"/>
+                    <path d="M17.5 14h1.2M17.5 17h1.2"/>
+                    <path d="M9.2 21v-3.2h2.6V21"/>
+                  </svg>
+                )}
+                {item.icon === 'scales' && (
+                  <svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3v18M8 21h8M12 5l-6.5 8h13L12 5Z"/>
+                    <path d="M5.5 13v.5a2.5 2.5 0 1 0 5 0V13M13.5 13v.5a2.5 2.5 0 1 0 5 0V13"/>
+                  </svg>
+                )}
+              </span>
+              {item.text}
+            </li>
+          ))}
+        </ul>
+        <button type="button" class="sluzba-how-hint sluzba-how-hint--desk sluzba-how-hint--dark" aria-expanded="false">
+          Jak to funguje
+          <span aria-hidden="true">→</span>
+        </button>
+        <div class="sluzba-foot">
+          <p class="sluzba-price">
+            <span class="sluzba-price-num">15 000 Kč</span>
+            <span class="sluzba-price-note">/ osobní vyhledávání</span>
+          </p>
+          <button type="button" class="sluzba-provize" data-provize-open aria-haspopup="dialog" aria-controls="provize-modal">
+            <span class="underline underline-offset-[3px] decoration-white/40">+ provize z nákupu</span>
+            <span class="sluzba-info" aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none">
+                <circle cx="8" cy="8" r="6.25" stroke="currentColor" stroke-width="1.2"/>
+                <path d="M8 7.2V11.2M8 5.35v.01" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <span class="sr-only">Podrobnosti k provizi z nákupu</span>
+          </button>
+          <div class="sluzba-cta-row">
+            <button
+              type="button"
+              class="sluzba-cta inline-flex items-center gap-1.5 bg-white px-3 py-1.5 font-yellix text-[13px] font-medium leading-none text-black transition-opacity hover:opacity-85"
+              data-smart-contact-open
+              data-smart-contact-type="client"
+              data-smart-contact-service="Osobní vyhledávání"
+            >
+              <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0 brightness-0" width="12" height="12" />
+              Zahájit spolupráci
+            </button>
+            <button type="button" class="sluzba-how-hint sluzba-how-hint--mobile sluzba-how-hint--dark" aria-expanded="false">
+              Jak to funguje
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </div>
+        </div>
+      </article>
+      </div>
+    </div>
+
+    <p class="sluzby-in mt-8 text-center font-yellix text-[14px] font-medium leading-[1.5] text-black/75 md:text-[15px]" style="--i: 3">
+      Pokud si po dobu spolupráce z našeho doporučení nevyberete, <span class="font-bold text-black">neúčtujeme si žádnou provizi.</span>
+    </p>
+  </div>
+</section>
+
+<style>
+  .sluzby-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    align-items: stretch;
+  }
+  .sluzba-pair {
+    display: grid;
+    grid-template-columns: 1fr;
+    min-height: 100%;
+    background: var(--color-muted);
+  }
+  .sluzba-pair--paid {
+    background: #000;
+  }
+  .sluzba-pair--paid .sluzba-card {
+    order: -1;
+  }
+  .sluzba-pair--paid .sluzba-how {
+    border-top-color: rgba(255, 255, 255, 0.12);
+  }
+  .sluzba-how--dark .sluzba-step-icon {
+    background: #000;
+    color: #fff;
+  }
+  .sluzba-how--dark .sluzba-step-rail::after {
+    background: rgba(255, 255, 255, 0.22);
+  }
+  .sluzba-card,
+  .sluzba-how {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    padding: 1.75rem 1.5rem 1.6rem;
+  }
+  .sluzba-how-hint {
+    display: none;
+  }
+  .sluzba-how {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  .sluzba-foot {
+    margin-top: auto;
+    padding-top: 1.5rem;
+  }
+  .sluzba-cta-row {
+    margin-top: 1.25rem;
+  }
+  .sluzba-price {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: baseline;
+    gap: 0.45em;
+    margin: 0;
+    white-space: nowrap;
+  }
+  .sluzba-title,
+  .sluzba-price-num {
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+  h2.sluzba-title {
+    font-weight: 600;
+  }
+  .sluzba-price-num {
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+  }
+  .sluzba-price-note {
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    opacity: 0.62;
+  }
+  .sluzba-provize {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0.5rem 0 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    text-align: left;
+  }
+  .sluzba-provize:hover {
+    opacity: 0.7;
+  }
+  .sluzba-info {
+    display: inline-flex;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    opacity: 0.5;
+  }
+  .sluzba-info svg {
+    width: 100%;
+    height: 100%;
+  }
+  .sluzba-badge {
+    display: inline-block;
+    margin-top: 0;
+    padding: 0.22rem 0.42rem;
+    background: #6a6a6a;
+    color: #fff;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+  .sluzba-badge--plain {
+    letter-spacing: 0.02em;
+    text-transform: none;
+    font-size: 10px;
+  }
+  .sluzba-step-title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 0.5rem;
+    margin: 0;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+  .sluzba-step-text {
+    margin: 0.3rem 0 0;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .sluzba-axis {
+    list-style: none;
+    margin: 1.35rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    position: relative;
+  }
+  .sluzba-step {
+    display: flex;
+    align-items: stretch;
+    gap: 0.9rem;
+  }
+  .sluzba-step-rail {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    width: 2rem;
+    flex-shrink: 0;
+    flex-direction: column;
+    align-items: center;
+    align-self: stretch;
+  }
+  .sluzba-step-rail::after {
+    content: '';
+    position: absolute;
+    top: 2rem;
+    bottom: -1.25rem;
+    left: 50%;
+    width: 1px;
+    background: rgba(0, 0, 0, 0.2);
+    transform: translateX(-50%);
+  }
+  .sluzba-step:last-child .sluzba-step-rail::after {
+    display: none;
+  }
+  .sluzba-step-icon {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    height: 2rem;
+    width: 2rem;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-muted);
+    color: #000;
+  }
+  @media (min-width: 768px) {
+    .sluzba-card,
+    .sluzba-how {
+      padding: 2.15rem 2rem 1.9rem;
+    }
+    .sluzba-step-rail,
+    .sluzba-step-icon {
+      width: 2.25rem;
+      height: 2.25rem;
+    }
+    .sluzba-step-rail {
+      height: auto;
+    }
+    .sluzba-title,
+    .sluzba-price-num {
+      font-size: 26px;
+    }
+    .sluzba-step-rail::after {
+      top: 2.25rem;
+    }
+  }
+  @media (max-width: 1023px) {
+    .sluzba-pair {
+      display: flex;
+      flex-direction: column;
+      padding: 1.75rem 1.5rem 1.6rem;
+    }
+    .sluzba-pair--free {
+      color: #000;
+    }
+    .sluzba-pair--paid {
+      color: #fff;
+    }
+    .sluzba-pair--paid .sluzba-card {
+      order: 0;
+    }
+    .sluzba-card,
+    .sluzba-how {
+      padding: 0;
+      min-height: 0;
+    }
+    .sluzba-card,
+    .sluzba-monitor,
+    .sluzba-paid {
+      display: contents;
+    }
+    .sluzba-how-hint--desk {
+      display: none;
+    }
+    .sluzba-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.75rem 1.1rem;
+      margin-top: 1.25rem;
+    }
+    .sluzba-how-hint--mobile {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      width: fit-content;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: none;
+      color: rgba(0, 0, 0, 0.45);
+      cursor: pointer;
+      font-family: 'Yellix', system-ui, sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      line-height: 1;
+    }
+    .sluzba-how-hint--dark.sluzba-how-hint--mobile {
+      color: rgba(255, 255, 255, 0.45);
+    }
+    .sluzba-how-hint span {
+      display: inline-block;
+      font-size: 14px;
+      line-height: 1;
+      transition: transform 0.2s ease;
+    }
+    .sluzba-how-hint[aria-expanded="true"] span {
+      transform: rotate(90deg);
+    }
+    .sluzba-how {
+      display: none;
+      order: 5;
+      margin-top: 1.15rem;
+      border-top: 0;
+    }
+    .sluzba-pair--paid .sluzba-how {
+      border-top: 0;
+    }
+    .sluzba-pair.is-how-open .sluzba-how {
+      display: flex;
+    }
+    .sluzba-foot {
+      order: 4;
+      margin-top: 0;
+      padding-top: 2.75rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .sluzby-grid {
+      container-type: inline-size;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-rows: max(32rem, calc(100svh - 108px - 12rem));
+      align-items: stretch;
+      overflow: hidden;
+    }
+    .sluzba-pair {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0fr);
+      height: 100%;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .sluzba-monitor,
+    .sluzba-paid {
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+      width: 100%;
+    }
+    .sluzba-monitor {
+      max-width: 19rem;
+    }
+    .sluzba-paid {
+      max-width: 22rem;
+    }
+    .sluzba-axis {
+      margin-top: 1.05rem;
+      gap: 1.05rem;
+    }
+    .sluzba-step-title {
+      font-size: 14px;
+    }
+    .sluzba-step-text {
+      margin-top: 0.2rem;
+      font-size: 12.5px;
+      line-height: 1.38;
+    }
+    .sluzba-step-rail,
+    .sluzba-step-icon {
+      width: 1.75rem;
+      height: 1.75rem;
+    }
+    .sluzba-step-icon svg {
+      width: 1.3rem;
+      height: 1.3rem;
+    }
+    .sluzba-step-rail::after {
+      top: 1.75rem;
+      bottom: -1.05rem;
+    }
+    .sluzba-how {
+      border-top: 0;
+      box-sizing: border-box;
+      min-width: 0;
+      width: 100%;
+      height: 100%;
+      max-height: none;
+      min-height: 0;
+      padding: 1.5rem 1.6rem 1.35rem;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      visibility: hidden;
+      transition: opacity 0.28s ease, visibility 0s linear 0.28s;
+    }
+    .sluzba-how-inner {
+      --sluzba-how-width: calc((100cqi - 1.25rem) * 1.7 / 2.7 * 1.2 / 2.12 - 3.2rem);
+      box-sizing: border-box;
+      width: var(--sluzba-how-width);
+      min-width: var(--sluzba-how-width);
+      max-width: var(--sluzba-how-width);
+    }
+    .sluzba-how-hint--desk {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 1.5rem;
+      padding: 0;
+      border: 0;
+      background: none;
+      pointer-events: none;
+      font-family: 'Yellix', system-ui, sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      color: rgba(0, 0, 0, 0.4);
+      transition: opacity 0.25s ease;
+    }
+    .sluzba-how-hint--mobile {
+      display: none;
+    }
+    .sluzba-how-hint span {
+      font-size: 14px;
+      line-height: 1;
+    }
+    .sluzba-how-hint--dark {
+      color: rgba(255, 255, 255, 0.4);
+    }
+  }
+  @media (min-width: 1024px) and (hover: hover) {
+    .sluzby-grid:has(.sluzba-pair--free:hover),
+    .sluzby-grid:has(.sluzba-pair--free:focus-within) {
+      grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+    }
+    .sluzby-grid:has(.sluzba-pair--paid:hover),
+    .sluzby-grid:has(.sluzba-pair--paid:focus-within) {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr);
+    }
+    .sluzba-pair--free:hover,
+    .sluzba-pair--free:focus-within,
+    .sluzba-pair--paid:hover,
+    .sluzba-pair--paid:focus-within {
+      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.2fr);
+    }
+    .sluzba-pair:hover .sluzba-how,
+    .sluzba-pair:focus-within .sluzba-how {
+      opacity: 1;
+      pointer-events: auto;
+      visibility: visible;
+      transition: opacity 0.28s ease, visibility 0s linear 0s;
+    }
+    .sluzba-pair--free:hover .sluzba-how,
+    .sluzba-pair--free:focus-within .sluzba-how {
+      border-left: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .sluzba-pair--paid:hover .sluzba-how,
+    .sluzba-pair--paid:focus-within .sluzba-how {
+      border-left: 1px solid rgba(255, 255, 255, 0.14);
+    }
+    .sluzba-pair:hover .sluzba-how-hint--desk,
+    .sluzba-pair:focus-within .sluzba-how-hint--desk {
+      opacity: 0;
+    }
+  }
+  @media (min-width: 1024px) and (hover: none) {
+    .sluzby-grid {
+      grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+    }
+    .sluzba-pair--free {
+      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.2fr);
+    }
+    .sluzba-pair--paid {
+      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.2fr);
+    }
+    .sluzba-how {
+      min-height: 0;
+      max-height: none;
+      height: 100%;
+      overflow: hidden;
+      opacity: 1;
+      padding: 1.5rem 1.6rem 1.35rem;
+      pointer-events: auto;
+      visibility: visible;
+      width: auto;
+      min-width: 0;
+      max-width: none;
+    }
+    .sluzba-how-inner {
+      width: auto;
+      min-width: 0;
+      max-width: none;
+    }
+    .sluzba-pair--free .sluzba-how {
+      border-left: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .sluzba-pair--paid .sluzba-how {
+      border-left: 1px solid rgba(255, 255, 255, 0.14);
+    }
+  }
+  .sluzby-in {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  .sluzby-in.is-in {
+    animation: sluzby-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: calc(var(--i) * 110ms);
+  }
+  @keyframes sluzby-in {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sluzby-grid,
+    .sluzba-pair,
+    .sluzba-how,
+    .sluzba-how-hint {
+      transition: none;
+    }
+    .sluzby-in,
+    .sluzby-in.is-in {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  function initSluzbyVyber() {
+    const wrap = document.querySelector('[data-sluzby-vyber]');
+    if (!wrap) return;
+    if (wrap._sluzbyCleanup) wrap._sluzbyCleanup();
+
+    const items = [...wrap.querySelectorAll('.sluzby-in')];
+    if (!items.length) return;
+
+    function onHowClick(event) {
+      const btn = event.target.closest('.sluzba-how-hint');
+      if (!btn) return;
+      if (window.matchMedia('(min-width: 1024px)').matches) return;
+      const pair = btn.closest('.sluzba-pair');
+      if (!pair) return;
+      const open = pair.classList.toggle('is-how-open');
+      pair.querySelectorAll('.sluzba-how-hint').forEach(function (el) {
+        el.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    }
+
+    wrap.addEventListener('click', onHowClick);
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) {
+      items.forEach((el) => el.classList.add('is-in'));
+      wrap._sluzbyCleanup = () => {
+        wrap.removeEventListener('click', onHowClick);
+        wrap._sluzbyCleanup = null;
+      };
+      return;
+    }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        items.forEach((el) => el.classList.add('is-in'));
+        io.disconnect();
+      },
+      { threshold: 0.12 }
+    );
+
+    io.observe(wrap);
+
+    wrap._sluzbyCleanup = () => {
+      io.disconnect();
+      wrap.removeEventListener('click', onHowClick);
+      wrap._sluzbyCleanup = null;
+    };
+  }
+
+  initSluzbyVyber();
+  document.addEventListener('astro:page-load', initSluzbyVyber);
+</script>

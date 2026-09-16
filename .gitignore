@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Astro
+dist/
+.astro/
+
+# Environment (nikdy necommituj hesla a API klíče)
+.env
+.env.*
+!.env.example
+
+# IDE a systém
+.DS_Store
+.idea/
+*.log
+
+# Vercel (lokální deploy cache)
+.vercel

@@ -1,0 +1,371 @@
+<div
+  id="provize-overlay"
+  class="provize-overlay fixed inset-0 z-[100] flex items-center justify-center bg-black/80 opacity-0 pointer-events-none transition-opacity duration-200"
+  aria-hidden="true"
+  data-provize
+>
+  <div
+    id="provize-modal"
+    class="provize-modal relative w-[94vw] max-w-[50rem] max-h-[90vh] overflow-y-auto bg-[var(--color-muted)] text-black scale-95 transition-all duration-200"
+    role="dialog"
+    aria-labelledby="provize-title"
+    aria-modal="true"
+    tabindex="-1"
+    data-provize-modal
+    onclick="event.stopPropagation()"
+  >
+    <button
+      type="button"
+      class="absolute top-8 right-8 z-10 flex items-center gap-2 border-0 bg-transparent p-0 font-yellix text-[14px] font-medium text-[#000000] cursor-pointer hover:opacity-80 transition-opacity"
+      aria-label="Zavřít"
+      data-provize-close
+    >
+      <span>Zavřít</span>
+      <span class="text-[#000000]" aria-hidden="true">×</span>
+    </button>
+
+    <div class="provize-layout">
+      <div class="provize-lead">
+        <p class="provize-kicker">Provize z nákupu</p>
+        <h2 id="provize-title" class="provize-price">
+          <span class="provize-price-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3.2 8.2h14.2A2.4 2.4 0 0 1 19.8 10.6v7.2A2.4 2.4 0 0 1 17.4 20.2H5.6A2.4 2.4 0 0 1 3.2 17.8V8.2Z"/>
+              <path d="M3.2 8.2 6.6 4.6h9.4l3.8 3.6"/>
+              <circle cx="16.15" cy="14.15" r="1.05"/>
+            </svg>
+          </span>
+          120 000 Kč
+        </h2>
+        <p class="provize-note">
+          Nárok na provizi vzniká pouze v případě, že si pořídíte nemovitost z našeho výběru.
+        </p>
+        <button
+          type="button"
+          class="provize-cta"
+          data-smart-contact-from-provize
+        >
+          <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
+          Vybrat službu
+        </button>
+      </div>
+
+      <div class="provize-included">
+        <p class="provize-included-label">V ceně provize</p>
+        <ul class="provize-list">
+          <li>doporučení konkrétní jednotky</li>
+          <li>prověření ceny, dispozice, lokality a potenciálu nemovitosti</li>
+          <li>přístup k příležitostem, které se nemusí objevit na běžných portálech</li>
+          <li>komunikace s developerem nebo prodejcem</li>
+          <li>pomoc s rezervací vybrané jednotky</li>
+          <li>vyjednání obchodních podmínek</li>
+          <li>koordinace právní kontroly smluvní dokumentace</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="provize-save">
+      <p class="provize-save-label">Na jedné transakci klientům průměrně ušetříme</p>
+      <div class="provize-save-grid">
+        <div class="provize-save-item">
+          <span class="provize-save-icon provize-save-icon--tag" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3.6 12.6 12.4 3.8H20v7.6L11.2 20.2 3.6 12.6Z"/>
+              <circle cx="16.2" cy="7.8" r="1.15"/>
+            </svg>
+          </span>
+          <p class="provize-save-num">456 000 Kč</p>
+          <p class="provize-save-cap">na ceně a podmínkách</p>
+        </div>
+        <div class="provize-save-item">
+          <span class="provize-save-icon provize-save-icon--clock" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="8.2"/>
+              <path d="M12 7.5V12l3.2 2.1"/>
+            </svg>
+          </span>
+          <p class="provize-save-num">80+ hodin</p>
+          <p class="provize-save-cap">hledání, porovnání a komunikace</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .provize-layout {
+    display: grid;
+    gap: 2rem;
+    padding: 2rem 2.75rem 2rem 2rem;
+    padding-top: 3.5rem;
+  }
+  .provize-kicker {
+    margin: 0;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    line-height: 1;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.45);
+  }
+  .provize-price {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin: 0.85rem 0 0;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+    color: #000;
+  }
+  .provize-price-icon {
+    display: flex;
+    width: 1.85rem;
+    height: 1.85rem;
+    flex-shrink: 0;
+    transform: rotate(-18deg);
+  }
+  .provize-price-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+  .provize-note {
+    margin: 1.15rem 0 0;
+    max-width: 28ch;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: rgba(0, 0, 0, 0.62);
+  }
+  .provize-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    margin-top: 1.5rem;
+    width: fit-content;
+    border: 0;
+    background: #000;
+    padding: 0.375rem 0.75rem;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+    color: #fff;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+  .provize-cta img {
+    width: 12px;
+    height: 12px;
+    filter: brightness(0) invert(1);
+  }
+  .provize-cta:hover {
+    opacity: 0.85;
+  }
+  .provize-included-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    line-height: 1;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.45);
+  }
+  .provize-included-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.14);
+  }
+  .provize-list {
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+  }
+  .provize-list li {
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: #000;
+  }
+  .provize-list li + li {
+    margin-top: 0.55rem;
+  }
+  .provize-save {
+    border-top: 1px solid rgba(44, 90, 66, 0.16);
+    background: rgba(44, 90, 66, 0.06);
+    padding: 1.35rem 2rem 1.5rem;
+  }
+  .provize-save-label {
+    margin: 0;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.35;
+    color: rgba(44, 90, 66, 0.75);
+  }
+  .provize-save-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.1rem;
+    margin-top: 0.95rem;
+  }
+  .provize-save-item {
+    display: grid;
+    grid-template-columns: 1.25rem 1fr;
+    column-gap: 0.6rem;
+    row-gap: 0.3rem;
+    align-items: center;
+  }
+  .provize-save-icon {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    width: 1.25rem;
+    height: 1.25rem;
+    color: #2c5a42;
+    overflow: visible;
+  }
+  .provize-save-icon svg {
+    width: 100%;
+    height: 100%;
+    transform-origin: center;
+  }
+  .provize-overlay.is-open .provize-save-icon--tag svg {
+    animation: provize-icon-tag 7.5s ease-in-out infinite;
+  }
+  .provize-overlay.is-open .provize-save-icon--clock svg {
+    animation: provize-icon-clock 7.5s ease-in-out 2.4s infinite;
+  }
+  @keyframes provize-icon-tag {
+    0%, 32%, 46%, 100% { transform: rotate(0deg); }
+    36% { transform: rotate(-28deg); }
+    41% { transform: rotate(20deg); }
+    45% { transform: rotate(0deg); }
+  }
+  @keyframes provize-icon-clock {
+    0%, 10%, 100% { transform: rotate(0deg); }
+    4% { transform: rotate(14deg); }
+    7% { transform: rotate(-6deg); }
+    10% { transform: rotate(0deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .provize-overlay.is-open .provize-save-icon svg {
+      animation: none;
+    }
+  }
+  .provize-save-num {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: #2c5a42;
+  }
+  .provize-save-cap {
+    grid-column: 2;
+    grid-row: 2;
+    margin: 0;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.35;
+    color: rgba(44, 90, 66, 0.72);
+  }
+  @media (min-width: 768px) {
+    .provize-layout {
+      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+      gap: 0;
+      padding: 2.35rem 3.25rem 2rem 2.5rem;
+      padding-top: 2.35rem;
+    }
+    .provize-lead {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-right: 2.5rem;
+    }
+    .provize-included {
+      border-left: 1px solid rgba(0, 0, 0, 0.1);
+      padding-left: 2.5rem;
+    }
+    .provize-price {
+      font-size: 36px;
+    }
+    .provize-save {
+      padding: 1.4rem 3.25rem 1.7rem 2.5rem;
+    }
+    .provize-save-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    .provize-save-num {
+      font-size: 26px;
+    }
+  }
+</style>
+
+<script>
+  function initProvizeModal() {
+    const overlay = document.getElementById('provize-overlay');
+    const modal = overlay?.querySelector('[data-provize-modal]');
+    if (!overlay || !modal || overlay.dataset.init === '1') return;
+    overlay.dataset.init = '1';
+
+    function openModal() {
+      overlay.classList.remove('opacity-0', 'pointer-events-none');
+      overlay.classList.add('is-open');
+      overlay.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      modal.classList.remove('scale-95');
+      modal.classList.add('scale-100');
+      modal.focus();
+    }
+
+    function closeModal() {
+      overlay.classList.add('opacity-0', 'pointer-events-none');
+      overlay.classList.remove('is-open');
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      modal.classList.remove('scale-100');
+      modal.classList.add('scale-95');
+    }
+
+    overlay.addEventListener('click', closeModal);
+    overlay.querySelectorAll('[data-provize-close]').forEach(function (btn) {
+      btn.addEventListener('click', closeModal);
+    });
+    overlay.querySelectorAll('[data-smart-contact-from-provize]').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        closeModal();
+        window.dispatchEvent(
+          new CustomEvent('smart-contact-open', {
+            detail: { initialType: 'client', initialService: null },
+          })
+        );
+      });
+    });
+    modal.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeModal();
+    });
+    window.addEventListener('provize-open', openModal);
+  }
+
+  initProvizeModal();
+  document.addEventListener('astro:page-load', initProvizeModal);
+</script>

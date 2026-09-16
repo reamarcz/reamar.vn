@@ -1,0 +1,383 @@
+---
+const meetingTypes = [
+  {
+    icon: 'coffee',
+    title: 'Osobní schůzka v Praze',
+    text: 'Záběhlický zámek, Za potokem 46/4, 106 00 Praha 10',
+  },
+  {
+    icon: 'screen',
+    title: 'Online',
+    text: 'Schůzka na dálku',
+  },
+];
+---
+<div
+  id="smart-meeting-overlay"
+  class="smart-meeting-overlay fixed inset-0 z-[100] flex items-center justify-center bg-black/80 opacity-0 pointer-events-none transition-opacity duration-200"
+  aria-hidden="true"
+  data-smart-meeting
+>
+  <div
+    class="smart-meeting-modal relative w-[94vw] max-w-[1000px] max-h-[90vh] overflow-y-auto bg-white rounded-none shadow-none scale-95 transition-all duration-200"
+    role="dialog"
+    aria-labelledby="smart-meeting-title"
+    aria-modal="true"
+    tabindex="-1"
+    data-smart-meeting-modal
+    onclick="event.stopPropagation()"
+  >
+    <div class="p-10 md:p-14 lg:p-16">
+      <!-- Zavřít -->
+      <button
+        type="button"
+        class="absolute top-8 right-8 flex items-center gap-2 border-0 bg-transparent p-0 font-yellix text-[14px] font-normal text-[#000000] cursor-pointer hover:opacity-80 transition-opacity"
+        aria-label="Zavřít"
+        data-smart-meeting-close
+      >
+        <span>Zavřít</span>
+        <span class="text-[#000000]" aria-hidden="true">×</span>
+      </button>
+
+      <div data-smart-meeting-form-view>
+      <h2 id="smart-meeting-title" class="font-yellix text-[27px] font-normal text-[#000000] pr-20 mb-10">
+        Domluvit schůzku
+      </h2>
+
+      <div class="mb-10">
+        <p class="font-yellix text-[14px] font-normal text-[#000000] mb-3">Mám zájem o</p>
+        <div class="meeting-interests" role="radiogroup" aria-label="Mám zájem o">
+          {meetingTypes.map((item, i) => (
+            <button
+              type="button"
+              class:list={['meeting-interest smart-meeting-service', i === 0 && 'is-active']}
+              data-service={item.title}
+              role="radio"
+              aria-checked={i === 0 ? 'true' : 'false'}
+            >
+              <span class="meeting-interest-icon" aria-hidden="true">
+                {item.icon === 'coffee' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 6.5h12.5v6.2A3.8 3.8 0 0 1 12.7 16.5H7.8A3.8 3.8 0 0 1 4 12.7V6.5Z"/>
+                    <path d="M16.5 8.2h1.6A2.4 2.4 0 0 1 20.5 10.6v0A2.4 2.4 0 0 1 18.1 13h-1.6"/>
+                    <path d="M4 18.5h12.5"/>
+                  </svg>
+                )}
+                {item.icon === 'screen' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="13" rx="0"/>
+                    <path d="M8 21h8M12 17v4"/>
+                  </svg>
+                )}
+              </span>
+              <span class="meeting-interest-copy">
+                <span class="meeting-interest-title">{item.title}</span>
+                <span class="meeting-interest-text">{item.text}</span>
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <form id="smart-meeting-form" class="flex flex-col gap-6" novalidate>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
+          <div>
+            <label for="smart-meeting-jmeno" class="block font-yellix text-[14px] font-normal text-[#000000] mb-1">Jméno</label>
+            <input
+              id="smart-meeting-jmeno"
+              name="jmeno"
+              type="text"
+              placeholder="*vaše jméno a příjmení"
+              class="smart-meeting-input w-full border-0 border-b border-gray-200 bg-transparent py-2.5 font-yellix text-[14px] font-normal text-[#000000] placeholder:text-gray-500 outline-none focus:border-[#000000] transition-colors"
+              autocomplete="name"
+            />
+            <span class="smart-meeting-error text-red-500 font-yellix text-[12px] mt-1 hidden" data-error="jmeno">Vyplňte jméno</span>
+          </div>
+          <div>
+            <label for="smart-meeting-telefon" class="block font-yellix text-[14px] font-normal text-[#000000] mb-1">Telefon</label>
+            <input
+              id="smart-meeting-telefon"
+              name="telefon"
+              type="tel"
+              placeholder="*váš telefon"
+              class="smart-meeting-input w-full border-0 border-b border-gray-200 bg-transparent py-2.5 font-yellix text-[14px] font-normal text-[#000000] placeholder:text-gray-500 outline-none focus:border-[#000000] transition-colors"
+              autocomplete="tel"
+            />
+            <span class="smart-meeting-error text-red-500 font-yellix text-[12px] mt-1 hidden" data-error="telefon">Vyplňte telefon</span>
+          </div>
+          <div>
+            <label for="smart-meeting-email" class="block font-yellix text-[14px] font-normal text-[#000000] mb-1">E-mail</label>
+            <input
+              id="smart-meeting-email"
+              name="email"
+              type="email"
+              placeholder="*váš e-mail"
+              class="smart-meeting-input w-full border-0 border-b border-gray-200 bg-transparent py-2.5 font-yellix text-[14px] font-normal text-[#000000] placeholder:text-gray-500 outline-none focus:border-[#000000] transition-colors"
+              autocomplete="email"
+            />
+            <span class="smart-meeting-error text-red-500 font-yellix text-[12px] mt-1 hidden" data-error="email">Vyplňte e-mail</span>
+          </div>
+          <div>
+            <label for="smart-meeting-vzkaz" class="block font-yellix text-[14px] font-normal text-[#000000] mb-1">Vzkaz a návrh termínu</label>
+            <input
+              id="smart-meeting-vzkaz"
+              name="vzkaz"
+              type="text"
+              placeholder="*navrhněte termín, který vám vyhovuje"
+              required
+              class="smart-meeting-input w-full border-0 border-b border-gray-200 bg-transparent py-2.5 font-yellix text-[14px] font-normal text-[#000000] placeholder:text-gray-500 outline-none focus:border-[#000000] transition-colors"
+              autocomplete="off"
+            />
+            <span class="smart-meeting-error text-red-500 font-yellix text-[12px] mt-1 hidden" data-error="vzkaz">Vyplňte vzkaz a návrh termínu</span>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="mt-4 w-full bg-[#000000] text-white font-yellix text-[14px] font-normal py-4 text-center border-0 cursor-pointer hover:opacity-90 transition-opacity disabled:opacity-70 disabled:cursor-not-allowed"
+          data-smart-meeting-submit
+        >
+          Odeslat
+        </button>
+      </form>
+
+      <p class="mt-6 font-yellix text-[14px] font-normal text-[#000000] leading-snug">
+        Odesláním souhlasíte se <a href="/ochrana-osobnich-udaju" class="text-[#000000] underline hover:opacity-80">Zásadami zpracování osobních údajů</a>.
+      </p>
+    </div>
+
+      <!-- Success State (Děkovná zpráva) -->
+      <div data-smart-meeting-success-view class="hidden">
+        <h2 class="font-yellix text-[27px] font-normal text-[#000000] pr-20 mb-6">Děkujeme</h2>
+        <p class="font-yellix text-[14px] font-normal text-[#000000] mb-4">
+          Váš záměr jsme přijali ke zpracování.
+        </p>
+        <p class="font-yellix text-[14px] font-normal text-[#000000] mb-4">
+          Na uvedené údaje se vám už brzy ozveme s prvním návrhem spolupráce.
+        </p>
+        <p class="font-yellix text-[14px] font-normal text-[#000000] mb-8">
+          Pokud s námi chcete mluvit dříve, rádi vás uslyšíme na čísle <a href="tel:+420607066044" class="text-[#000000] underline hover:opacity-80">+420 607 066 044</a>.
+        </p>
+        <a href="tel:+420607066044" class="inline-flex items-center gap-1.5 bg-[#000000] text-white font-yellix text-[14px] font-normal py-2 px-3 border-0 cursor-pointer hover:opacity-90 transition-opacity no-underline w-fit">
+          <span>Zavolat</span>
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </a>
+        <p class="mt-6">
+          <button type="button" class="font-yellix text-[14px] font-normal text-[#000000] underline bg-transparent border-0 cursor-pointer p-0 hover:opacity-80 transition-opacity" data-smart-meeting-close>zavřít</button>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .meeting-interests {
+    display: grid;
+    gap: 0.75rem;
+  }
+  @media (min-width: 768px) {
+    .meeting-interests {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+  }
+  .meeting-interest {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.7rem;
+    margin: 0;
+    padding: 1rem 1.05rem;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: var(--color-muted);
+    text-align: left;
+    cursor: pointer;
+  }
+  .meeting-interest:hover {
+    border-color: rgba(0, 0, 0, 0.22);
+  }
+  .meeting-interest.is-active {
+    background: #fff;
+    border-color: #000;
+  }
+  .meeting-interest-icon {
+    display: flex;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    color: rgba(0, 0, 0, 0.35);
+  }
+  .meeting-interest-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+  .meeting-interest-copy {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .meeting-interest-title {
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: rgba(0, 0, 0, 0.45);
+  }
+  .meeting-interest-text {
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: rgba(0, 0, 0, 0.42);
+  }
+  .meeting-interest.is-active .meeting-interest-title {
+    color: #000;
+  }
+  .meeting-interest.is-active .meeting-interest-text {
+    color: rgba(0, 0, 0, 0.62);
+  }
+  .meeting-interest.is-active .meeting-interest-icon {
+    color: #000;
+  }
+</style>
+
+<script>
+  import { actions } from 'astro:actions';
+
+  function initSmartMeetingModal() {
+    const overlay = document.getElementById('smart-meeting-overlay');
+    const modal = document.querySelector('[data-smart-meeting-modal]');
+    if (!overlay || !modal || overlay.dataset.init === '1') return;
+    overlay.dataset.init = '1';
+
+    const form = document.getElementById('smart-meeting-form');
+    const formView = modal.querySelector('[data-smart-meeting-form-view]');
+    const successView = modal.querySelector('[data-smart-meeting-success-view]');
+    const submitBtn = form?.querySelector('[data-smart-meeting-submit]');
+    const serviceButtons = modal.querySelectorAll('.smart-meeting-service');
+
+    let selectedService = 'Osobní schůzka v Praze';
+
+    function setSelectedService(value) {
+      selectedService = value;
+      serviceButtons?.forEach(function (btn) {
+        const isActive = btn.getAttribute('data-service') === value;
+        btn.classList.toggle('is-active', isActive);
+        btn.setAttribute('aria-checked', isActive ? 'true' : 'false');
+      });
+    }
+
+    function openModal(options) {
+      options = options || {};
+      const initialService = options.initialService || null;
+      selectedService = initialService || 'Osobní schůzka v Praze';
+      setSelectedService(selectedService);
+      if (form) form.reset();
+      document.querySelectorAll('.smart-meeting-error').forEach(function (el) { el.classList.add('hidden'); });
+      if (formView) formView.classList.remove('hidden');
+      if (successView) successView.classList.add('hidden');
+      if (submitBtn) { submitBtn.textContent = 'Odeslat'; submitBtn.disabled = false; }
+    if (!overlay) return;
+    overlay.classList.remove('opacity-0', 'pointer-events-none');
+      overlay.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      if (modal) {
+        modal.classList.remove('scale-95');
+        modal.classList.add('scale-100');
+      }
+      modal?.focus();
+    }
+
+    function closeModal() {
+      overlay.classList.add('opacity-0', 'pointer-events-none');
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (modal) {
+        modal.classList.remove('scale-100');
+        modal.classList.add('scale-95');
+      }
+      if (formView) formView.classList.remove('hidden');
+      if (successView) successView.classList.add('hidden');
+      if (submitBtn) {
+        submitBtn.textContent = 'Odeslat';
+        submitBtn.disabled = false;
+      }
+      window.dispatchEvent(new CustomEvent('smart-modal-closed'));
+    }
+
+    async function handleSubmit() {
+      const jmeno = (form.querySelector('[name="jmeno"]')?.value || '').trim();
+      const telefon = (form.querySelector('[name="telefon"]')?.value || '').trim();
+      const email = (form.querySelector('[name="email"]')?.value || '').trim();
+      const vzkaz = (form.querySelector('[name="vzkaz"]')?.value || '').trim();
+      let valid = true;
+      document.querySelectorAll('.smart-meeting-error').forEach(function (el) { el.classList.add('hidden'); });
+      if (!jmeno) {
+        const err = form.querySelector('[data-error="jmeno"]');
+        if (err) { err.classList.remove('hidden'); valid = false; }
+      }
+      if (!telefon) {
+        const err = form.querySelector('[data-error="telefon"]');
+        if (err) { err.classList.remove('hidden'); valid = false; }
+      }
+      if (!email) {
+        const err = form.querySelector('[data-error="email"]');
+        if (err) { err.classList.remove('hidden'); valid = false; }
+      }
+      if (!vzkaz) {
+        const err = form.querySelector('[data-error="vzkaz"]');
+        if (err) { err.classList.remove('hidden'); valid = false; }
+      }
+      if (!valid) return;
+      if (submitBtn) {
+        submitBtn.textContent = 'Odesílám...';
+        submitBtn.disabled = true;
+      }
+      try {
+        const { data, error } = await actions.sendContactForm({
+          formSource: 'meeting',
+          jmeno,
+          telefon,
+          email,
+          vzkaz: vzkaz || '',
+          selectedService: selectedService ?? '',
+        });
+        if (error) {
+          if (submitBtn) { submitBtn.textContent = 'Odeslat'; submitBtn.disabled = false; }
+          return;
+        }
+        if (data && formView && successView) {
+          formView.classList.add('hidden');
+          successView.classList.remove('hidden');
+        }
+      } catch (_) {
+        if (submitBtn) { submitBtn.textContent = 'Odeslat'; submitBtn.disabled = false; }
+      }
+    }
+
+    overlay?.addEventListener('click', closeModal);
+    modal?.querySelectorAll('[data-smart-meeting-close]').forEach(function (btn) { btn.addEventListener('click', closeModal); });
+    modal?.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    serviceButtons?.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        setSelectedService(btn.getAttribute('data-service'));
+      });
+    });
+
+    form?.addEventListener('submit', function (e) {
+      e.preventDefault();
+      handleSubmit();
+    });
+
+    window.addEventListener('smart-meeting-open', function (event) {
+      openModal(event.detail || {});
+    });
+  }
+
+  initSmartMeetingModal();
+  document.addEventListener('astro:page-load', initSmartMeetingModal);
+</script>

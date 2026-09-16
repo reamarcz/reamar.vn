@@ -1,0 +1,174 @@
+---
+const items = [
+  {
+    q: 'Koho v celém procesu zastupujete?',
+    a: 'Zastupujeme kupujícího. U běžného prodeje si realitní službu platí prodávající. <span class="faq-em">U nás si službu platí kupující, aby měl při nákupu vlastní tým na své straně.</span> Naším úkolem je hájit jeho zadání, priority a rozhodnutí.',
+  },
+  {
+    q: 'V čem se lišíte od realitní kanceláře?',
+    a: 'Realitní kancelář je obvykle součástí prodejní strany a jejím úkolem je prodat nemovitost, kterou zastupuje. My stojíme na straně kupujícího. Službu si platí klient, a tím získává vlastní zastoupení, které doporučuje podle jeho zadání, ne podle zájmu prodat konkrétní nabídku.',
+  },
+  {
+    q: 'Proč má smysl mít při nákupu vlastní tým?',
+    a: 'Developer má na své straně obchodní proces, ceník, data i zkušený prodejní tým. Kupující do stejného procesu často vstupuje sám. My mu dáváme vlastní odborné zastoupení, aby se rozhodoval s přehledem a bez zbytečného tlaku.',
+  },
+  {
+    q: 'Dostáváte odměnu také od developera?',
+    a: 'Naše odměna je nastavena předem ve smlouvě s klientem. Pokud by u konkrétní nabídky existovala jakákoli odměna z druhé strany, klient o tom musí vědět ještě před rozhodnutím. Transparentnost je pro tuto službu zásadní.',
+  },
+  {
+    q: 'Co když doporučený projekt sami prodáváte nebo jste na něm pracovali?',
+    a: 'Pokud máme k projektu obchodní vztah nebo historii, klientovi to otevřeně řekneme. Doporučení musí vždy obstát podle jeho zadání, rozpočtu a nákupního záměru. Právě proto oddělujeme roli prodávajícího a roli nákupního zastoupení.',
+  },
+  {
+    q: 'Může se stát, že klientovi doporučíte nekoupit?',
+    a: 'Ano. To je podstatná část naší práce. Pokud byt nedává smysl cenou, dispozicí, smluvními podmínkami nebo budoucí využitelností, řekneme to. Dobré doporučení někdy znamená i počkat nebo hledat dál.',
+  },
+  {
+    q: 'Umíte pomoci i tehdy, když už mám vybraný konkrétní byt?',
+    a: 'Ano. V takovém případě se zaměříme na prověření konkrétní jednotky. Podíváme se na cenu, dispozici, lokalitu, podmínky rezervace, smlouvu a prostor pro jednání s developerem.',
+  },
+  {
+    q: 'Jak vypadá doporučení konkrétní jednotky?',
+    a: 'Doporučení obsahuje odkaz na konkrétní byt a náš pohled na to, jak odpovídá zadání klienta a proč dává smysl. Hodnotíme shodu s preferencemi, cenu, dispozici, polohu v domě, srovnání s trhem, možná rizika i prostor pro jednání s developerem.',
+  },
+  {
+    q: 'Kdo komunikuje s developerem?',
+    a: 'Záleží na domluveném rozsahu spolupráce. Klienta můžeme na jednání připravit, komunikaci s developerem vést společně, nebo ji převzít jeho jménem. V některých případech můžeme klienta zastupovat také na základě plné moci.',
+  },
+  {
+    q: 'Co je součástí odměny za pořízení?',
+    a: 'Odměna není procentem z ceny bytu. Doporučení proto nestavíme podle hodnoty transakce, ale podle zadání klienta. Fixní odměnou si klient hradí přístup k vybraným příležitostem na trhu i práci týmu, který hlídá celý nákupní proces od výběru jednotky po právní kontrolu dokumentace.',
+  },
+];
+
+const left = items.slice(0, 5);
+const right = items.slice(5);
+---
+
+<section id="nejcastejsi-otazky" class="bg-[var(--color-muted)]" aria-labelledby="faq-heading">
+  <div class="mx-auto max-w-[1440px] px-5 py-16 md:px-10 md:py-24 xl:px-14 xl:py-28">
+    <p class="font-yellix text-[12px] font-medium uppercase tracking-[0.07em] text-black/45">
+      Buyer’s Agency
+    </p>
+    <h2
+      id="faq-heading"
+      class="mt-3 flex items-center gap-3 font-yellix text-[28px] font-medium leading-[1.12] tracking-[-0.02em] text-black md:gap-3.5 md:text-[36px] xl:text-[40px]"
+    >
+      <img
+        src="/images/arrow-1.svg"
+        alt=""
+        class="h-5 w-5 shrink-0 brightness-0 md:h-6 md:w-6"
+        width="20"
+        height="20"
+      />
+      Nejčastější otázky
+    </h2>
+
+    <div class="faq-grid mt-10 md:mt-14">
+      {[left, right].map((col) => (
+        <div class="faq-col">
+          {col.map((item) => (
+            <details class="faq-item">
+              <summary class="faq-q">
+                <span class="faq-q-text">{item.q}</span>
+                <span class="faq-toggle" aria-hidden="true">
+                  <svg viewBox="0 0 16 16" fill="none">
+                    <path d="M3 8h10" />
+                    <path class="faq-toggle-v" d="M8 3v10" />
+                  </svg>
+                </span>
+              </summary>
+              <p class="faq-a" set:html={item.a} />
+            </details>
+          ))}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-grid {
+    display: grid;
+    gap: 0;
+  }
+  @media (min-width: 900px) {
+    .faq-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 0 4.5rem;
+    }
+  }
+  .faq-item {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  .faq-q {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.25rem;
+    margin: 0;
+    padding: 1.15rem 0;
+    cursor: pointer;
+    list-style: none;
+  }
+  .faq-q::-webkit-details-marker,
+  .faq-q::marker {
+    display: none;
+    content: none;
+  }
+  .faq-q-text {
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.35;
+    color: #000;
+  }
+  @media (min-width: 768px) {
+    .faq-q-text {
+      font-size: 16px;
+    }
+  }
+  .faq-toggle {
+    display: flex;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+    color: #000;
+  }
+  .faq-toggle svg {
+    width: 100%;
+    height: 100%;
+  }
+  .faq-toggle path {
+    stroke: currentColor;
+    stroke-width: 1.4;
+    stroke-linecap: round;
+  }
+  .faq-toggle-v {
+    transform-origin: center;
+    transition: transform 0.18s ease, opacity 0.18s ease;
+  }
+  .faq-item[open] .faq-toggle-v {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  .faq-a {
+    margin: 0;
+    padding: 0 2rem 1.2rem 0;
+    max-width: 58ch;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.55;
+    color: rgba(0, 0, 0, 0.62);
+  }
+  .faq-a :global(.faq-em) {
+    color: #000;
+  }
+  .faq-q:hover .faq-q-text,
+  .faq-q:hover .faq-toggle {
+    opacity: 0.85;
+  }
+</style>

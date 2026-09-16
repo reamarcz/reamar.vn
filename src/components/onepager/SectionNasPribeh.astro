@@ -1,0 +1,137 @@
+---
+interface Props {
+  ctaHref?: string;
+  ctaLabel?: string;
+}
+
+const { ctaHref = '/#pribeh', ctaLabel = 'Náš příběh' } = Astro.props;
+const ctaExternal = ctaHref.startsWith('http');
+const image = '/images/agency/Storyholder.jpeg';
+const lines = [
+  { text: 'Nejdřív pro sebe.', em: false, indent: 0 },
+  { text: 'Pak pro rodinu.', em: false, indent: 1 },
+  { text: 'Dnes pro klienty.', em: true, indent: 2 },
+];
+---
+
+<section id="o-nas" class="pribeh-section relative w-full overflow-hidden" aria-labelledby="pribeh-heading" data-pribeh>
+  <div class="relative h-[64vh] min-h-[520px] max-h-[760px] w-full">
+    <img
+      src={image}
+      alt=""
+      class="absolute inset-0 h-full w-full object-cover object-[42%_center]"
+      width="1280"
+      height="853"
+      loading="lazy"
+    />
+
+    <div class="relative mx-auto flex h-full max-w-[1440px] items-center px-5 py-8 md:px-10 md:py-12 xl:px-14 xl:py-14">
+      <div class="flex w-full max-w-[32rem] flex-col gap-10">
+        <h2
+          id="pribeh-heading"
+          class="font-yellix text-[22px] font-medium leading-[1.18] tracking-[-0.02em] text-white md:text-[28px] xl:text-[32px] [text-shadow:0_1px_16px_rgba(0,0,0,0.35)]"
+        >
+          {lines.map((line, index) => (
+            <span
+              class:list={['pribeh-line', line.em && 'pribeh-em']}
+              style={`--i: ${index}; --indent: ${line.indent}`}
+            >
+              {line.text}
+            </span>
+          ))}
+        </h2>
+
+        <div class="pribeh-body">
+          <p class="font-yellix text-[14px] font-medium leading-[1.55] text-white md:text-[15px] [text-shadow:0_1px_12px_rgba(0,0,0,0.4)]">
+            Na developerském trhu se sami dlouhodobě pohybujeme a sami na něm nakupujeme. Postupně jsme začali stejným způsobem pomáhat rodině, blízkým a lidem kolem nás.
+          </p>
+          <p class="mt-4 font-yellix text-[14px] font-medium leading-[1.55] text-white md:text-[15px] [text-shadow:0_1px_12px_rgba(0,0,0,0.4)]">
+            Čím častěji jsme to řešili, tím jasnější bylo, že taková služba nemá zůstat jen pro náš okruh. Kupující ji potřebují také.
+          </p>
+          <a
+            href={ctaHref}
+            class="mt-6 inline-flex items-center gap-1.5 bg-white px-3 py-1.5 font-yellix text-[13px] font-medium leading-none text-black no-underline transition-opacity hover:opacity-85"
+            target={ctaExternal ? '_blank' : undefined}
+            rel={ctaExternal ? 'noopener noreferrer' : undefined}
+          >
+            <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0 brightness-0" width="12" height="12" />
+            {ctaLabel}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pribeh-section {
+    z-index: 40;
+  }
+  .pribeh-line {
+    display: block;
+    width: fit-content;
+    opacity: 0;
+    transform: translateY(14px);
+    margin-left: calc(var(--indent) * 1.25rem);
+  }
+  .pribeh-line.is-in {
+    animation: pribeh-line-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: calc(var(--i) * 220ms);
+  }
+  @keyframes pribeh-line-in {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .pribeh-em {
+    width: fit-content;
+    border-bottom: 2.5px solid #fff;
+    padding-bottom: 0.02em;
+  }
+  .pribeh-body {
+    margin-left: 2.5rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pribeh-line {
+      opacity: 1;
+      transform: none;
+    }
+    .pribeh-line.is-in {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  function initPribeh() {
+    const wrap = document.querySelector('[data-pribeh]');
+    if (!wrap) return;
+    if (wrap._pribehCleanup) wrap._pribehCleanup();
+
+    const lines = [...wrap.querySelectorAll('.pribeh-line')];
+    if (!lines.length) return;
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) {
+      lines.forEach((el) => el.classList.add('is-in'));
+      return;
+    }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        lines.forEach((el) => el.classList.add('is-in'));
+        io.disconnect();
+      },
+      { threshold: 0.28 }
+    );
+
+    io.observe(wrap);
+
+    wrap._pribehCleanup = () => {
+      io.disconnect();
+      wrap._pribehCleanup = null;
+    };
+  }
+
+  initPribeh();
+  document.addEventListener('astro:page-load', initPribeh);
+</script>

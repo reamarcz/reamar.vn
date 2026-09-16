@@ -1,0 +1,492 @@
+---
+const developerServices = ['Marketing', 'Sales', 'Kombinace služeb'];
+const clientInterests = [
+  {
+    icon: 'search',
+    title: 'Osobní vyhledávání',
+    text: 'Od výběru jednotky po smlouvy.',
+  },
+  {
+    icon: 'send',
+    title: 'Monitoring projektů',
+    text: 'Tipy na nové projekty podle zadání.',
+  },
+  {
+    icon: 'chat',
+    title: 'Nezávazná konzultace',
+    text: 'Společně vybereme, jak dál.',
+  },
+];
+const questionnaireUrl = 'https://www.reamar-konzultace.cz/c/dotaznik';
+---
+<div
+  id="smart-contact-overlay"
+  class="smart-contact-overlay fixed inset-0 z-[110] flex items-center justify-center bg-black/80 opacity-0 pointer-events-none transition-opacity duration-200"
+  aria-hidden="true"
+  data-smart-contact
+>
+  <div
+    class="smart-contact-modal relative w-[94vw] max-w-[1000px] max-h-[90vh] overflow-y-auto bg-white rounded-none shadow-none scale-95 transition-all duration-200"
+    role="dialog"
+    aria-labelledby="smart-contact-title"
+    aria-modal="true"
+    tabindex="-1"
+    data-smart-contact-modal
+    onclick="event.stopPropagation()"
+  >
+    <div class="p-10 md:p-14 lg:p-16">
+      <button
+        type="button"
+        class="absolute top-8 right-8 flex items-center gap-2 border-0 bg-transparent p-0 font-yellix text-[14px] font-medium text-[#000000] cursor-pointer hover:opacity-80 transition-opacity"
+        aria-label="Zavřít"
+        data-smart-contact-close
+      >
+        <span>Zavřít</span>
+        <span class="text-[#000000]" aria-hidden="true">×</span>
+      </button>
+
+      <div data-smart-contact-form-view>
+      <h2 id="smart-contact-title" class="font-yellix text-[27px] font-medium text-[#000000] pr-20 mb-6">
+        Poptávkový formulář
+      </h2>
+
+      <div data-contact-client-view>
+        <p class="contact-intro font-yellix text-[14px] font-medium leading-[1.55] text-black/75">
+          <span class="block md:whitespace-nowrap">Většinou začínáme <strong>nezávaznou konzultací</strong>, kde si projdeme vaše zadání, preference a vhodnou formu spolupráce.</span>
+          <span class="block md:whitespace-nowrap">Pokud už víte, co hledáte, můžete nám své preference <a href={questionnaireUrl} target="_blank" rel="noopener noreferrer">vyplnit online</a>.</span>
+        </p>
+        <p class="mt-8 font-yellix text-[14px] font-medium text-[#000000] mb-3">Vyberte službu</p>
+        <div class="contact-interests" role="radiogroup" aria-label="Vyberte službu">
+          {clientInterests.map((item) => (
+            <button
+              type="button"
+              class="contact-interest smart-contact-service"
+              data-service={item.title}
+              role="radio"
+              aria-checked="false"
+            >
+              <span class="contact-interest-icon" aria-hidden="true">
+                  {item.icon === 'send' && (
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M4 6.5h16v11H4z"/>
+                      <path d="m4 6.5 8 6.2 8-6.2"/>
+                    </svg>
+                  )}
+                  {item.icon === 'search' && (
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="11" cy="11" r="6.2"/>
+                      <path d="M16.2 16.2 21 21"/>
+                    </svg>
+                  )}
+                  {item.icon === 'chat' && (
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M4 6.2h9.2A1.8 1.8 0 0 1 15 8v5.2a1.8 1.8 0 0 1-1.8 1.8H9.4L6.2 18v-3H4A1.8 1.8 0 0 1 2.2 13.2V8A1.8 1.8 0 0 1 4 6.2Z"/>
+                    </svg>
+                  )}
+                </span>
+              <span class="contact-interest-copy">
+                <span class="contact-interest-title">{item.title}</span>
+                <span class="contact-interest-text">{item.text}</span>
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div data-contact-developer-view class="hidden">
+        <p class="font-yellix text-[14px] font-medium text-[#000000] mb-2">Mám zájem o</p>
+        <div id="smart-contact-services-developer" class="smart-contact-services flex flex-wrap gap-x-4 gap-y-1">
+          {developerServices.map((s) => (
+            <button
+              type="button"
+              class="smart-contact-service font-yellix text-[14px] font-medium text-gray-500 border-0 bg-transparent p-0 cursor-pointer no-underline hover:text-gray-700"
+              data-service={s}
+            >
+              {s}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <form id="smart-contact-form" class="mt-8 flex flex-col gap-6" novalidate>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
+          <div>
+            <label for="smart-contact-jmeno" class="block font-yellix text-[14px] font-medium text-[#000000] mb-1">Jméno</label>
+            <input
+              id="smart-contact-jmeno"
+              name="jmeno"
+              type="text"
+              placeholder="*vaše jméno a příjmení"
+              class="smart-contact-input w-full border-0 border-b border-gray-200 bg-transparent py-2.5 font-yellix text-[14px] font-medium text-[#000000] placeholder:text-gray-500 outline-none focus:border-[#000000] transition-colors"
+              autocomplete="name"
+            />
+            <span class="smart-contact-error text-red-500 font-yellix text-[12px] mt-1 hidden" data-error="jmeno">Vyplňte jméno</span>
+          </div>
+          <div>
+            <label for="smart-contact-telefon" class="block font-yellix text-[14px] font-medium text-[#000000] mb-1">Telefon</label>
+            <input
+              id="smart-contact-telefon"
+              name="telefon"
+              type="tel"
+              placeholder="*váš telefon"
+              class="smart-contact-input w-full border-0 border-b border-gray-200 bg-transparent py-2.5 font-yellix text-[14px] font-medium text-[#000000] placeholder:text-gray-500 outline-none focus:border-[#000000] transition-colors"
+              autocomplete="tel"
+            />
+            <span class="smart-contact-error text-red-500 font-yellix text-[12px] mt-1 hidden" data-error="telefon">Vyplňte telefon</span>
+          </div>
+          <div>
+            <label for="smart-contact-email" class="block font-yellix text-[14px] font-medium text-[#000000] mb-1">E-mail</label>
+            <input
+              id="smart-contact-email"
+              name="email"
+              type="email"
+              placeholder="*váš e-mail"
+              class="smart-contact-input w-full border-0 border-b border-gray-200 bg-transparent py-2.5 font-yellix text-[14px] font-medium text-[#000000] placeholder:text-gray-500 outline-none focus:border-[#000000] transition-colors"
+              autocomplete="email"
+            />
+            <span class="smart-contact-error text-red-500 font-yellix text-[12px] mt-1 hidden" data-error="email">Vyplňte e-mail</span>
+          </div>
+          <div>
+            <label for="smart-contact-vzkaz" class="block font-yellix text-[14px] font-medium text-[#000000] mb-1">Vzkaz</label>
+            <input
+              id="smart-contact-vzkaz"
+              name="vzkaz"
+              type="text"
+              placeholder="Lokalita, rozpočet, dispozice, termín nákupu…"
+              class="w-full border-0 border-b border-gray-200 bg-transparent py-2.5 font-yellix text-[14px] font-medium text-[#000000] placeholder:text-gray-500 outline-none focus:border-[#000000] transition-colors"
+              autocomplete="off"
+            />
+          </div>
+        </div>
+
+        <div class="mt-2 flex flex-wrap items-center gap-2">
+          <button
+            type="submit"
+            class="inline-flex items-center gap-1.5 bg-black px-3 py-1.5 font-yellix text-[13px] font-medium leading-none text-white border-0 cursor-pointer transition-opacity hover:opacity-85 disabled:opacity-70 disabled:cursor-not-allowed"
+            data-smart-contact-submit
+          >
+            <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0 brightness-0 invert" width="12" height="12" />
+            Odeslat
+          </button>
+          <a
+            href={questionnaireUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 border border-black bg-white px-3 py-1.5 font-yellix text-[13px] font-medium leading-none text-black no-underline transition-opacity hover:opacity-70"
+            data-contact-questionnaire
+          >
+            <svg class="h-3.5 w-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M8 3.5h7.5L19 7v13.5H8V3.5Z"/>
+              <path d="M15.5 3.5V7H19"/>
+              <path d="M10.5 11.5h5"/>
+              <path d="M10.5 15h5"/>
+              <path d="M10.5 18.5h3"/>
+            </svg>
+            Vyplnit preference online
+          </a>
+        </div>
+      </form>
+
+      <p class="mt-6 font-yellix text-[14px] font-medium text-[#000000] leading-snug">
+        Odesláním souhlasíte se <a href="/ochrana-osobnich-udaju" class="text-[#000000] underline hover:opacity-80">Zásadami zpracování osobních údajů</a>.
+      </p>
+    </div>
+
+      <div data-smart-contact-success-view class="hidden">
+        <h2 class="font-yellix text-[27px] font-medium text-[#000000] pr-20 mb-6">Děkujeme</h2>
+        <p class="font-yellix text-[14px] font-medium text-[#000000] mb-4">
+          Váš záměr jsme přijali ke zpracování.
+        </p>
+        <p class="font-yellix text-[14px] font-medium text-[#000000] mb-4">
+          Na uvedené údaje se vám už brzy ozveme s prvním návrhem spolupráce.
+        </p>
+        <p class="font-yellix text-[14px] font-medium text-[#000000] mb-8">
+          Pokud s námi chcete mluvit dříve, rádi vás uslyšíme na čísle <a href="tel:+420607066044" class="text-[#000000] underline hover:opacity-80">+420 607 066 044</a>.
+        </p>
+        <a href="tel:+420607066044" class="inline-flex items-center gap-1.5 bg-black px-3 py-1.5 font-yellix text-[13px] font-medium leading-none text-white no-underline transition-opacity hover:opacity-85 w-fit">
+          <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0 brightness-0 invert" width="12" height="12" />
+          Zavolat
+        </a>
+        <p class="mt-6">
+          <button type="button" class="font-yellix text-[14px] font-medium text-[#000000] underline bg-transparent border-0 cursor-pointer p-0 hover:opacity-80 transition-opacity" data-smart-contact-close>zavřít</button>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .contact-intro strong {
+    font-weight: 700;
+  }
+  .contact-intro a {
+    color: inherit;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+  .contact-intro a:hover {
+    opacity: 0.7;
+  }
+  .contact-interests {
+    display: grid;
+    gap: 0.75rem;
+  }
+  @media (min-width: 768px) {
+    .contact-interests {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+  }
+  .contact-interest {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.7rem;
+    margin: 0;
+    padding: 1rem 1.05rem;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: var(--color-muted);
+    text-align: left;
+    cursor: pointer;
+  }
+  .contact-interest:hover {
+    border-color: rgba(0, 0, 0, 0.22);
+  }
+  .contact-interest.is-active {
+    background: #fff;
+    border-color: #000;
+  }
+  .contact-interest-icon {
+    display: flex;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    color: rgba(0, 0, 0, 0.35);
+  }
+  .contact-interest-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+  .contact-interest-copy {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .contact-interest-title {
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: rgba(0, 0, 0, 0.45);
+  }
+  .contact-interest-text {
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: rgba(0, 0, 0, 0.42);
+  }
+  .contact-interest.is-active .contact-interest-title {
+    color: #000;
+  }
+  .contact-interest.is-active .contact-interest-text {
+    color: rgba(0, 0, 0, 0.62);
+  }
+  .contact-interest.is-active .contact-interest-icon {
+    color: #000;
+  }
+</style>
+
+<script>
+  import { actions } from 'astro:actions';
+
+  function initSmartContactModal() {
+    const overlay = document.getElementById('smart-contact-overlay');
+    const modal = document.querySelector('[data-smart-contact-modal]');
+    const form = document.getElementById('smart-contact-form');
+    const formView = modal?.querySelector('[data-smart-contact-form-view]');
+    const successView = modal?.querySelector('[data-smart-contact-success-view]');
+    const submitBtn = form?.querySelector('[data-smart-contact-submit]');
+    const clientView = modal?.querySelector('[data-contact-client-view]');
+    const developerView = modal?.querySelector('[data-contact-developer-view]');
+    const clientServices = clientView?.querySelectorAll('.smart-contact-service');
+    const servicesDeveloper = document.getElementById('smart-contact-services-developer');
+    const questionnaireBtn = modal?.querySelector('[data-contact-questionnaire]');
+
+    let userType = 'client';
+    let selectedService = 'Nezávazná konzultace';
+
+    function mapClientInterest(value) {
+      if (!value) return 'Nezávazná konzultace';
+      const v = String(value).toLowerCase();
+      if (v.indexOf('monitor') !== -1) return 'Monitoring projektů';
+      if (v.indexOf('vyhled') !== -1 || v.indexOf('osobní') !== -1) return 'Osobní vyhledávání';
+      return 'Nezávazná konzultace';
+    }
+
+    function setMode(type) {
+      userType = type;
+      const isClient = type !== 'developer';
+      clientView?.classList.toggle('hidden', !isClient);
+      developerView?.classList.toggle('hidden', isClient);
+      questionnaireBtn?.classList.toggle('hidden', !isClient);
+    }
+
+    function setDeveloperServiceActive(value) {
+      if (!servicesDeveloper) return;
+      servicesDeveloper.querySelectorAll('.smart-contact-service').forEach(function (btn) {
+        const isActive = btn.getAttribute('data-service') === value;
+        btn.classList.toggle('font-medium', isActive);
+        btn.classList.toggle('text-[#000000]', isActive);
+        btn.classList.toggle('underline', isActive);
+        btn.classList.toggle('underline-offset-2', isActive);
+        btn.classList.toggle('decoration-[#000000]', isActive);
+        btn.classList.toggle('text-gray-500', !isActive);
+        btn.classList.toggle('no-underline', !isActive);
+      });
+    }
+
+    function setClientInterestActive(value) {
+      clientServices?.forEach(function (btn) {
+        const isActive = btn.getAttribute('data-service') === value;
+        btn.classList.toggle('is-active', isActive);
+        btn.setAttribute('aria-checked', isActive ? 'true' : 'false');
+      });
+    }
+
+    function setSelectedService(value) {
+      selectedService = value;
+      if (userType === 'developer') setDeveloperServiceActive(value);
+      else setClientInterestActive(value);
+    }
+
+    function resetSubmit() {
+      if (!submitBtn) return;
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '<img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0 brightness-0 invert" width="12" height="12" />Odeslat';
+    }
+
+    function openModal(options) {
+      options = options || {};
+      const initialType = options.initialType || 'client';
+      const initialService = options.initialService || null;
+      if (initialType === 'developer') {
+        setMode('developer');
+        selectedService = initialService || null;
+        setDeveloperServiceActive(selectedService);
+      } else {
+        setMode('client');
+        selectedService = mapClientInterest(initialService);
+        setClientInterestActive(selectedService);
+      }
+      if (form) form.reset();
+      document.querySelectorAll('.smart-contact-error').forEach(function (el) { el.classList.add('hidden'); });
+      if (formView) formView.classList.remove('hidden');
+      if (successView) successView.classList.add('hidden');
+      resetSubmit();
+      const titleEl = document.getElementById('smart-contact-title');
+      if (titleEl) titleEl.textContent = options.customTitle || 'Poptávkový formulář';
+      overlay.classList.remove('opacity-0', 'pointer-events-none');
+      overlay.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      if (modal) {
+        modal.classList.remove('scale-95');
+        modal.classList.add('scale-100');
+      }
+      modal?.focus();
+    }
+
+    function closeModal() {
+      overlay.classList.add('opacity-0', 'pointer-events-none');
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (modal) {
+        modal.classList.remove('scale-100');
+        modal.classList.add('scale-95');
+      }
+      if (formView) formView.classList.remove('hidden');
+      if (successView) successView.classList.add('hidden');
+      resetSubmit();
+      window.dispatchEvent(new CustomEvent('smart-modal-closed'));
+    }
+
+    async function handleSubmit() {
+      const jmeno = (form.querySelector('[name="jmeno"]')?.value || '').trim();
+      const telefon = (form.querySelector('[name="telefon"]')?.value || '').trim();
+      const email = (form.querySelector('[name="email"]')?.value || '').trim();
+      const vzkaz = (form.querySelector('[name="vzkaz"]')?.value || '').trim();
+      let valid = true;
+      document.querySelectorAll('.smart-contact-error').forEach(function (el) { el.classList.add('hidden'); });
+      if (!jmeno) {
+        const err = form.querySelector('[data-error="jmeno"]');
+        if (err) { err.classList.remove('hidden'); valid = false; }
+      }
+      if (!telefon) {
+        const err = form.querySelector('[data-error="telefon"]');
+        if (err) { err.classList.remove('hidden'); valid = false; }
+      }
+      if (!email) {
+        const err = form.querySelector('[data-error="email"]');
+        if (err) { err.classList.remove('hidden'); valid = false; }
+      }
+      if (!valid) return;
+      if (submitBtn) {
+        submitBtn.textContent = 'Odesílám...';
+        submitBtn.disabled = true;
+      }
+      try {
+        const { data, error } = await actions.sendContactForm({
+          formSource: 'contact',
+          jmeno,
+          telefon,
+          email,
+          vzkaz: vzkaz || '',
+          userType: userType === 'developer' ? 'Developer' : 'Koncový klient',
+          selectedService: selectedService ?? '',
+        });
+        if (error) {
+          resetSubmit();
+          return;
+        }
+        if (data && formView && successView) {
+          formView.classList.add('hidden');
+          successView.classList.remove('hidden');
+        }
+      } catch (_) {
+        resetSubmit();
+      }
+    }
+
+    overlay?.addEventListener('click', closeModal);
+    modal?.querySelectorAll('[data-smart-contact-close]').forEach(function (btn) { btn.addEventListener('click', closeModal); });
+    modal?.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    clientServices?.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        setSelectedService(btn.getAttribute('data-service'));
+      });
+    });
+    servicesDeveloper?.querySelectorAll('.smart-contact-service').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        setSelectedService(btn.getAttribute('data-service'));
+      });
+    });
+
+    form?.addEventListener('submit', function (e) {
+      e.preventDefault();
+      handleSubmit();
+    });
+
+    window.addEventListener('smart-contact-open', function (event) {
+      openModal(event.detail || {});
+    });
+  }
+
+  initSmartContactModal();
+  document.addEventListener('astro:page-load', initSmartContactModal);
+</script>

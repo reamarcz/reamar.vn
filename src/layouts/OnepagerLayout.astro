@@ -1,0 +1,98 @@
+---
+import { ViewTransitions } from 'astro:transitions';
+import Navigation from '../components/onepager/Navigation.astro';
+import SmartContactModal from '../components/onepager/SmartContactModal.astro';
+import SmartMeetingModal from '../components/onepager/SmartMeetingModal.astro';
+import ProvizeModal from '../components/onepager/ProvizeModal.astro';
+import CookieSystem from '../components/CookieSystem.astro';
+import FormThankYouModal from '../components/FormThankYouModal.astro';
+import SEO from '../components/SEO.astro';
+import '../styles/global.css';
+import '../styles/onepager.css';
+import 'aos/dist/aos.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  canonical?: string;
+  ogType?: string;
+  robots?: string;
+}
+const {
+  title = 'REAMAR | Reality. Marketing.',
+  description = 'Propojujeme marketing a obchod pro realitní developery.',
+  image,
+  ogTitle,
+  ogDescription,
+  canonical,
+  ogType,
+  robots,
+} = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="cs" class="onepager overflow-x-clip w-full">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <SEO
+      title={title}
+      description={description}
+      image={image}
+      ogTitle={ogTitle}
+      ogDescription={ogDescription}
+      canonical={canonical}
+      ogType={ogType}
+      robots={robots}
+    />
+    <link rel="icon" type="image/svg+xml" href="/images/Reamar%20SVG.svg" />
+    <ViewTransitions />
+    <script is:inline>
+      function handleModalClick(event) {
+        var target = event.target.closest('[data-smart-contact-open], [data-smart-meeting-open], [data-provize-open]');
+        if (!target) return;
+        event.preventDefault();
+        event.stopPropagation();
+        if (target.hasAttribute('data-provize-open')) {
+          window.dispatchEvent(new CustomEvent('provize-open'));
+        } else if (target.hasAttribute('data-smart-contact-open')) {
+          var type = target.getAttribute('data-smart-contact-type') || 'developer';
+          var service = target.getAttribute('data-smart-contact-service') || null;
+          window.dispatchEvent(new CustomEvent('smart-contact-open', { detail: { initialType: type, initialService: service } }));
+        } else {
+          var meetingType = target.getAttribute('data-smart-meeting-type') || 'developer';
+          var meetingService = target.getAttribute('data-smart-meeting-service') || null;
+          window.dispatchEvent(new CustomEvent('smart-meeting-open', { detail: { initialType: meetingType, initialService: meetingService } }));
+        }
+      }
+
+      document.addEventListener('click', handleModalClick, true);
+
+      document.addEventListener('astro:after-swap', function () {
+        document.removeEventListener('click', handleModalClick, true);
+        document.addEventListener('click', handleModalClick, true);
+      });
+    </script>
+  </head>
+  <body class="font-yellix overflow-x-clip w-full min-w-0">
+    <Navigation />
+    <main id="main" role="main" class="min-w-0 overflow-x-clip">
+      <slot />
+    </main>
+    <SmartContactModal />
+    <SmartMeetingModal />
+    <ProvizeModal />
+    <CookieSystem />
+    <FormThankYouModal />
+    <script>
+      import AOS from 'aos';
+      const aosOptions = { duration: 800, easing: 'ease', offset: 60, once: false };
+      AOS.init(aosOptions);
+      document.addEventListener('astro:page-load', function () {
+        AOS.init(aosOptions);
+      });
+    </script>
+  </body>
+</html>

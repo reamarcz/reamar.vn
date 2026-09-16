@@ -1,0 +1,331 @@
+---
+const items = [
+  {
+    image: '/images/agency/statistiky.webp',
+    imageWidth: 1000,
+    imageHeight: 760,
+    titleHtml: 'Vlastní software<br />na monitoring trhu',
+    tags: ['99 % trhu', 'AI analýza', '40+ parametrů výběru'],
+    bodyBefore: 'Sbíráme data od partnerů, zpracováváme je pomocí AI a ',
+    bodyEm: 'obohacujeme',
+    bodyAfter:
+      ' o zkušenosti z reálného prodeje developerských projektů. Díky tomu vidíme trh v hloubce, kterou běžné portály ani veřejné ceníky nenabízejí.',
+    nav: 'Monitoring trhu',
+  },
+  {
+    image: '/images/agency/vyjednavani.webp',
+    imageWidth: 1000,
+    imageHeight: 760,
+    titleHtml: 'Vyjednávání s developerem<br />a právní servis',
+    tags: ['Ověření developera', 'Vyjednání podmínek', 'Bezpečný podpis'],
+    bodyBefore:
+      'Máme za sebou stovky transakcí a jednání s developery. Díky tomu víme, co si v nákupním procesu pohlídat, kde bývá prostor pro úpravu ceny nebo podmínek a kde je naopak lepší neztrácet čas. Klientovi můžeme být po celou dobu nákupu odborným partnerem, nebo celý proces řešit jeho jménem na základě plné moci.',
+    bodyEm: '',
+    bodyAfter: '',
+    nav: 'Vyjednávání',
+  },
+  {
+    image: '/images/agency/projekty-seznam.webp',
+    imageWidth: 1000,
+    imageHeight: 760,
+    titleHtml: 'Předprodej projektů<br />a neveřejné nabídky',
+    tags: ['Přednostní výběr', 'Rezervace před spuštěním'],
+    bodyBefore:
+      'U vybraných projektů máme často předrezervované jednotky pro naše klienty ještě před oficiálním spuštěním prodeje. Díky široké síti kontaktů se k nabídkám dostáváme za výhodnějších podmínek a ve fázi, kdy ještě nejsou veřejně dostupné.',
+    bodyEm: '',
+    bodyAfter: '',
+    nav: 'Předprodej',
+  },
+];
+
+const stepColors = ['#ffffff', 'var(--color-muted)', '#ffffff'];
+
+interface Props {
+  showSoftwarePlay?: boolean;
+}
+
+const { showSoftwarePlay = true } = Astro.props;
+---
+
+<section id="specializace" class="spec-stack" aria-labelledby="specializace-heading" data-spec-stack>
+  <div class="spec-head-space" aria-hidden="true"></div>
+  <div class="spec-head" data-spec-head>
+    <div class="mx-auto flex max-w-[1440px] flex-col gap-5 px-5 pb-5 pt-6 sm:flex-row sm:items-end sm:justify-between sm:gap-8 md:px-10 md:pb-6 md:pt-7 xl:px-14">
+      <h2
+        id="specializace-heading"
+        class="flex items-center gap-3 font-yellix text-[28px] font-medium leading-[1.12] tracking-[-0.02em] text-black md:gap-3.5 md:text-[36px] xl:text-[40px]"
+      >
+        <img
+          src="/images/arrow-1.svg"
+          alt=""
+          class="h-5 w-5 shrink-0 brightness-0 md:h-6 md:w-6"
+          width="20"
+          height="20"
+        />
+        Naše specializace
+      </h2>
+      <nav class="spec-steps" aria-label="Kroky specializace">
+        {items.map((step, stepIndex) => (
+          <button
+            type="button"
+            class:list={['spec-step', stepIndex === 0 && 'is-active']}
+            data-spec-step={stepIndex}
+            aria-current={stepIndex === 0 ? 'true' : undefined}
+          >
+            {step.nav}
+          </button>
+        ))}
+      </nav>
+    </div>
+  </div>
+
+  {items.map((item, index) => (
+    <article
+      class="spec-card"
+      data-spec-card
+      data-spec-color={stepColors[index]}
+      style={`z-index: ${index + 1}; background: ${stepColors[index]}`}
+    >
+      <div class="spec-card-inner mx-auto flex min-h-[inherit] max-w-[1440px] flex-col justify-center px-5 py-8 md:px-10 md:py-10 xl:px-14">
+        <div class="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-x-20 xl:gap-x-24">
+          <div class="spec-visual relative lg:col-span-5">
+            <img
+              src={item.image}
+              alt=""
+              class="h-full w-full object-cover object-top"
+              width={item.imageWidth}
+              height={item.imageHeight}
+              loading={index === 0 ? 'eager' : 'lazy'}
+            />
+            {index === 0 && showSoftwarePlay && (
+              <button
+                type="button"
+                class="absolute left-1/2 top-1/2 z-[2] inline-flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 rounded-full bg-black/45 px-4 py-2 font-yellix text-[13px] font-medium text-white backdrop-blur-[6px] transition-opacity hover:bg-black/55"
+              >
+                <svg class="h-3.5 w-3.5 shrink-0" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true">
+                  <path d="M3.2 1.6v8.8L10.4 6 3.2 1.6Z"/>
+                </svg>
+                Přehrát ukázku
+              </button>
+            )}
+          </div>
+
+          <div class="lg:col-span-6 lg:col-start-7 lg:max-w-[32rem]">
+            <h3
+              class="font-yellix text-[26px] font-medium leading-[1.15] tracking-[-0.02em] text-black md:text-[32px] xl:text-[36px]"
+              set:html={item.titleHtml}
+            />
+            <div class="mt-6 flex flex-wrap gap-2">
+              {item.tags.map((tag) => (
+                <span class="bg-black px-2.5 py-1.5 font-yellix text-[10px] font-medium uppercase leading-none tracking-[0.08em] text-white">
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <p class="mt-7 font-yellix text-[14px] font-medium leading-[1.65] text-black/75 md:text-[15px]">
+              {item.bodyBefore}{item.bodyEm && (
+                <span class="underline underline-offset-[3px] decoration-black/40">{item.bodyEm}</span>
+              )}{item.bodyAfter}
+            </p>
+          </div>
+        </div>
+      </div>
+    </article>
+  ))}
+</section>
+
+<style>
+  .spec-stack {
+    position: relative;
+    z-index: 1;
+    isolation: isolate;
+  }
+  .spec-head-space {
+    height: 3.5rem;
+    background: #fff;
+  }
+  @media (min-width: 768px) {
+    .spec-head-space {
+      height: 4.5rem;
+    }
+  }
+  @media (min-width: 1280px) {
+    .spec-head-space {
+      height: 5.5rem;
+    }
+  }
+  .spec-head {
+    position: sticky;
+    top: var(--nav-h);
+    z-index: 5;
+    background: #ffffff;
+  }
+  .spec-head.is-released {
+    position: relative;
+    top: auto;
+    z-index: 0;
+  }
+  .spec-card {
+    position: sticky;
+    top: calc(var(--nav-h) + var(--spec-head-h, 5.75rem));
+    min-height: calc(100svh - var(--nav-h) - var(--spec-head-h, 5.75rem));
+    scroll-margin-top: calc(var(--nav-h) + var(--spec-head-h, 5.75rem));
+  }
+  .spec-card + .spec-card {
+    box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.06);
+  }
+  @media (min-width: 768px) {
+    .spec-card {
+      top: calc(var(--nav-h) + var(--spec-head-h, 6.25rem));
+      min-height: calc(100svh - var(--nav-h) - var(--spec-head-h, 6.25rem));
+      scroll-margin-top: calc(var(--nav-h) + var(--spec-head-h, 6.25rem));
+    }
+  }
+  .spec-card-inner {
+    min-height: inherit;
+  }
+  .spec-visual {
+    overflow: hidden;
+    width: 100%;
+    max-width: 34rem;
+    aspect-ratio: 1000 / 760;
+    background: var(--color-muted);
+  }
+  .spec-steps {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 1.25rem;
+  }
+  .spec-step {
+    padding: 0 0 0.4rem;
+    border: 0;
+    border-bottom: 1px solid transparent;
+    background: none;
+    color: rgba(0, 0, 0, 0.32);
+    cursor: pointer;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    transition: color 0.25s ease, border-color 0.25s ease;
+  }
+  .spec-step:hover {
+    color: rgba(0, 0, 0, 0.7);
+  }
+  .spec-step.is-active {
+    color: #000;
+    border-bottom-color: #000;
+  }
+
+  /* Mobil: bez sticky stacku — karty jdou za sebou jako běžný obsah */
+  @media (max-width: 1023px) {
+    .spec-head-space {
+      height: 0.5rem;
+    }
+    .spec-head,
+    .spec-head.is-released,
+    .spec-card {
+      position: relative;
+      top: auto;
+      z-index: auto;
+    }
+    .spec-card {
+      min-height: 0;
+      scroll-margin-top: calc(var(--nav-h) + 0.75rem);
+    }
+    .spec-card + .spec-card {
+      box-shadow: none;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+    }
+    .spec-card-inner {
+      min-height: 0;
+      padding-top: 2rem;
+      padding-bottom: 2.25rem;
+    }
+    .spec-steps {
+      gap: 0.85rem 1rem;
+    }
+  }
+</style>
+
+<script>
+  function navOffset() {
+    var raw = getComputedStyle(document.documentElement).getPropertyValue('--nav-h');
+    var n = parseFloat(raw);
+    return Number.isFinite(n) ? n : 80;
+  }
+
+  function initSpecStack() {
+    const wrap = document.querySelector('[data-spec-stack]');
+    if (!wrap) return;
+    if (wrap._specCleanup) wrap._specCleanup();
+
+    const cards = [...wrap.querySelectorAll('[data-spec-card]')];
+    const head = wrap.querySelector('[data-spec-head]');
+    if (!cards.length || !head) return;
+
+    const syncHead = () => {
+      wrap.style.setProperty('--spec-head-h', `${head.offsetHeight}px`);
+    };
+
+    const releaseHead = () => {
+      const limit = navOffset() + head.offsetHeight;
+      head.classList.toggle('is-released', wrap.getBoundingClientRect().bottom <= limit);
+    };
+
+    const setActive = () => {
+      const line = navOffset() + head.offsetHeight + 24;
+      let active = 0;
+      cards.forEach((card, i) => {
+        if (card.getBoundingClientRect().top <= line) active = i;
+      });
+      wrap.querySelectorAll('[data-spec-step]').forEach((btn) => {
+        const on = Number(btn.dataset.specStep) === active;
+        btn.classList.toggle('is-active', on);
+        if (on) btn.setAttribute('aria-current', 'true');
+        else btn.removeAttribute('aria-current');
+      });
+    };
+
+    const onClick = (event) => {
+      const btn = event.target.closest('[data-spec-step]');
+      if (!btn) return;
+      const i = Number(btn.dataset.specStep);
+      const card = cards[i];
+      if (!card) return;
+      const top = card.getBoundingClientRect().top + window.scrollY - navOffset() - head.offsetHeight;
+      window.scrollTo({ top, behavior: 'smooth' });
+    };
+
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        syncHead();
+        setActive();
+        releaseHead();
+        ticking = false;
+      });
+    };
+
+    syncHead();
+    setActive();
+    releaseHead();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    wrap.addEventListener('click', onClick);
+
+    wrap._specCleanup = () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      wrap.removeEventListener('click', onClick);
+      wrap._specCleanup = null;
+    };
+  }
+
+  initSpecStack();
+  document.addEventListener('astro:page-load', initSpecStack);
+</script>

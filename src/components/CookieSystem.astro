@@ -1,0 +1,271 @@
+---
+const STORAGE_KEY = 'reamar-cookie-consent';
+const CATEGORIES = [
+  { id: 'necessary', label: 'Nezbytné', alwaysOn: true },
+  { id: 'analytical', label: 'Analytické', alwaysOn: false },
+  { id: 'marketing', label: 'Marketingové', alwaysOn: false },
+] as const;
+---
+<!-- Cookie Banner: fixní lišta dole -->
+<div
+  id="cookie-banner"
+  class="cookie-banner fixed bottom-0 left-0 right-0 z-[90] w-full bg-white border-t border-gray-200 opacity-0 pointer-events-none transition-opacity duration-300"
+  aria-hidden="true"
+  data-cookie-banner
+>
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 px-6 py-4 md:px-10 md:py-5">
+    <p class="font-yellix text-[14px] font-normal text-gray-700 order-2 sm:order-1">
+      Tento web používá cookies pro zajištění nejlepšího zážitku.
+    </p>
+    <div class="flex items-center gap-6 order-1 sm:order-2">
+      <button
+        type="button"
+        class="font-yellix text-[14px] font-normal text-gray-500 underline border-0 bg-transparent p-0 cursor-pointer hover:text-gray-700 transition-colors"
+        data-cookie-open-settings
+        aria-label="Nastavení cookies"
+      >
+        Nastavení
+      </button>
+      <button
+        type="button"
+        class="font-yellix text-[14px] font-normal text-white bg-[#000000] border border-[#000000] py-2.5 px-5 cursor-pointer hover:opacity-90 transition-opacity"
+        data-cookie-accept
+      >
+        Souhlasím
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Cookie Modal: nastavení (styl jako poptávkový formulář) -->
+<div
+  id="cookie-modal-overlay"
+  class="cookie-modal-overlay fixed inset-0 z-[100] flex items-center justify-center bg-black/80 opacity-0 pointer-events-none transition-opacity duration-200"
+  aria-hidden="true"
+  data-cookie-overlay
+>
+  <div
+    class="cookie-modal relative w-[94vw] max-w-[1000px] max-h-[90vh] overflow-y-auto bg-white rounded-none shadow-none border border-gray-200 scale-95 transition-all duration-200"
+    role="dialog"
+    aria-labelledby="cookie-modal-title"
+    aria-modal="true"
+    tabindex="-1"
+    data-cookie-modal
+    onclick="event.stopPropagation()"
+  >
+    <div class="p-10 md:p-14 lg:p-16">
+      <button
+        type="button"
+        class="absolute top-8 right-8 flex items-center gap-2 border-0 bg-transparent p-0 font-yellix text-[14px] font-normal text-gray-400 cursor-pointer hover:text-gray-600 transition-colors"
+        aria-label="Zavřít"
+        data-cookie-modal-close
+      >
+        <span>Zavřít</span>
+        <span class="text-[#000000]" aria-hidden="true">×</span>
+      </button>
+
+      <h2 id="cookie-modal-title" class="font-yellix text-[27px] font-normal text-[#000000] pr-20 mb-8 uppercase tracking-[0.2em]">
+        Využití cookies
+      </h2>
+
+      <p class="font-yellix text-[14px] font-normal text-[#000000] leading-relaxed mb-10">
+        Pro zajištění plné funkčnosti a analýzu návštěvnosti využívají tyto stránky soubory cookies – malé textové soubory ukládané ve vašem prohlížeči. Ze zákona ukládáme pouze cookies nezbytně nutné pro provoz webu. Pro analytické a reklamní účely (včetně služeb třetích stran) potřebujeme váš souhlas. Podrobné informace naleznete v našich <a href="/ochrana-osobnich-udaju" class="text-[#000000] underline hover:opacity-80">Zásadách ochrany osobních údajů</a>.
+      </p>
+
+      <p class="font-yellix text-[14px] font-normal text-gray-500 mb-3">Kategorie</p>
+      <div class="flex flex-wrap gap-x-6 gap-y-2 mb-10">
+        {CATEGORIES.map((cat) => (
+          <span class="inline-flex items-center gap-2">
+            {cat.alwaysOn ? (
+              <span class="font-yellix text-[14px] font-normal text-[#000000] underline underline-offset-2 decoration-[#000000]">
+                {cat.label}
+              </span>
+            ) : (
+              <button
+                type="button"
+                class="cookie-category font-yellix text-[14px] font-normal border-0 bg-transparent p-0 cursor-pointer no-underline hover:text-gray-600 transition-colors text-gray-400"
+                data-category={cat.id}
+              >
+                {cat.label}
+              </button>
+            )}
+          </span>
+        ))}
+      </div>
+
+      <div class="flex justify-center">
+        <button
+          type="button"
+          class="font-yellix text-[14px] font-normal text-white bg-[#000000] border border-[#000000] py-3 px-8 cursor-pointer hover:opacity-90 transition-opacity"
+          data-cookie-save
+        >
+          Uložit preference
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ STORAGE_KEY }}>
+  function initCookieSystem() {
+    const banner = document.querySelector('[data-cookie-banner]');
+    const overlay = document.querySelector('[data-cookie-overlay]');
+    const modal = document.querySelector('[data-cookie-modal]');
+    if (!banner && !overlay && !modal) return;
+
+    if (window.__cookieOpenSettingsHandler) {
+      document.body.removeEventListener('click', window.__cookieOpenSettingsHandler);
+    }
+
+    const defaultConsent = {
+      necessary: true,
+      analytical: false,
+      marketing: false,
+      consented: false,
+    };
+
+    function getConsent() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return null;
+        const data = JSON.parse(raw);
+        return { ...defaultConsent, ...data };
+      } catch (_) {
+        return null;
+      }
+    }
+
+    function setConsent(data) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...defaultConsent, ...data }));
+      } catch (_) {}
+    }
+
+    function updateGtagConsent(prefs) {
+      if (typeof window.gtag !== 'function') return;
+      window.gtag('consent', 'update', {
+        analytics_storage: prefs.analytical ? 'granted' : 'denied',
+        ad_storage: prefs.marketing ? 'granted' : 'denied',
+        ad_user_data: prefs.marketing ? 'granted' : 'denied',
+        ad_personalization: prefs.marketing ? 'granted' : 'denied',
+      });
+    }
+
+    function showBanner() {
+      if (!banner) return;
+      banner.classList.remove('opacity-0', 'pointer-events-none');
+      banner.setAttribute('aria-hidden', 'false');
+    }
+
+    function hideBanner() {
+      if (!banner) return;
+      banner.classList.add('opacity-0', 'pointer-events-none');
+      banner.setAttribute('aria-hidden', 'true');
+    }
+
+    function openModal() {
+      const prefs = getConsent() || defaultConsent;
+      document.querySelectorAll('.cookie-category').forEach(function (btn) {
+        const id = btn.getAttribute('data-category');
+        if (!id || id === 'necessary') return;
+        const active = id === 'analytical' ? prefs.analytical : prefs.marketing;
+        btn.setAttribute('data-active', active ? 'true' : 'false');
+        if (active) {
+          btn.classList.add('underline', 'underline-offset-2', 'decoration-[#000000]', 'text-[#000000]');
+          btn.classList.remove('text-gray-400', 'no-underline');
+        } else {
+          btn.classList.remove('underline', 'underline-offset-2', 'decoration-[#000000]', 'text-[#000000]');
+          btn.classList.add('text-gray-400', 'no-underline');
+        }
+      });
+      if (overlay) {
+        overlay.classList.remove('opacity-0', 'pointer-events-none');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+      if (modal) {
+        modal.classList.remove('scale-95');
+        modal.classList.add('scale-100');
+        modal.focus();
+      }
+    }
+
+    function closeModal() {
+      if (overlay) {
+        overlay.classList.add('opacity-0', 'pointer-events-none');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+      if (modal) {
+        modal.classList.remove('scale-100');
+        modal.classList.add('scale-95');
+      }
+    }
+
+    // Banner: zobrazit 2s po načtení, pokud není souhlas
+    setTimeout(function () {
+      const consent = getConsent();
+      if (!consent || !consent.consented) showBanner();
+    }, 2000);
+
+    // Souhlasím = přijmout vše, skrýt banner, uložit, gtag
+    document.querySelector('[data-cookie-accept]')?.addEventListener('click', function () {
+      const prefs = { necessary: true, analytical: true, marketing: true, consented: true };
+      setConsent(prefs);
+      updateGtagConsent(prefs);
+      hideBanner();
+    });
+
+    // Nastavení = otevřít modal (ze banneru)
+    document.querySelector('[data-cookie-open-settings]')?.addEventListener('click', openModal);
+
+    // Otevřít modal z patičky: #open-cookie-settings nebo [data-cookie-settings]
+    function handleOpenSettings(e) {
+      if (e.target.closest('#open-cookie-settings') || e.target.closest('[data-cookie-settings]')) {
+        e.preventDefault();
+        openModal();
+      }
+    }
+    window.__cookieOpenSettingsHandler = handleOpenSettings;
+    document.body.addEventListener('click', handleOpenSettings);
+
+    // Toggle kategorie v modalu (Analytické, Marketingové)
+    document.querySelectorAll('.cookie-category').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        const id = btn.getAttribute('data-category');
+        if (!id || id === 'necessary') return;
+        const isActive = btn.getAttribute('data-active') === 'true';
+        const next = !isActive;
+        btn.setAttribute('data-active', next ? 'true' : 'false');
+        if (next) {
+          btn.classList.add('underline', 'underline-offset-2', 'decoration-[#000000]', 'text-[#000000]');
+          btn.classList.remove('text-gray-400', 'no-underline');
+        } else {
+          btn.classList.remove('underline', 'underline-offset-2', 'decoration-[#000000]', 'text-[#000000]');
+          btn.classList.add('text-gray-400', 'no-underline');
+        }
+      });
+    });
+
+    // Uložit preference
+    document.querySelector('[data-cookie-save]')?.addEventListener('click', function () {
+      const analytical = document.querySelector('.cookie-category[data-category="analytical"]')?.getAttribute('data-active') === 'true';
+      const marketing = document.querySelector('.cookie-category[data-category="marketing"]')?.getAttribute('data-active') === 'true';
+      const prefs = { necessary: true, analytical, marketing, consented: true };
+      setConsent(prefs);
+      updateGtagConsent(prefs);
+      hideBanner();
+      closeModal();
+    });
+
+    overlay?.addEventListener('click', closeModal);
+    document.querySelectorAll('[data-cookie-modal-close]').forEach(function (btn) {
+      btn.addEventListener('click', closeModal);
+    });
+    modal?.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeModal();
+    });
+  }
+  initCookieSystem();
+  document.addEventListener('astro:page-load', initCookieSystem);
+</script>

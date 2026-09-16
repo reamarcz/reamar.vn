@@ -1,0 +1,46 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  canonical?: string;
+  ogType?: string;
+  /** např. „noindex, follow“ pro stránky chyb */
+  robots?: string;
+}
+
+const {
+  title,
+  description,
+  image,
+  ogTitle,
+  ogDescription,
+  canonical,
+  ogType = 'website',
+  robots = 'index, follow',
+} = Astro.props;
+const baseUrl = 'https://www.reamar.vn';
+const ogImage = image?.startsWith('http') ? image : image ? `${baseUrl}${image.startsWith('/') ? image : '/' + image}` : `${baseUrl}/images/og-image.jpg`;
+const ogTitleVal = ogTitle ?? title;
+const ogDescVal = ogDescription ?? description;
+const canonicalUrl = canonical?.startsWith('http') ? canonical : canonical ? `${baseUrl}${canonical.startsWith('/') ? canonical : '/' + canonical}` : undefined;
+---
+<title>{title}</title>
+<meta name="description" content={description} />
+{canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+<meta name="robots" content={robots} />
+{robots.includes('noindex') && <meta name="googlebot" content={robots} />}
+
+<meta property="og:type" content={ogType} />
+<meta property="og:site_name" content="REAMAR | Reality. Marketing." />
+{canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
+<meta property="og:title" content={ogTitleVal} />
+<meta property="og:description" content={ogDescVal} />
+<meta property="og:image" content={ogImage} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={ogTitleVal} />
+<meta name="twitter:description" content={ogDescVal} />
+<meta name="twitter:image" content={ogImage} />

@@ -1,0 +1,733 @@
+---
+interface Cta {
+  href: string;
+  label: string;
+  primary?: boolean;
+}
+
+interface Props {
+  image?: string;
+  playLabel?: string;
+  em?: string;
+  line2?: string;
+  title?: [string, string, string];
+  titleEmBreak?: boolean;
+  titleEmGreen?: boolean;
+  actionCardGreen?: boolean;
+  lead?: string;
+  ctas?: Cta[];
+  proof?: 'market' | 'offer';
+  storyHref?: string;
+  storyKicker?: string;
+  storyTitle?: string;
+  storyYt?: boolean;
+  showPlay?: boolean;
+  actionKicker?: string;
+  actionMeta?: string;
+  actionCta?: string;
+  actionHref?: string;
+  actionImage?: string;
+  actionPlacement?: 'photo' | 'clients' | 'copy';
+  eyebrow?: string;
+  cueAfterCtas?: boolean;
+  cueHref?: string;
+  copyLift?: boolean;
+}
+
+const {
+  image: heroImage = '/images/agency/jv-holder3.jpg',
+  playLabel = 'Přehrát video',
+  em = 'kupující',
+  line2 = 'na developerském trhu',
+  title,
+  titleEmBreak = false,
+  titleEmGreen = false,
+  actionCardGreen = false,
+  lead,
+  ctas = [
+    { href: '/investice', label: 'Jsem investor' },
+    { href: '/bydleni', label: 'Hledám bydlení', primary: true },
+  ],
+  proof = 'market',
+  storyHref = '/#pribehy-z-trhu',
+  storyKicker = 'Příběhy z trhu',
+  storyTitle = 'Agent pro kupující',
+  storyYt = true,
+  showPlay = true,
+  actionKicker = 'Brzy v předprodeji',
+  actionMeta = 'Malešice | září 2026',
+  actionCta = 'Chci být u toho',
+  actionHref = '/#presale',
+  actionImage = '/images/zizkov.webp',
+  actionPlacement = 'photo',
+  eyebrow,
+  cueAfterCtas = false,
+  cueHref = '/#koncept',
+  copyLift = false,
+} = Astro.props;
+
+const leadHtml = lead ?? null;
+const actionExternal = actionHref.startsWith('http');
+---
+
+<section class="hero relative w-full overflow-hidden bg-white" aria-label="Úvod">
+  <div class="hero-visual pointer-events-none absolute inset-y-0 right-0 hidden w-[72%] lg:block">
+    <img
+      src={heroImage}
+      alt=""
+      class="h-full w-full object-cover object-[58%_center]"
+      width="1600"
+      height="900"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <div class="hero-fade pointer-events-none absolute inset-y-0 left-0 w-[32%]" aria-hidden="true"></div>
+    <div class="pointer-events-auto absolute inset-0">
+      {showPlay && (
+      <button
+        type="button"
+        class="hero-play absolute left-1/2 top-1/2 inline-flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 rounded-full bg-white/80 px-4 py-2 font-yellix text-[13px] font-medium text-black backdrop-blur-[12px] transition-opacity hover:opacity-85"
+      >
+        <svg class="h-3.5 w-3.5 shrink-0" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true">
+          <path d="M3.2 1.6v8.8L10.4 6 3.2 1.6Z"/>
+        </svg>
+        {playLabel}
+      </button>
+      )}
+
+      <div class="hero-corner absolute right-8 bottom-8 flex flex-col items-end gap-2.5 md:right-10 md:bottom-10">
+        {actionPlacement === 'photo' && (
+        <a
+          href={actionHref}
+          class:list={['hero-action-card', actionCardGreen && 'hero-action-card-green']}
+          target={actionExternal ? '_blank' : undefined}
+          rel={actionExternal ? 'noopener noreferrer' : undefined}
+        >
+          <img
+            src={actionImage}
+            alt=""
+            class="hero-action-photo"
+            width="96"
+            height="96"
+          />
+          <span class="hero-action-copy">
+            <span class="hero-action-kicker">{actionKicker}</span>
+            <span class="hero-action-meta">{actionMeta}</span>
+            <span class="hero-action-cta">
+              <img src="/images/arrow-1.svg" alt="" width="11" height="11" />
+              {actionCta}
+            </span>
+          </span>
+        </a>
+        )}
+        <a href={storyHref} class="hero-story-card">
+          {storyYt ? (
+            <span class="hero-story-yt" aria-hidden="true">
+              <svg viewBox="0 0 24 17">
+                <path fill="#FF0000" d="M23.5 2.65A3.02 3.02 0 0 0 21.38.5C19.5 0 12 0 12 0S4.5 0 2.62.5A3.02 3.02 0 0 0 .5 2.65 31.9 31.9 0 0 0 0 8.5a31.9 31.9 0 0 0 .5 5.85 3.02 3.02 0 0 0 2.12 2.15C4.5 17 12 17 12 17s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.15A31.9 31.9 0 0 0 24 8.5a31.9 31.9 0 0 0-.5-5.85Z"/>
+                <path fill="#fff" d="M9.75 12.15V4.85L15.7 8.5 9.75 12.15Z"/>
+              </svg>
+            </span>
+          ) : (
+            <span class="hero-story-yt hero-story-yt-static" aria-hidden="true">
+              <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
+            </span>
+          )}
+          <span class="hero-story-copy">
+            <span class="hero-story-kicker">{storyKicker}</span>
+            <span class="hero-story-title">{storyTitle}</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-stage relative mx-auto flex min-h-[calc(100svh-80px)] max-w-[1440px] flex-col md:min-h-[calc(100svh-108px)]">
+    <div class="hero-copy relative z-10 flex w-full flex-1 flex-col px-5 py-8 md:px-10 lg:w-[44%] xl:px-14">
+      <div class:list={['flex flex-1 flex-col justify-center', titleEmBreak ? 'hero-copy-tight' : copyLift ? 'lg:-translate-y-20' : actionPlacement === 'copy' ? '' : 'lg:-translate-y-5']}>
+      {actionPlacement === 'copy' && (
+        <a
+          href={actionHref}
+          class:list={['hero-action-card mb-6 w-fit md:mb-8', actionCardGreen && 'hero-action-card-green']}
+          target={actionExternal ? '_blank' : undefined}
+          rel={actionExternal ? 'noopener noreferrer' : undefined}
+        >
+          <img
+            src={actionImage}
+            alt=""
+            class="hero-action-photo"
+            width="96"
+            height="96"
+          />
+          <span class="hero-action-copy">
+            <span class="hero-action-kicker">{actionKicker}</span>
+            <span class="hero-action-meta">{actionMeta}</span>
+            <span class="hero-action-cta">
+              <img src="/images/arrow-1.svg" alt="" width="11" height="11" />
+              {actionCta}
+            </span>
+          </span>
+        </a>
+      )}
+      {eyebrow && (
+        <p class="mb-3 font-yellix text-[13px] font-medium uppercase leading-snug tracking-[0.08em] text-black md:mb-4 md:text-[14px]">
+          {eyebrow}
+        </p>
+      )}
+      <h1 class:list={['font-yellix text-[36px] font-medium leading-[1.08] tracking-[-0.025em] text-black sm:text-[46px] xl:text-[52px]', title && 'hero-title-stack']}>
+        {title ? (
+          titleEmBreak ? (
+            <>
+              <span class="hero-title-lead">{title[0]}</span>
+              <span class:list={['hero-title-emline', titleEmGreen && 'hero-title-em-green']}><span class="hero-em">{title[1]}</span></span>
+              <span class="hero-title-sub">{title[2]}</span>
+            </>
+          ) : (
+            <>
+              <span class="hero-title-lead">
+                {title[0]}{title[1] && <span class="hero-em">{title[1]}</span>}
+              </span>
+              <span class="hero-title-sub">{title[2]}</span>
+            </>
+          )
+        ) : (
+          <>
+            Zastupujeme{' '}
+            <span class="hero-rotate" aria-live="polite">
+              <span class="hero-rotate-sizer" aria-hidden="true">investory</span>
+              <span class="hero-em hero-rotate-word" data-hero-word>{em}</span>
+            </span>
+            <br />
+            <span class:list={[line2 === 'na developerském trhu' && 'whitespace-nowrap']}>{line2}</span>
+          </>
+        )}
+      </h1>
+      {leadHtml ? (
+        <p class="mt-4 max-w-[42ch] font-yellix text-[14px] font-medium leading-[1.5] text-black/80 md:text-[15px]">
+          {leadHtml}
+        </p>
+      ) : (
+        <p class="mt-4 max-w-[68ch] font-yellix text-[14px] font-medium leading-[1.5] text-black/80 md:text-[15px]">
+          <span class="block md:whitespace-nowrap">Získejte svůj tým pro pořízení bytu v developerském projektu.</span>
+          Sledujeme trh, vybíráme vhodné jednotky a jednáme<br />
+          s developerem na vaší straně.
+        </p>
+      )}
+      <div class:list={['mt-6 flex flex-wrap items-center', cueAfterCtas ? 'gap-x-4 gap-y-2' : 'gap-2']}>
+        {ctas.map((cta) => (
+          cta.primary ? (
+            <a
+              href={cta.href}
+              class="inline-flex items-center gap-1.5 bg-black px-3 py-1.5 font-yellix text-[13px] font-medium leading-none text-white no-underline transition-opacity hover:opacity-85"
+            >
+              <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0" width="12" height="12" />
+              {cta.label}
+            </a>
+          ) : (
+            <a
+              href={cta.href}
+              class="inline-flex items-center border border-black bg-white px-3 py-1.5 font-yellix text-[13px] font-medium leading-none text-black no-underline transition-opacity hover:opacity-70"
+            >
+              {cta.label}
+            </a>
+          )
+        ))}
+        {cueAfterCtas && (
+          <a href={cueHref} class="font-yellix text-[13px] font-medium leading-none text-black no-underline transition-opacity hover:opacity-70">
+            Co děláme
+          </a>
+        )}
+      </div>
+
+      {proof === 'market' && !cueAfterCtas && (
+        <div class="mt-10">
+          <p class="font-yellix text-[13px] font-medium uppercase leading-snug tracking-[0.08em] text-black md:text-[14px]">
+            Nákupní agentura pro novostavby
+          </p>
+          <a href="/#koncept" class="hero-scroll-cue mt-2 inline-flex w-fit items-center gap-1.5 font-yellix text-[14px] font-medium leading-none text-black no-underline transition-opacity hover:opacity-85 md:text-[15px]">
+            <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0 brightness-0" width="12" height="12" />
+            <span>Co děláme</span>
+          </a>
+        </div>
+      )}
+
+      {proof === 'offer' && (
+        <div class="mt-10">
+          <p class="font-yellix text-[13px] font-medium leading-none text-black md:text-[14px]">Jak vypadá nabídka na míru</p>
+          <a
+            href="#"
+            class="hero-offer-btn mt-3 inline-flex w-fit items-center gap-2 font-yellix text-[13px] font-medium leading-none text-black no-underline transition-opacity hover:opacity-85 md:text-[14px]"
+          >
+            <svg class="h-3.5 w-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M7 3.5h8.5L19 7v13.5H7V3.5Z"/>
+              <path d="M15.5 3.5V7H19"/>
+              <circle cx="12.2" cy="14.2" r="3.1"/>
+              <path d="m14.4 16.4 2.3 2.3"/>
+            </svg>
+            <span>Detail nabídky</span>
+          </a>
+        </div>
+      )}
+      </div>
+    </div>
+    {actionPlacement !== 'copy' && (
+    <div class="hero-clients z-10 flex items-center gap-2.5 px-5 pt-8 md:px-10 lg:absolute lg:bottom-10 lg:left-10 lg:min-h-[44px] lg:px-0 lg:pt-0 xl:left-14">
+      {actionPlacement === 'clients' ? (
+        <a
+          href={actionHref}
+          class:list={['hero-action-card', actionCardGreen && 'hero-action-card-green']}
+          target={actionExternal ? '_blank' : undefined}
+          rel={actionExternal ? 'noopener noreferrer' : undefined}
+        >
+          <img
+            src={actionImage}
+            alt=""
+            class="hero-action-photo"
+            width="96"
+            height="96"
+          />
+          <span class="hero-action-copy">
+            <span class="hero-action-kicker">{actionKicker}</span>
+            <span class="hero-action-meta">{actionMeta}</span>
+            <span class="hero-action-cta">
+              <img src="/images/arrow-1.svg" alt="" width="11" height="11" />
+              {actionCta}
+            </span>
+          </span>
+        </a>
+      ) : (
+        <>
+          <div class="flex -space-x-1.5" aria-hidden="true">
+            <span class="hero-avatar h-7 w-7 rounded-full ring-2 ring-white" style="background:#d7d2c8"></span>
+            <span class="hero-avatar h-7 w-7 rounded-full ring-2 ring-white" style="background:#c3beb4"></span>
+            <span class="hero-avatar h-7 w-7 rounded-full ring-2 ring-white" style="background:#a8a29a"></span>
+          </div>
+          <p class="font-yellix text-[10px] font-medium uppercase leading-[1.25] tracking-[0.08em] text-black">
+            150+ spokojených<br />klientů
+          </p>
+        </>
+      )}
+    </div>
+    )}
+
+    <div class="relative mt-2 aspect-[16/10] w-full overflow-hidden lg:hidden">
+      <img
+        src={heroImage}
+        alt=""
+        class="h-full w-full object-cover object-[center_30%]"
+        width="1200"
+        height="750"
+        loading="eager"
+      />
+      {showPlay && (
+      <button
+        type="button"
+        class="hero-play absolute left-1/2 top-1/2 inline-flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 rounded-full bg-white/80 px-4 py-2 font-yellix text-[13px] font-medium text-black backdrop-blur-[12px] transition-opacity hover:opacity-85"
+      >
+        <svg class="h-3.5 w-3.5 shrink-0" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true">
+          <path d="M3.2 1.6v8.8L10.4 6 3.2 1.6Z"/>
+        </svg>
+        {playLabel}
+      </button>
+      )}
+      <div class="absolute right-4 bottom-4 flex flex-col items-end gap-2">
+        {actionPlacement === 'photo' && (
+        <a
+          href={actionHref}
+          class:list={['hero-action-card', actionCardGreen && 'hero-action-card-green']}
+          target={actionExternal ? '_blank' : undefined}
+          rel={actionExternal ? 'noopener noreferrer' : undefined}
+        >
+          <img
+            src={actionImage}
+            alt=""
+            class="hero-action-photo"
+            width="96"
+            height="96"
+          />
+          <span class="hero-action-copy">
+            <span class="hero-action-kicker">{actionKicker}</span>
+            <span class="hero-action-meta">{actionMeta}</span>
+            <span class="hero-action-cta">
+              <img src="/images/arrow-1.svg" alt="" width="11" height="11" />
+              {actionCta}
+            </span>
+          </span>
+        </a>
+        )}
+        <a href={storyHref} class="hero-story-card">
+          {storyYt ? (
+            <span class="hero-story-yt" aria-hidden="true">
+              <svg viewBox="0 0 24 17">
+                <path fill="#FF0000" d="M23.5 2.65A3.02 3.02 0 0 0 21.38.5C19.5 0 12 0 12 0S4.5 0 2.62.5A3.02 3.02 0 0 0 .5 2.65 31.9 31.9 0 0 0 0 8.5a31.9 31.9 0 0 0 .5 5.85 3.02 3.02 0 0 0 2.12 2.15C4.5 17 12 17 12 17s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.15A31.9 31.9 0 0 0 24 8.5a31.9 31.9 0 0 0-.5-5.85Z"/>
+                <path fill="#fff" d="M9.75 12.15V4.85L15.7 8.5 9.75 12.15Z"/>
+              </svg>
+            </span>
+          ) : (
+            <span class="hero-story-yt hero-story-yt-static" aria-hidden="true">
+              <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
+            </span>
+          )}
+          <span class="hero-story-copy">
+            <span class="hero-story-kicker">{storyKicker}</span>
+            <span class="hero-story-title">{storyTitle}</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-em {
+    text-decoration: underline;
+    text-decoration-thickness: 2.5px;
+    text-underline-offset: 0.11em;
+    text-decoration-skip-ink: none;
+  }
+  .hero-rotate {
+    display: inline-block;
+    position: relative;
+    vertical-align: baseline;
+  }
+  .hero-rotate-sizer {
+    visibility: hidden;
+    display: inline-block;
+    pointer-events: none;
+  }
+  .hero-rotate-word {
+    position: absolute;
+    left: 0;
+    top: 0;
+    white-space: nowrap;
+    transition: opacity 0.32s ease, transform 0.32s ease;
+    will-change: opacity, transform;
+  }
+  .hero-rotate-word.is-out {
+    opacity: 0;
+    transform: translateY(-0.25em);
+  }
+  .hero-rotate-word.is-in {
+    opacity: 0;
+    transform: translateY(0.25em);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-rotate-word {
+      transition: none;
+    }
+  }
+  .hero-title-stack {
+    padding-bottom: 12px;
+  }
+  .hero-title-stack:has(.hero-title-emline) {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .hero-title-lead {
+    display: block;
+    line-height: 1.08;
+    margin-left: 0.25em;
+  }
+  .hero-title-stack:has(.hero-title-emline) .hero-title-lead {
+    margin-left: 0;
+  }
+  .hero-title-emline {
+    display: block;
+    line-height: 1.08;
+    margin-top: 8px;
+    margin-left: 0.9em;
+    font-weight: 500;
+  }
+  .hero-title-sub {
+    display: block;
+    white-space: nowrap;
+    font-size: 22px;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+    margin-top: 10px;
+  }
+  @media (min-width: 1024px) {
+    .hero-title-sub {
+      font-size: 24px;
+    }
+  }
+  @media (min-width: 1280px) {
+    .hero-title-sub {
+      font-size: 30px;
+    }
+  }
+  .hero-title-stack:has(.hero-title-emline) .hero-title-sub {
+    margin-top: 10px;
+    font-size: 26px;
+  }
+  @media (min-width: 1024px) {
+    .hero-title-stack:has(.hero-title-emline) .hero-title-sub {
+      font-size: 28px;
+    }
+  }
+  @media (min-width: 1280px) {
+    .hero-title-stack:has(.hero-title-emline) .hero-title-sub {
+      font-size: 34px;
+    }
+  }
+  .hero-title-em-green,
+  .hero-title-em-green .hero-em {
+    color: #022d20;
+  }
+  .hero-title-em-green .hero-em {
+    text-decoration-color: #022d20;
+  }
+  @media (min-width: 1024px) {
+    .hero-copy-tight {
+      transform: translateY(-40px);
+    }
+    .hero-corner,
+    .hero-clients {
+      transform: translateY(-20px);
+    }
+    .hero {
+      max-height: 720px;
+    }
+    .hero .hero-stage {
+      min-height: min(calc(100svh - 108px), 720px) !important;
+      max-height: 720px;
+    }
+  }
+  .hero-scroll-cue span,
+  .hero-offer-btn span {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+  .hero-fade {
+    background: linear-gradient(to right, #fff 0%, rgba(255,255,255,0.85) 28%, rgba(255,255,255,0) 100%);
+  }
+  .hero-story-card {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px 8px 8px;
+    background: rgba(255, 255, 255, 0.86);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    text-decoration: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  }
+  .hero-story-card:hover {
+    background: rgba(255, 255, 255, 0.96);
+    transform: translateY(-1px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.10);
+  }
+  .hero-story-yt {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    overflow: visible;
+  }
+  .hero-story-yt svg {
+    width: 16px;
+    height: 11px;
+    transform-origin: 50% 50%;
+    animation: hero-yt-pulse 2.4s ease-in-out infinite;
+  }
+  .hero-story-yt-static img {
+    display: block;
+    width: 12px;
+    height: 12px;
+    filter: brightness(0);
+  }
+  .hero-story-card:hover .hero-story-yt:not(.hero-story-yt-static) svg {
+    animation: none;
+    transform: scale(1.28);
+  }
+  @keyframes hero-yt-pulse {
+    0%, 18%, 100% { transform: scale(1); }
+    28% { transform: scale(1.48); }
+    36% { transform: scale(1); }
+    44% { transform: scale(1.28); }
+    52% { transform: scale(1); }
+  }
+  .hero-story-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+  .hero-story-kicker {
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.42);
+    line-height: 1;
+  }
+  .hero-story-title {
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #000;
+    line-height: 1;
+  }
+  .hero-action-card {
+    position: relative;
+    left: auto;
+    top: auto;
+    z-index: 20;
+    display: inline-flex;
+    align-items: stretch;
+    gap: 10px;
+    padding: 0 14px 0 0;
+    background: #000;
+    border: 0;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+    text-decoration: none;
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  }
+  .hero-action-card:hover {
+    background: #111;
+    transform: translateY(-1px);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.22);
+  }
+  .hero-action-card-green {
+    background: #022d20;
+    animation: hero-action-glow 2.4s ease-in-out infinite;
+  }
+  .hero-action-card-green:hover {
+    background: #033d2c;
+    animation: none;
+  }
+  .hero-action-card-green .hero-action-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .hero-action-card-green .hero-action-kicker::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #4ade80;
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.45);
+    animation: hero-action-live 2.2s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  @keyframes hero-action-glow {
+    0%, 100% { box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18); }
+    50% { box-shadow: 0 12px 32px rgba(2, 45, 32, 0.28), 0 0 0 5px rgba(74, 222, 128, 0.18); }
+  }
+  @keyframes hero-action-live {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.45); }
+    50% { opacity: 0.7; box-shadow: 0 0 0 4px rgba(74, 222, 128, 0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-action-card-green,
+    .hero-action-card-green .hero-action-kicker::before {
+      animation: none;
+    }
+  }
+  .hero-action-photo {
+    width: 76px;
+    height: 76px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+  .hero-action-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    min-width: 0;
+    padding: 2px 0;
+  }
+  .hero-action-kicker {
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1;
+  }
+  .hero-action-meta {
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #fff;
+    line-height: 1.15;
+  }
+  .hero-action-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 2px;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: #fff;
+    line-height: 1;
+  }
+  .hero-action-cta img {
+    width: 10px;
+    height: 10px;
+    opacity: 0.85;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .hero-action-card:hover .hero-action-cta img {
+    transform: translate(1px, 1px);
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-story-yt svg {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  function initHeroWordRotate() {
+    if (window.__heroWordTimeoutId) {
+      clearTimeout(window.__heroWordTimeoutId);
+      window.__heroWordTimeoutId = null;
+    }
+    const el = document.querySelector('[data-hero-word]');
+    if (!el) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const words = ['kupující', 'investory', 'klienty'];
+    let i = 0;
+    const DISPLAY_MS = 2200;
+    const SWAP_MS = 320;
+
+    function tick() {
+      if (!document.body.contains(el)) return;
+      el.classList.add('is-out');
+      setTimeout(function () {
+        i = (i + 1) % words.length;
+        el.textContent = words[i];
+        el.classList.remove('is-out');
+        el.classList.add('is-in');
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            el.classList.remove('is-in');
+          });
+        });
+      }, SWAP_MS);
+      window.__heroWordTimeoutId = setTimeout(tick, DISPLAY_MS);
+    }
+
+    window.__heroWordTimeoutId = setTimeout(tick, DISPLAY_MS);
+  }
+
+  initHeroWordRotate();
+  document.addEventListener('astro:page-load', initHeroWordRotate);
+</script>
+
