@@ -4,13 +4,13 @@ interface Props {
   ctaLabel?: string;
 }
 
-const { ctaHref = '/#pribeh', ctaLabel = 'Náš příběh' } = Astro.props;
+const { ctaHref = '/#pribeh', ctaLabel = 'Câu chuyện của chúng tôi' } = Astro.props;
 const ctaExternal = ctaHref.startsWith('http');
 const image = '/images/agency/George_14.jpg';
 const lines = [
-  { text: 'Nejdřív pro sebe.', em: false, indent: 0 },
-  { text: 'Pak pro rodinu.', em: false, indent: 1 },
-  { text: 'Dnes pro klienty.', em: true, indent: 2 },
+  { text: 'Trước hết cho chính mình.', em: false, indent: 0 },
+  { text: 'Sau đó cho gia đình.', em: false, indent: 1 },
+  { text: 'Hôm nay cho khách hàng.', em: true, indent: 2 },
 ];
 ---
 
@@ -44,10 +44,10 @@ const lines = [
 
         <div class="pribeh-body">
           <p class="font-yellix text-[14px] font-medium leading-[1.55] text-white md:text-[15px] [text-shadow:0_1px_12px_rgba(0,0,0,0.4)]">
-            Na developerském trhu se sami dlouhodobě pohybujeme a sami na něm nakupujeme. Postupně jsme začali stejným způsobem pomáhat rodině, blízkým a lidem kolem nás.
+            Chúng tôi hoạt động lâu dài trên thị trường chủ đầu tư và cũng tự mình mua trên thị trường đó. Dần dần, chúng tôi bắt đầu giúp gia đình, người thân và những người xung quanh theo cùng cách đó.
           </p>
           <p class="mt-4 font-yellix text-[14px] font-medium leading-[1.55] text-white md:text-[15px] [text-shadow:0_1px_12px_rgba(0,0,0,0.4)]">
-            Čím častěji jsme to řešili, tím jasnější bylo, že taková služba nemá zůstat jen pro náš okruh. Kupující ji potřebují také.
+            Càng làm nhiều, càng rõ ràng rằng dịch vụ này không nên chỉ dành cho vòng quanh chúng tôi. Người mua cũng cần nó.
           </p>
           <a
             href={ctaHref}

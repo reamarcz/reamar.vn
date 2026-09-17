@@ -41,29 +41,29 @@ interface Props {
 
 const {
   image: heroImage = '/images/agency/jv-holder3.jpg',
-  playLabel = 'Přehrát video',
-  em = 'kupující',
-  line2 = 'na developerském trhu',
+  playLabel = 'Phát video',
+  em = 'người mua',
+  line2 = 'trên thị trường chủ đầu tư',
   title,
   titleEmBreak = false,
   titleEmGreen = false,
   actionCardGreen = false,
   lead,
   ctas = [
-    { href: '/investice', label: 'Jsem investor' },
-    { href: '/bydleni', label: 'Hledám bydlení', primary: true },
+    { href: '/investice', label: 'Tôi là nhà đầu tư' },
+    { href: '/bydleni', label: 'Tôi tìm nhà ở', primary: true },
   ],
   proof = 'market',
   storyHref = '/#pribehy-z-trhu',
-  storyKicker = 'Příběhy z trhu',
-  storyTitle = 'Agent pro kupující',
+  storyKicker = 'Câu chuyện từ thị trường',
+  storyTitle = 'Agent cho người mua',
   storyYt = true,
   storyMeeting = false,
   showPlay = true,
   showProcess = false,
-  actionKicker = 'Brzy v předprodeji',
-  actionMeta = 'Malešice | září 2026',
-  actionCta = 'Chci být u toho',
+  actionKicker = 'Sắp mở pre-sale',
+  actionMeta = 'Malešice | tháng 9/2026',
+  actionCta = 'Tôi muốn tham gia',
   actionHref = '/#presale',
   actionImage = '/images/zizkov.webp',
   actionPlacement = 'photo',
@@ -73,10 +73,10 @@ const {
   copyLift = false,
   prepTicker = false,
   prepItems = [
-    { title: 'Vinohrady', subtitle: 'mikrobyty' },
-    { title: 'Holešovice', subtitle: 'investiční byty' },
-    { title: 'Vršovice', subtitle: 'velký projekt' },
-    { title: 'Karlín', subtitle: 'tři nové projekty' },
+    { title: 'Vinohrady', subtitle: 'căn nhỏ' },
+    { title: 'Holešovice', subtitle: 'căn đầu tư' },
+    { title: 'Vršovice', subtitle: 'dự án lớn' },
+    { title: 'Karlín', subtitle: 'ba dự án mới' },
   ],
   mobileImage = '/images/agency/Georgemob.webp',
 } = Astro.props;
@@ -87,21 +87,21 @@ const prepLabels = prepItems.map((item) => `${item.title} · ${item.subtitle}`);
 
 const processSteps = [
   {
-    title: 'Úvodní konzultace',
+    title: 'Tư vấn ban đầu',
     icon: 'chat',
   },
   {
-    title: 'Osobní vyhledání',
+    title: 'Tìm kiếm cá nhân',
     icon: 'search',
   },
   {
-    title: 'Jednání s developerem',
+    title: 'Đàm phán với chủ đầu tư',
     icon: 'building',
   },
 ] as const;
 ---
 
-<section class="hero relative w-full overflow-hidden bg-white" aria-label="Úvod">
+<section class="hero relative w-full overflow-hidden bg-white" aria-label="Mở đầu">
   <div class="hero-visual pointer-events-none absolute inset-y-0 right-0 z-[5] hidden w-[72%] overflow-hidden lg:block">
     <img
       src={heroImage}
@@ -154,8 +154,7 @@ const processSteps = [
         <div class="hero-agent-stack">
         <div class="hero-agent-card">
           <p class="hero-agent-name">George</p>
-          <p class="hero-agent-role">Váš zástupce při koupi bytu</p>
-          <p class="hero-agent-role-vi" lang="vi">Đại diện của bạn khi mua căn hộ</p>
+          <p class="hero-agent-role">Đại diện của bạn khi mua căn hộ</p>
           <div class="hero-agent-contacts">
             <a
               class="hero-agent-contact"
@@ -180,7 +179,7 @@ const processSteps = [
               data-smart-meeting-type="client"
             >
               <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
-              Domluvit osobní schůzku
+              Đặt lịch gặp trực tiếp
             </button>
           )}
         </div>
@@ -193,7 +192,7 @@ const processSteps = [
           >
             <span class="hero-prep-kicker">
               <span class="hero-prep-dot" aria-hidden="true"></span>
-              Aktuálně připravujeme
+              Đang chuẩn bị
             </span>
             <span class="hero-prep-line">
               <span class="hero-prep-rotate" aria-live="polite">
@@ -269,7 +268,7 @@ const processSteps = [
           {eyebrow}
         </p>
       )}
-      <h1 class:list={['font-yellix text-[36px] font-medium leading-[1.08] tracking-[-0.025em] text-black sm:text-[46px] xl:text-[52px]', title && 'hero-title-stack']}>
+      <h1 class:list={['font-yellix text-[36px] font-medium leading-[1.08] tracking-[-0.025em] text-black sm:text-[46px] xl:text-[52px]', title && (title[1] || title[2]) && 'hero-title-stack']}>
         {title ? (
           titleEmBreak ? (
             <>
@@ -277,23 +276,25 @@ const processSteps = [
               <span class:list={['hero-title-emline', titleEmGreen && 'hero-title-em-green']}><span class="hero-em">{title[1]}</span></span>
               <span class="hero-title-sub">{title[2]}</span>
             </>
-          ) : (
+          ) : title[1] || title[2] ? (
             <>
               <span class="hero-title-lead">
                 {title[0]}{title[1] && <span class="hero-em">{title[1]}</span>}
               </span>
-              <span class="hero-title-sub">{title[2]}</span>
+              {title[2] && <span class="hero-title-sub">{title[2]}</span>}
             </>
+          ) : (
+            title[0]
           )
         ) : (
           <>
-            Zastupujeme{' '}
+            Chúng tôi đại diện{' '}
             <span class="hero-rotate" aria-live="polite">
-              <span class="hero-rotate-sizer" aria-hidden="true">investory</span>
+              <span class="hero-rotate-sizer" aria-hidden="true">nhà đầu tư</span>
               <span class="hero-em hero-rotate-word" data-hero-word>{em}</span>
             </span>
             <br />
-            <span class:list={[line2 === 'na developerském trhu' && 'whitespace-nowrap']}>{line2}</span>
+            <span class:list={[line2 === 'trên thị trường chủ đầu tư' && 'whitespace-nowrap']}>{line2}</span>
           </>
         )}
       </h1>
@@ -303,9 +304,9 @@ const processSteps = [
         </p>
       ) : (
         <p class="mt-4 max-w-[68ch] font-yellix text-[14px] font-medium leading-[1.5] text-black/80 md:text-[15px]">
-          <span class="block md:whitespace-nowrap">Získejte svůj tým pro pořízení bytu v developerském projektu.</span>
-          Sledujeme trh, vybíráme vhodné jednotky a jednáme<br />
-          s developerem na vaší straně.
+          <span class="block md:whitespace-nowrap">Có đội ngũ riêng khi mua căn hộ dự án.</span>
+          Theo dõi thị trường, chọn căn phù hợp và đàm phán<br />
+          với chủ đầu tư bên cạnh bạn.
         </p>
       )}
 
@@ -330,7 +331,7 @@ const processSteps = [
         ))}
         {cueAfterCtas && (
           <a href={cueHref} class="font-yellix text-[13px] font-medium leading-none text-black no-underline transition-opacity hover:opacity-70">
-            Co děláme
+            Chúng tôi làm gì
           </a>
         )}
       </div>
@@ -338,18 +339,18 @@ const processSteps = [
       {proof === 'market' && !cueAfterCtas && (
         <div class="mt-10">
           <p class="font-yellix text-[13px] font-medium uppercase leading-snug tracking-[0.08em] text-black md:text-[14px]">
-            Nákupní agentura pro novostavby
+            Đại diện người mua căn hộ dự án mới
           </p>
           <a href="/#koncept" class="hero-scroll-cue mt-2 inline-flex w-fit items-center gap-1.5 font-yellix text-[14px] font-medium leading-none text-black no-underline transition-opacity hover:opacity-85 md:text-[15px]">
             <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0 brightness-0" width="12" height="12" />
-            <span>Co děláme</span>
+            <span>Chúng tôi làm gì</span>
           </a>
         </div>
       )}
 
       {proof === 'offer' && (
         <div class="mt-10">
-          <p class="font-yellix text-[13px] font-medium leading-none text-black md:text-[14px]">Jak vypadá nabídka na míru</p>
+          <p class="font-yellix text-[13px] font-medium leading-none text-black md:text-[14px]">Bảng chào bán cá nhân hóa trông như thế nào</p>
           <a
             href="#"
             class="hero-offer-btn mt-3 inline-flex w-fit items-center gap-2 font-yellix text-[13px] font-medium leading-none text-black no-underline transition-opacity hover:opacity-85 md:text-[14px]"
@@ -360,20 +361,20 @@ const processSteps = [
               <circle cx="12.2" cy="14.2" r="3.1"/>
               <path d="m14.4 16.4 2.3 2.3"/>
             </svg>
-            <span>Detail nabídky</span>
+            <span>Chi tiết chào bán</span>
           </a>
         </div>
       )}
 
       {showProcess && (
         <div class="hero-process-wrap">
-          <p class="hero-process-heading">Jak to funguje</p>
+          <p class="hero-process-heading">Cách hoạt động</p>
           <div class="hero-process" data-hero-process>
             <div class="hero-process-track" aria-hidden="true">
               <span class="hero-process-track-base"></span>
               <span class="hero-process-track-fill" data-hero-process-fill></span>
             </div>
-            <ol class="hero-process-list" aria-label="Jak to funguje">
+            <ol class="hero-process-list" aria-label="Cách hoạt động">
               {processSteps.map((step, index) => (
                 <li
                   class:list={['hero-process-step', index === 0 && 'is-active']}
@@ -467,7 +468,7 @@ const processSteps = [
             <span class="hero-avatar h-7 w-7 rounded-full ring-2 ring-white" style="background:#a8a29a"></span>
           </div>
           <p class="font-yellix text-[10px] font-medium uppercase leading-[1.25] tracking-[0.08em] text-black">
-            150+ spokojených<br />klientů
+            150+ khách hàng<br />hài lòng
           </p>
         </>
       )}
@@ -525,8 +526,7 @@ const processSteps = [
         <div class="hero-agent-stack hero-agent-stack-mobile">
         <div class="hero-agent-card">
           <p class="hero-agent-name">George</p>
-          <p class="hero-agent-role">Váš zástupce při koupi bytu</p>
-          <p class="hero-agent-role-vi" lang="vi">Đại diện của bạn khi mua căn hộ</p>
+          <p class="hero-agent-role">Đại diện của bạn khi mua căn hộ</p>
           <div class="hero-agent-contacts">
             <a
               class="hero-agent-contact"
@@ -551,7 +551,7 @@ const processSteps = [
               data-smart-meeting-type="client"
             >
               <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
-              Domluvit osobní schůzku
+              Đặt lịch gặp trực tiếp
             </button>
           )}
         </div>
@@ -564,7 +564,7 @@ const processSteps = [
           >
             <span class="hero-prep-kicker">
               <span class="hero-prep-dot" aria-hidden="true"></span>
-              Aktuálně připravujeme
+              Đang chuẩn bị
             </span>
             <span class="hero-prep-line">
               <span class="hero-prep-rotate" aria-live="polite">
@@ -1272,23 +1272,6 @@ const processSteps = [
     animation: hero-process-in 0.55s ease forwards;
     animation-delay: calc(var(--i, 0) * 120ms + 180ms);
   }
-  .hero-process-step:first-child {
-    align-items: flex-start;
-  }
-  .hero-process-step:last-child {
-    align-items: flex-end;
-  }
-  .hero-process-step:last-child .hero-process-label {
-    text-align: right;
-    transform-origin: top right;
-  }
-  .hero-process-step:first-child .hero-process-label {
-    text-align: left;
-    transform-origin: top left;
-  }
-  .hero-process-step:nth-child(2) .hero-process-label {
-    text-align: center;
-  }
   .hero-process-icon {
     display: flex;
     align-items: center;
@@ -1310,6 +1293,7 @@ const processSteps = [
     font-size: 12px;
     font-weight: 500;
     line-height: 1.25;
+    text-align: center;
     color: rgba(0, 0, 0, 0.42);
     max-width: 12ch;
     transform-origin: top center;
@@ -1364,7 +1348,7 @@ const processSteps = [
     if (!el) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const words = ['kupující', 'investory', 'klienty'];
+    const words = ['người mua', 'nhà đầu tư', 'khách hàng'];
     let i = 0;
     const DISPLAY_MS = 2200;
     const SWAP_MS = 320;

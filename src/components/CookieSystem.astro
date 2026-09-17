@@ -1,12 +1,12 @@
 ---
 const STORAGE_KEY = 'reamar-cookie-consent';
 const CATEGORIES = [
-  { id: 'necessary', label: 'Nezbytné', alwaysOn: true },
-  { id: 'analytical', label: 'Analytické', alwaysOn: false },
-  { id: 'marketing', label: 'Marketingové', alwaysOn: false },
+  { id: 'necessary', label: 'Bắt buộc', alwaysOn: true },
+  { id: 'analytical', label: 'Phân tích', alwaysOn: false },
+  { id: 'marketing', label: 'Marketing', alwaysOn: false },
 ] as const;
 ---
-<!-- Cookie Banner: fixní lišta dole -->
+<!-- Cookie Banner -->
 <div
   id="cookie-banner"
   class="cookie-banner fixed bottom-0 left-0 right-0 z-[90] w-full bg-white border-t border-gray-200 opacity-0 pointer-events-none transition-opacity duration-300"
@@ -15,29 +15,29 @@ const CATEGORIES = [
 >
   <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 px-6 py-4 md:px-10 md:py-5">
     <p class="font-yellix text-[14px] font-normal text-gray-700 order-2 sm:order-1">
-      Tento web používá cookies pro zajištění nejlepšího zážitku.
+      Trang web này sử dụng cookie để mang lại trải nghiệm tốt nhất.
     </p>
     <div class="flex items-center gap-6 order-1 sm:order-2">
       <button
         type="button"
         class="font-yellix text-[14px] font-normal text-gray-500 underline border-0 bg-transparent p-0 cursor-pointer hover:text-gray-700 transition-colors"
         data-cookie-open-settings
-        aria-label="Nastavení cookies"
+        aria-label="Cài đặt cookie"
       >
-        Nastavení
+        Cài đặt
       </button>
       <button
         type="button"
         class="font-yellix text-[14px] font-normal text-white bg-[#000000] border border-[#000000] py-2.5 px-5 cursor-pointer hover:opacity-90 transition-opacity"
         data-cookie-accept
       >
-        Souhlasím
+        Đồng ý
       </button>
     </div>
   </div>
 </div>
 
-<!-- Cookie Modal: nastavení (styl jako poptávkový formulář) -->
+<!-- Cookie Modal -->
 <div
   id="cookie-modal-overlay"
   class="cookie-modal-overlay fixed inset-0 z-[100] flex items-center justify-center bg-black/80 opacity-0 pointer-events-none transition-opacity duration-200"
@@ -57,22 +57,22 @@ const CATEGORIES = [
       <button
         type="button"
         class="absolute top-8 right-8 flex items-center gap-2 border-0 bg-transparent p-0 font-yellix text-[14px] font-normal text-gray-400 cursor-pointer hover:text-gray-600 transition-colors"
-        aria-label="Zavřít"
+        aria-label="Đóng"
         data-cookie-modal-close
       >
-        <span>Zavřít</span>
+        <span>Đóng</span>
         <span class="text-[#000000]" aria-hidden="true">×</span>
       </button>
 
       <h2 id="cookie-modal-title" class="font-yellix text-[27px] font-normal text-[#000000] pr-20 mb-8 uppercase tracking-[0.2em]">
-        Využití cookies
+        Sử dụng cookie
       </h2>
 
       <p class="font-yellix text-[14px] font-normal text-[#000000] leading-relaxed mb-10">
-        Pro zajištění plné funkčnosti a analýzu návštěvnosti využívají tyto stránky soubory cookies – malé textové soubory ukládané ve vašem prohlížeči. Ze zákona ukládáme pouze cookies nezbytně nutné pro provoz webu. Pro analytické a reklamní účely (včetně služeb třetích stran) potřebujeme váš souhlas. Podrobné informace naleznete v našich <a href="/ochrana-osobnich-udaju" class="text-[#000000] underline hover:opacity-80">Zásadách ochrany osobních údajů</a>.
+        Để đảm bảo đầy đủ chức năng và phân tích lưu lượng truy cập, trang này sử dụng cookie — các tệp văn bản nhỏ lưu trong trình duyệt của bạn. Theo luật, chúng tôi chỉ lưu cookie bắt buộc cho hoạt động của trang. Với mục đích phân tích và quảng cáo (kể cả dịch vụ bên thứ ba), chúng tôi cần sự đồng ý của bạn. Thông tin chi tiết có trong <a href="/ochrana-osobnich-udaju" class="text-[#000000] underline hover:opacity-80">Chính sách bảo vệ dữ liệu cá nhân</a>.
       </p>
 
-      <p class="font-yellix text-[14px] font-normal text-gray-500 mb-3">Kategorie</p>
+      <p class="font-yellix text-[14px] font-normal text-gray-500 mb-3">Danh mục</p>
       <div class="flex flex-wrap gap-x-6 gap-y-2 mb-10">
         {CATEGORIES.map((cat) => (
           <span class="inline-flex items-center gap-2">
@@ -99,7 +99,7 @@ const CATEGORIES = [
           class="font-yellix text-[14px] font-normal text-white bg-[#000000] border border-[#000000] py-3 px-8 cursor-pointer hover:opacity-90 transition-opacity"
           data-cookie-save
         >
-          Uložit preference
+          Lưu tùy chọn
         </button>
       </div>
     </div>

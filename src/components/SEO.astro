@@ -1,13 +1,21 @@
 ---
+interface HreflangLink {
+  lang: string;
+  href: string;
+}
+
 interface Props {
   title: string;
   description: string;
   image?: string;
+  imageAlt?: string;
   ogTitle?: string;
   ogDescription?: string;
   canonical?: string;
   ogType?: string;
-  /** např. „noindex, follow“ pro stránky chyb */
+  locale?: string;
+  hreflang?: HreflangLink[];
+  /** např. „noindex, follow“ pro preview / chyby */
   robots?: string;
 }
 
@@ -15,17 +23,35 @@ const {
   title,
   description,
   image,
+  imageAlt,
   ogTitle,
   ogDescription,
   canonical,
   ogType = 'website',
+  locale,
+  hreflang = [],
   robots = 'index, follow',
 } = Astro.props;
+
 const baseUrl = 'https://www.reamar.vn';
-const ogImage = image?.startsWith('http') ? image : image ? `${baseUrl}${image.startsWith('/') ? image : '/' + image}` : `${baseUrl}/images/og-image.jpg`;
+const defaultOgImage = `${baseUrl}/images/agency/og.png`;
+const defaultOgAlt = 'George, người đại diện hỗ trợ khách hàng mua căn hộ tại Praha bằng tiếng Việt';
+
+const ogImage = image?.startsWith('http')
+  ? image
+  : image
+    ? `${baseUrl}${image.startsWith('/') ? image : `/${image}`}`
+    : defaultOgImage;
+
+const ogImageAlt = imageAlt || defaultOgAlt;
 const ogTitleVal = ogTitle ?? title;
 const ogDescVal = ogDescription ?? description;
-const canonicalUrl = canonical?.startsWith('http') ? canonical : canonical ? `${baseUrl}${canonical.startsWith('/') ? canonical : '/' + canonical}` : undefined;
+
+const canonicalUrl = canonical
+  ? canonical.startsWith('http')
+    ? canonical
+    : `${baseUrl}${canonical.startsWith('/') ? canonical : `/${canonical}`}`
+  : undefined;
 ---
 <title>{title}</title>
 <meta name="description" content={description} />
@@ -33,14 +59,23 @@ const canonicalUrl = canonical?.startsWith('http') ? canonical : canonical ? `${
 <meta name="robots" content={robots} />
 {robots.includes('noindex') && <meta name="googlebot" content={robots} />}
 
+{hreflang.map((item) => (
+  <link rel="alternate" hreflang={item.lang} href={item.href} />
+))}
+
 <meta property="og:type" content={ogType} />
-<meta property="og:site_name" content="REAMAR | Reality. Marketing." />
+<meta property="og:site_name" content="REAMAR" />
+{locale && <meta property="og:locale" content={locale} />}
 {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
 <meta property="og:title" content={ogTitleVal} />
 <meta property="og:description" content={ogDescVal} />
 <meta property="og:image" content={ogImage} />
+<meta property="og:image:alt" content={ogImageAlt} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={ogTitleVal} />
 <meta name="twitter:description" content={ogDescVal} />
 <meta name="twitter:image" content={ogImage} />
+<meta name="twitter:image:alt" content={ogImageAlt} />

@@ -1,20 +1,20 @@
 ---
-const developerServices = ['Marketing', 'Sales', 'Kombinace služeb'];
+const developerServices = ['Marketing', 'Sales', 'Kết hợp dịch vụ'];
 const clientInterests = [
   {
     icon: 'search',
-    title: 'Osobní vyhledávání',
-    text: 'Od výběru jednotky po smlouvy.',
+    title: 'Tìm kiếm cá nhân',
+    text: 'Từ chọn căn đến hợp đồng.',
   },
   {
     icon: 'send',
-    title: 'Monitoring projektů',
-    text: 'Tipy na nové projekty podle zadání.',
+    title: 'Theo dõi dự án',
+    text: 'Gợi ý dự án mới theo yêu cầu.',
   },
   {
     icon: 'chat',
-    title: 'Nezávazná konzultace',
-    text: 'Společně vybereme, jak dál.',
+    title: 'Tư vấn không ràng buộc',
+    text: 'Cùng chọn hướng tiếp theo.',
   },
 ];
 const questionnaireUrl = 'https://www.reamar-konzultace.cz/c/dotaznik';
@@ -38,25 +38,25 @@ const questionnaireUrl = 'https://www.reamar-konzultace.cz/c/dotaznik';
       <button
         type="button"
         class="absolute top-8 right-8 flex items-center gap-2 border-0 bg-transparent p-0 font-yellix text-[14px] font-medium text-[#000000] cursor-pointer hover:opacity-80 transition-opacity"
-        aria-label="Zavřít"
+        aria-label="Đóng"
         data-smart-contact-close
       >
-        <span>Zavřít</span>
+        <span>Đóng</span>
         <span class="text-[#000000]" aria-hidden="true">×</span>
       </button>
 
       <div data-smart-contact-form-view>
       <h2 id="smart-contact-title" class="font-yellix text-[27px] font-medium text-[#000000] pr-20 mb-6">
-        Poptávkový formulář
+        Form liên hệ
       </h2>
 
       <div data-contact-client-view>
         <p class="contact-intro font-yellix text-[14px] font-medium leading-[1.55] text-black/75">
-          <span class="block md:whitespace-nowrap">Většinou začínáme <strong>nezávaznou konzultací</strong>, kde si projdeme vaše zadání, preference a vhodnou formu spolupráce.</span>
-          <span class="block md:whitespace-nowrap">Pokud už víte, co hledáte, můžete nám své preference <a href={questionnaireUrl} target="_blank" rel="noopener noreferrer">vyplnit online</a>.</span>
+          <span class="block md:whitespace-nowrap">Thường chúng tôi bắt đầu bằng <strong>tư vấn không ràng buộc</strong>, để xem yêu cầu, sở thích và hình thức hợp tác phù hợp.</span>
+          <span class="block md:whitespace-nowrap">Nếu bạn đã biết mình tìm gì, có thể <a href={questionnaireUrl} target="_blank" rel="noopener noreferrer">điền sở thích online</a>.</span>
         </p>
-        <p class="mt-8 font-yellix text-[14px] font-medium text-[#000000] mb-3">Vyberte službu</p>
-        <div class="contact-interests" role="radiogroup" aria-label="Vyberte službu">
+        <p class="mt-8 font-yellix text-[14px] font-medium text-[#000000] mb-3">Chọn dịch vụ</p>
+        <div class="contact-interests" role="radiogroup" aria-label="Chọn dịch vụ">
           {clientInterests.map((item) => (
             <button
               type="button"
@@ -94,7 +94,7 @@ const questionnaireUrl = 'https://www.reamar-konzultace.cz/c/dotaznik';
       </div>
 
       <div data-contact-developer-view class="hidden">
-        <p class="font-yellix text-[14px] font-medium text-[#000000] mb-2">Mám zájem o</p>
+        <p class="font-yellix text-[14px] font-medium text-[#000000] mb-2">Tôi quan tâm đến</p>
         <div id="smart-contact-services-developer" class="smart-contact-services flex flex-wrap gap-x-4 gap-y-1">
           {developerServices.map((s) => (
             <button
@@ -111,28 +111,28 @@ const questionnaireUrl = 'https://www.reamar-konzultace.cz/c/dotaznik';
       <form id="smart-contact-form" class="mt-8 flex flex-col gap-6" novalidate>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
           <div>
-            <label for="smart-contact-jmeno" class="block font-yellix text-[14px] font-medium text-[#000000] mb-1">Jméno</label>
+            <label for="smart-contact-jmeno" class="block font-yellix text-[14px] font-medium text-[#000000] mb-1">Họ tên</label>
             <input
               id="smart-contact-jmeno"
               name="jmeno"
               type="text"
-              placeholder="*vaše jméno a příjmení"
+              placeholder="*họ và tên của bạn"
               class="smart-contact-input w-full border-0 border-b border-gray-200 bg-transparent py-2.5 font-yellix text-[14px] font-medium text-[#000000] placeholder:text-gray-500 outline-none focus:border-[#000000] transition-colors"
               autocomplete="name"
             />
-            <span class="smart-contact-error text-red-500 font-yellix text-[12px] mt-1 hidden" data-error="jmeno">Vyplňte jméno</span>
+            <span class="smart-contact-error text-red-500 font-yellix text-[12px] mt-1 hidden" data-error="jmeno">Vui lòng điền họ tên</span>
           </div>
           <div>
-            <label for="smart-contact-telefon" class="block font-yellix text-[14px] font-medium text-[#000000] mb-1">Telefon</label>
+            <label for="smart-contact-telefon" class="block font-yellix text-[14px] font-medium text-[#000000] mb-1">Điện thoại</label>
             <input
               id="smart-contact-telefon"
               name="telefon"
               type="tel"
-              placeholder="*váš telefon"
+              placeholder="*số điện thoại của bạn"
               class="smart-contact-input w-full border-0 border-b border-gray-200 bg-transparent py-2.5 font-yellix text-[14px] font-medium text-[#000000] placeholder:text-gray-500 outline-none focus:border-[#000000] transition-colors"
               autocomplete="tel"
             />
-            <span class="smart-contact-error text-red-500 font-yellix text-[12px] mt-1 hidden" data-error="telefon">Vyplňte telefon</span>
+            <span class="smart-contact-error text-red-500 font-yellix text-[12px] mt-1 hidden" data-error="telefon">Vui lòng điền số điện thoại</span>
           </div>
           <div>
             <label for="smart-contact-email" class="block font-yellix text-[14px] font-medium text-[#000000] mb-1">E-mail</label>
@@ -140,19 +140,19 @@ const questionnaireUrl = 'https://www.reamar-konzultace.cz/c/dotaznik';
               id="smart-contact-email"
               name="email"
               type="email"
-              placeholder="*váš e-mail"
+              placeholder="*e-mail của bạn"
               class="smart-contact-input w-full border-0 border-b border-gray-200 bg-transparent py-2.5 font-yellix text-[14px] font-medium text-[#000000] placeholder:text-gray-500 outline-none focus:border-[#000000] transition-colors"
               autocomplete="email"
             />
-            <span class="smart-contact-error text-red-500 font-yellix text-[12px] mt-1 hidden" data-error="email">Vyplňte e-mail</span>
+            <span class="smart-contact-error text-red-500 font-yellix text-[12px] mt-1 hidden" data-error="email">Vui lòng điền e-mail</span>
           </div>
           <div>
-            <label for="smart-contact-vzkaz" class="block font-yellix text-[14px] font-medium text-[#000000] mb-1">Vzkaz</label>
+            <label for="smart-contact-vzkaz" class="block font-yellix text-[14px] font-medium text-[#000000] mb-1">Tin nhắn</label>
             <input
               id="smart-contact-vzkaz"
               name="vzkaz"
               type="text"
-              placeholder="Lokalita, rozpočet, dispozice, termín nákupu…"
+              placeholder="Khu vực, ngân sách, bố cục, thời điểm mua…"
               class="w-full border-0 border-b border-gray-200 bg-transparent py-2.5 font-yellix text-[14px] font-medium text-[#000000] placeholder:text-gray-500 outline-none focus:border-[#000000] transition-colors"
               autocomplete="off"
             />
@@ -166,7 +166,7 @@ const questionnaireUrl = 'https://www.reamar-konzultace.cz/c/dotaznik';
             data-smart-contact-submit
           >
             <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0 brightness-0 invert" width="12" height="12" />
-            Odeslat
+            Gửi
           </button>
           <a
             href={questionnaireUrl}
@@ -182,33 +182,33 @@ const questionnaireUrl = 'https://www.reamar-konzultace.cz/c/dotaznik';
               <path d="M10.5 15h5"/>
               <path d="M10.5 18.5h3"/>
             </svg>
-            Vyplnit preference online
+            Điền sở thích online
           </a>
         </div>
       </form>
 
       <p class="mt-6 font-yellix text-[14px] font-medium text-[#000000] leading-snug">
-        Odesláním souhlasíte se <a href="/ochrana-osobnich-udaju" class="text-[#000000] underline hover:opacity-80">Zásadami zpracování osobních údajů</a>.
+        Bằng việc gửi, bạn đồng ý với <a href="/ochrana-osobnich-udaju" class="text-[#000000] underline hover:opacity-80">Chính sách xử lý dữ liệu cá nhân</a>.
       </p>
     </div>
 
       <div data-smart-contact-success-view class="hidden">
-        <h2 class="font-yellix text-[27px] font-medium text-[#000000] pr-20 mb-6">Děkujeme</h2>
+        <h2 class="font-yellix text-[27px] font-medium text-[#000000] pr-20 mb-6">Cảm ơn bạn</h2>
         <p class="font-yellix text-[14px] font-medium text-[#000000] mb-4">
-          Váš záměr jsme přijali ke zpracování.
+          Chúng tôi đã nhận yêu cầu của bạn để xử lý.
         </p>
         <p class="font-yellix text-[14px] font-medium text-[#000000] mb-4">
-          Na uvedené údaje se vám už brzy ozveme s prvním návrhem spolupráce.
+          Chúng tôi sẽ sớm liên hệ theo thông tin đã cung cấp với đề xuất hợp tác đầu tiên.
         </p>
         <p class="font-yellix text-[14px] font-medium text-[#000000] mb-8">
-          Pokud s námi chcete mluvit dříve, rádi vás uslyšíme na čísle <a href="tel:+420607066044" class="text-[#000000] underline hover:opacity-80">+420 607 066 044</a>.
+          Nếu muốn nói chuyện sớm hơn, chúng tôi sẵn sàng nghe bạn tại số <a href="tel:+420607066044" class="text-[#000000] underline hover:opacity-80">+420 607 066 044</a>.
         </p>
         <a href="tel:+420607066044" class="inline-flex items-center gap-1.5 bg-black px-3 py-1.5 font-yellix text-[13px] font-medium leading-none text-white no-underline transition-opacity hover:opacity-85 w-fit">
           <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0 brightness-0 invert" width="12" height="12" />
-          Zavolat
+          Gọi điện
         </a>
         <p class="mt-6">
-          <button type="button" class="font-yellix text-[14px] font-medium text-[#000000] underline bg-transparent border-0 cursor-pointer p-0 hover:opacity-80 transition-opacity" data-smart-contact-close>zavřít</button>
+          <button type="button" class="font-yellix text-[14px] font-medium text-[#000000] underline bg-transparent border-0 cursor-pointer p-0 hover:opacity-80 transition-opacity" data-smart-contact-close>đóng</button>
         </p>
       </div>
     </div>
@@ -317,14 +317,14 @@ const questionnaireUrl = 'https://www.reamar-konzultace.cz/c/dotaznik';
     const questionnaireBtn = modal?.querySelector('[data-contact-questionnaire]');
 
     let userType = 'client';
-    let selectedService = 'Nezávazná konzultace';
+    let selectedService = 'Tư vấn không ràng buộc';
 
     function mapClientInterest(value) {
-      if (!value) return 'Nezávazná konzultace';
+      if (!value) return 'Tư vấn không ràng buộc';
       const v = String(value).toLowerCase();
-      if (v.indexOf('monitor') !== -1) return 'Monitoring projektů';
-      if (v.indexOf('vyhled') !== -1 || v.indexOf('osobní') !== -1) return 'Osobní vyhledávání';
-      return 'Nezávazná konzultace';
+      if (v.indexOf('theo dõi') !== -1 || v.indexOf('monitor') !== -1) return 'Theo dõi dự án';
+      if (v.indexOf('tìm kiếm') !== -1 || v.indexOf('cá nhân') !== -1 || v.indexOf('vyhled') !== -1 || v.indexOf('osobní') !== -1) return 'Tìm kiếm cá nhân';
+      return 'Tư vấn không ràng buộc';
     }
 
     function setMode(type) {
@@ -366,7 +366,7 @@ const questionnaireUrl = 'https://www.reamar-konzultace.cz/c/dotaznik';
     function resetSubmit() {
       if (!submitBtn) return;
       submitBtn.disabled = false;
-      submitBtn.innerHTML = '<img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0 brightness-0 invert" width="12" height="12" />Odeslat';
+      submitBtn.innerHTML = '<img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0 brightness-0 invert" width="12" height="12" />Gửi';
     }
 
     function openModal(options) {
@@ -388,7 +388,7 @@ const questionnaireUrl = 'https://www.reamar-konzultace.cz/c/dotaznik';
       if (successView) successView.classList.add('hidden');
       resetSubmit();
       const titleEl = document.getElementById('smart-contact-title');
-      if (titleEl) titleEl.textContent = options.customTitle || 'Poptávkový formulář';
+      if (titleEl) titleEl.textContent = options.customTitle || 'Form liên hệ';
       overlay.classList.remove('opacity-0', 'pointer-events-none');
       overlay.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
@@ -434,7 +434,7 @@ const questionnaireUrl = 'https://www.reamar-konzultace.cz/c/dotaznik';
       }
       if (!valid) return;
       if (submitBtn) {
-        submitBtn.textContent = 'Odesílám...';
+        submitBtn.textContent = 'Đang gửi...';
         submitBtn.disabled = true;
       }
       try {
@@ -444,7 +444,7 @@ const questionnaireUrl = 'https://www.reamar-konzultace.cz/c/dotaznik';
           telefon,
           email,
           vzkaz: vzkaz || '',
-          userType: userType === 'developer' ? 'Developer' : 'Koncový klient',
+          userType: userType === 'developer' ? 'Developer' : 'Khách hàng cuối',
           selectedService: selectedService ?? '',
         });
         if (error) {

@@ -15,25 +15,31 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  imageAlt?: string;
   ogTitle?: string;
   ogDescription?: string;
   canonical?: string;
   ogType?: string;
+  locale?: string;
+  hreflang?: { lang: string; href: string }[];
   robots?: string;
 }
 const {
   title = 'REAMAR | Reality. Marketing.',
-  description = 'Propojujeme marketing a obchod pro realitní developery.',
+  description = 'Đại diện người mua trên thị trường dự án mới tại Praha.',
   image,
+  imageAlt,
   ogTitle,
   ogDescription,
   canonical,
   ogType,
+  locale,
+  hreflang,
   robots,
 } = Astro.props;
 ---
 <!DOCTYPE html>
-<html lang="cs" class="onepager overflow-x-clip w-full">
+<html lang="vi" class="onepager overflow-x-clip w-full">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -41,10 +47,13 @@ const {
       title={title}
       description={description}
       image={image}
+      imageAlt={imageAlt}
       ogTitle={ogTitle}
       ogDescription={ogDescription}
       canonical={canonical}
       ogType={ogType}
+      locale={locale}
+      hreflang={hreflang}
       robots={robots}
     />
     <link rel="icon" type="image/svg+xml" href="/images/Reamar%20SVG.svg" />

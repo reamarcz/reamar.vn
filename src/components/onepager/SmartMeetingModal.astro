@@ -2,13 +2,13 @@
 const meetingTypes = [
   {
     icon: 'coffee',
-    title: 'Osobní schůzka v Praze',
+    title: 'Gặp trực tiếp tại Praha',
     text: 'Záběhlický zámek, Za potokem 46/4, 106 00 Praha 10',
   },
   {
     icon: 'screen',
     title: 'Online',
-    text: 'Schůzka na dálku',
+    text: 'Gặp từ xa',
   },
 ];
 ---
@@ -28,25 +28,25 @@ const meetingTypes = [
     onclick="event.stopPropagation()"
   >
     <div class="p-10 md:p-14 lg:p-16">
-      <!-- Zavřít -->
+      <!-- Đóng -->
       <button
         type="button"
         class="absolute top-8 right-8 flex items-center gap-2 border-0 bg-transparent p-0 font-yellix text-[14px] font-normal text-[#000000] cursor-pointer hover:opacity-80 transition-opacity"
-        aria-label="Zavřít"
+        aria-label="Đóng"
         data-smart-meeting-close
       >
-        <span>Zavřít</span>
+        <span>Đóng</span>
         <span class="text-[#000000]" aria-hidden="true">×</span>
       </button>
 
       <div data-smart-meeting-form-view>
       <h2 id="smart-meeting-title" class="font-yellix text-[27px] font-normal text-[#000000] pr-20 mb-10">
-        Domluvit schůzku
+        Đặt lịch gặp
       </h2>
 
       <div class="mb-10">
-        <p class="font-yellix text-[14px] font-normal text-[#000000] mb-3">Mám zájem o</p>
-        <div class="meeting-interests" role="radiogroup" aria-label="Mám zájem o">
+        <p class="font-yellix text-[14px] font-normal text-[#000000] mb-3">Tôi quan tâm đến</p>
+        <div class="meeting-interests" role="radiogroup" aria-label="Tôi quan tâm đến">
           {meetingTypes.map((item, i) => (
             <button
               type="button"
@@ -82,28 +82,28 @@ const meetingTypes = [
       <form id="smart-meeting-form" class="flex flex-col gap-6" novalidate>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
           <div>
-            <label for="smart-meeting-jmeno" class="block font-yellix text-[14px] font-normal text-[#000000] mb-1">Jméno</label>
+            <label for="smart-meeting-jmeno" class="block font-yellix text-[14px] font-normal text-[#000000] mb-1">Họ tên</label>
             <input
               id="smart-meeting-jmeno"
               name="jmeno"
               type="text"
-              placeholder="*vaše jméno a příjmení"
+              placeholder="*họ và tên của bạn"
               class="smart-meeting-input w-full border-0 border-b border-gray-200 bg-transparent py-2.5 font-yellix text-[14px] font-normal text-[#000000] placeholder:text-gray-500 outline-none focus:border-[#000000] transition-colors"
               autocomplete="name"
             />
-            <span class="smart-meeting-error text-red-500 font-yellix text-[12px] mt-1 hidden" data-error="jmeno">Vyplňte jméno</span>
+            <span class="smart-meeting-error text-red-500 font-yellix text-[12px] mt-1 hidden" data-error="jmeno">Vui lòng điền họ tên</span>
           </div>
           <div>
-            <label for="smart-meeting-telefon" class="block font-yellix text-[14px] font-normal text-[#000000] mb-1">Telefon</label>
+            <label for="smart-meeting-telefon" class="block font-yellix text-[14px] font-normal text-[#000000] mb-1">Điện thoại</label>
             <input
               id="smart-meeting-telefon"
               name="telefon"
               type="tel"
-              placeholder="*váš telefon"
+              placeholder="*số điện thoại của bạn"
               class="smart-meeting-input w-full border-0 border-b border-gray-200 bg-transparent py-2.5 font-yellix text-[14px] font-normal text-[#000000] placeholder:text-gray-500 outline-none focus:border-[#000000] transition-colors"
               autocomplete="tel"
             />
-            <span class="smart-meeting-error text-red-500 font-yellix text-[12px] mt-1 hidden" data-error="telefon">Vyplňte telefon</span>
+            <span class="smart-meeting-error text-red-500 font-yellix text-[12px] mt-1 hidden" data-error="telefon">Vui lòng điền số điện thoại</span>
           </div>
           <div>
             <label for="smart-meeting-email" class="block font-yellix text-[14px] font-normal text-[#000000] mb-1">E-mail</label>
@@ -111,24 +111,24 @@ const meetingTypes = [
               id="smart-meeting-email"
               name="email"
               type="email"
-              placeholder="*váš e-mail"
+              placeholder="*e-mail của bạn"
               class="smart-meeting-input w-full border-0 border-b border-gray-200 bg-transparent py-2.5 font-yellix text-[14px] font-normal text-[#000000] placeholder:text-gray-500 outline-none focus:border-[#000000] transition-colors"
               autocomplete="email"
             />
-            <span class="smart-meeting-error text-red-500 font-yellix text-[12px] mt-1 hidden" data-error="email">Vyplňte e-mail</span>
+            <span class="smart-meeting-error text-red-500 font-yellix text-[12px] mt-1 hidden" data-error="email">Vui lòng điền e-mail</span>
           </div>
           <div>
-            <label for="smart-meeting-vzkaz" class="block font-yellix text-[14px] font-normal text-[#000000] mb-1">Vzkaz a návrh termínu</label>
+            <label for="smart-meeting-vzkaz" class="block font-yellix text-[14px] font-normal text-[#000000] mb-1">Tin nhắn và đề xuất thời gian</label>
             <input
               id="smart-meeting-vzkaz"
               name="vzkaz"
               type="text"
-              placeholder="*navrhněte termín, který vám vyhovuje"
+              placeholder="*đề xuất thời gian phù hợp với bạn"
               required
               class="smart-meeting-input w-full border-0 border-b border-gray-200 bg-transparent py-2.5 font-yellix text-[14px] font-normal text-[#000000] placeholder:text-gray-500 outline-none focus:border-[#000000] transition-colors"
               autocomplete="off"
             />
-            <span class="smart-meeting-error text-red-500 font-yellix text-[12px] mt-1 hidden" data-error="vzkaz">Vyplňte vzkaz a návrh termínu</span>
+            <span class="smart-meeting-error text-red-500 font-yellix text-[12px] mt-1 hidden" data-error="vzkaz">Vui lòng điền tin nhắn và đề xuất thời gian</span>
           </div>
         </div>
 
@@ -137,33 +137,33 @@ const meetingTypes = [
           class="mt-4 w-full bg-[#000000] text-white font-yellix text-[14px] font-normal py-4 text-center border-0 cursor-pointer hover:opacity-90 transition-opacity disabled:opacity-70 disabled:cursor-not-allowed"
           data-smart-meeting-submit
         >
-          Odeslat
+          Gửi
         </button>
       </form>
 
       <p class="mt-6 font-yellix text-[14px] font-normal text-[#000000] leading-snug">
-        Odesláním souhlasíte se <a href="/ochrana-osobnich-udaju" class="text-[#000000] underline hover:opacity-80">Zásadami zpracování osobních údajů</a>.
+        Bằng việc gửi, bạn đồng ý với <a href="/ochrana-osobnich-udaju" class="text-[#000000] underline hover:opacity-80">Chính sách xử lý dữ liệu cá nhân</a>.
       </p>
     </div>
 
-      <!-- Success State (Děkovná zpráva) -->
+      <!-- Success State -->
       <div data-smart-meeting-success-view class="hidden">
-        <h2 class="font-yellix text-[27px] font-normal text-[#000000] pr-20 mb-6">Děkujeme</h2>
+        <h2 class="font-yellix text-[27px] font-normal text-[#000000] pr-20 mb-6">Cảm ơn bạn</h2>
         <p class="font-yellix text-[14px] font-normal text-[#000000] mb-4">
-          Váš záměr jsme přijali ke zpracování.
+          Chúng tôi đã nhận yêu cầu của bạn để xử lý.
         </p>
         <p class="font-yellix text-[14px] font-normal text-[#000000] mb-4">
-          Na uvedené údaje se vám už brzy ozveme s prvním návrhem spolupráce.
+          Chúng tôi sẽ sớm liên hệ theo thông tin đã cung cấp với đề xuất hợp tác đầu tiên.
         </p>
         <p class="font-yellix text-[14px] font-normal text-[#000000] mb-8">
-          Pokud s námi chcete mluvit dříve, rádi vás uslyšíme na čísle <a href="tel:+420607066044" class="text-[#000000] underline hover:opacity-80">+420 607 066 044</a>.
+          Nếu muốn nói chuyện sớm hơn, chúng tôi sẵn sàng nghe bạn tại số <a href="tel:+420607066044" class="text-[#000000] underline hover:opacity-80">+420 607 066 044</a>.
         </p>
         <a href="tel:+420607066044" class="inline-flex items-center gap-1.5 bg-[#000000] text-white font-yellix text-[14px] font-normal py-2 px-3 border-0 cursor-pointer hover:opacity-90 transition-opacity no-underline w-fit">
-          <span>Zavolat</span>
+          <span>Gọi điện</span>
           <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         </a>
         <p class="mt-6">
-          <button type="button" class="font-yellix text-[14px] font-normal text-[#000000] underline bg-transparent border-0 cursor-pointer p-0 hover:opacity-80 transition-opacity" data-smart-meeting-close>zavřít</button>
+          <button type="button" class="font-yellix text-[14px] font-normal text-[#000000] underline bg-transparent border-0 cursor-pointer p-0 hover:opacity-80 transition-opacity" data-smart-meeting-close>đóng</button>
         </p>
       </div>
     </div>
@@ -257,7 +257,7 @@ const meetingTypes = [
     const submitBtn = form?.querySelector('[data-smart-meeting-submit]');
     const serviceButtons = modal.querySelectorAll('.smart-meeting-service');
 
-    let selectedService = 'Osobní schůzka v Praze';
+    let selectedService = 'Gặp trực tiếp tại Praha';
 
     function setSelectedService(value) {
       selectedService = value;
@@ -271,13 +271,13 @@ const meetingTypes = [
     function openModal(options) {
       options = options || {};
       const initialService = options.initialService || null;
-      selectedService = initialService || 'Osobní schůzka v Praze';
+      selectedService = initialService || 'Gặp trực tiếp tại Praha';
       setSelectedService(selectedService);
       if (form) form.reset();
       document.querySelectorAll('.smart-meeting-error').forEach(function (el) { el.classList.add('hidden'); });
       if (formView) formView.classList.remove('hidden');
       if (successView) successView.classList.add('hidden');
-      if (submitBtn) { submitBtn.textContent = 'Odeslat'; submitBtn.disabled = false; }
+      if (submitBtn) { submitBtn.textContent = 'Gửi'; submitBtn.disabled = false; }
     if (!overlay) return;
     overlay.classList.remove('opacity-0', 'pointer-events-none');
       overlay.setAttribute('aria-hidden', 'false');
@@ -300,7 +300,7 @@ const meetingTypes = [
       if (formView) formView.classList.remove('hidden');
       if (successView) successView.classList.add('hidden');
       if (submitBtn) {
-        submitBtn.textContent = 'Odeslat';
+        submitBtn.textContent = 'Gửi';
         submitBtn.disabled = false;
       }
       window.dispatchEvent(new CustomEvent('smart-modal-closed'));
@@ -331,7 +331,7 @@ const meetingTypes = [
       }
       if (!valid) return;
       if (submitBtn) {
-        submitBtn.textContent = 'Odesílám...';
+        submitBtn.textContent = 'Đang gửi...';
         submitBtn.disabled = true;
       }
       try {
@@ -344,7 +344,7 @@ const meetingTypes = [
           selectedService: selectedService ?? '',
         });
         if (error) {
-          if (submitBtn) { submitBtn.textContent = 'Odeslat'; submitBtn.disabled = false; }
+          if (submitBtn) { submitBtn.textContent = 'Gửi'; submitBtn.disabled = false; }
           return;
         }
         if (data && formView && successView) {
@@ -352,7 +352,7 @@ const meetingTypes = [
           successView.classList.remove('hidden');
         }
       } catch (_) {
-        if (submitBtn) { submitBtn.textContent = 'Odeslat'; submitBtn.disabled = false; }
+        if (submitBtn) { submitBtn.textContent = 'Gửi'; submitBtn.disabled = false; }
       }
     }
 

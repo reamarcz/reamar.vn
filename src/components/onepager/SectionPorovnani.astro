@@ -7,41 +7,41 @@ const { ctaHref = '/sluzby' } = Astro.props;
 const columns = [
   {
     featured: true,
-    title: 'Nákupní agentura',
+    title: 'Đại diện người mua',
     intro:
-      'Nákupní agentura neprodává konkrétní projekt ani jednu vybranou nabídku. Pomáhá klientovi porovnat možnosti a vybrat nemovitost podle jeho zadání, rozpočtu a důvodu nákupu.',
+      'Đại diện người mua không bán một dự án cụ thể hay một ưu đãi đã chọn sẵn. Chúng tôi giúp khách hàng so sánh các lựa chọn và tìm bất động sản theo yêu cầu, ngân sách và lý do mua của họ.',
     points: [
-      'hledá podle vašeho cíle',
-      'porovnává nabídky napříč trhem',
-      'prověřuje cenu, dispozici, lokalitu i rizika',
-      'upozorní na slabá místa nabídky',
-      'pomáhá s rezervací, jednáním a smlouvami',
+      'tìm kiếm theo mục tiêu của bạn',
+      'so sánh ưu đãi trên toàn thị trường',
+      'kiểm tra giá, bố cục, khu vực và rủi ro',
+      'chỉ ra điểm yếu của ưu đãi',
+      'hỗ trợ đặt chỗ, đàm phán và hợp đồng',
     ],
   },
   {
     featured: false,
-    title: 'Developer',
+    title: 'Chủ đầu tư',
     intro:
-      'Developer zná svůj projekt nejlépe. Umí vysvětlit standard, harmonogram, financování i dostupné jednotky. Jeho cílem je ale prodat vlastní nabídku.',
+      'Chủ đầu tư hiểu dự án của mình nhất. Họ có thể giải thích tiêu chuẩn, tiến độ, tài chính và các căn còn lại. Nhưng mục tiêu của họ là bán ưu đãi của chính mình.',
     points: [
-      'představuje vlastní projekt',
-      'doporučuje jednotky ze svého ceníku',
-      'vysvětluje parametry a podmínky koupě',
-      'zdůrazňuje silné stránky projektu',
-      'neporovnává nezávisle celý trh',
+      'giới thiệu dự án của mình',
+      'đề xuất căn từ bảng giá của họ',
+      'giải thích thông số và điều kiện mua',
+      'nhấn mạnh điểm mạnh của dự án',
+      'không so sánh độc lập toàn thị trường',
     ],
   },
   {
     featured: false,
-    title: 'Realitní kancelář',
+    title: 'Công ty môi giới',
     intro:
-      'Realitní kancelář pracuje s nemovitostmi, které má v portfoliu. Pomáhá s prohlídkami, komunikací a transakcí, ale obvykle nevychází z nezávislého výběru napříč novostavbami.',
+      'Công ty môi giới làm việc với bất động sản trong danh mục của họ. Họ hỗ trợ xem nhà, liên lạc và giao dịch, nhưng thường không xuất phát từ lựa chọn độc lập trên toàn bộ nhà mới.',
     points: [
-      'nabízí své nemovitosti',
-      'řeší konkrétní byt nebo projekt',
-      'pomáhá s prohlídkou a transakcí',
-      'často zastupuje prodávajícího',
-      'nemusí hledat napříč celým trhem',
+      'chào bán bất động sản của họ',
+      'xử lý một căn hoặc một dự án cụ thể',
+      'hỗ trợ xem nhà và giao dịch',
+      'thường đại diện bên bán',
+      'không nhất thiết tìm trên toàn thị trường',
     ],
   },
 ];
@@ -52,14 +52,14 @@ const columns = [
     <div class="flex flex-col items-center gap-5 text-center md:gap-6" data-porov-cite>
       <blockquote class="porov-cite m-0">
         <p class="m-0 font-yellix text-[24px] font-medium leading-[1.22] tracking-[-0.02em] text-black md:text-[30px] xl:text-[34px]">
-          <span class="porov-cite-line md:whitespace-nowrap" style="--i: 0">„Developer vám nabídne svůj projekt,</span>
-          <span class="porov-cite-line md:whitespace-nowrap" style="--i: 1">realitní kancelář svoje nemovitosti.“</span>
+          <span class="porov-cite-line md:whitespace-nowrap" style="--i: 0">„Chủ đầu tư chào bạn dự án của họ,</span>
+          <span class="porov-cite-line md:whitespace-nowrap" style="--i: 1">công ty môi giới chào bất động sản của họ.“</span>
         </p>
       </blockquote>
       <div class="porov-cite-rule" aria-hidden="true"></div>
       <p class="porov-cite-late font-yellix text-[14px] font-medium leading-[1.7] text-black md:text-[15px]">
-        <span class="block md:whitespace-nowrap">My jsme se rozhodli postavit službu, která začíná u kupujícího.</span>
-        <span class="block md:whitespace-nowrap">Ne u nabídky, kterou je potřeba prodat.</span>
+        <span class="block md:whitespace-nowrap">Chúng tôi quyết định xây dựng dịch vụ bắt đầu từ người mua.</span>
+        <span class="block md:whitespace-nowrap">Không phải từ ưu đãi cần được bán.</span>
       </p>
     </div>
 
@@ -75,7 +75,7 @@ const columns = [
         width="20"
         height="20"
       />
-      Porovnání
+      So sánh
     </h2>
 
     <div class="porov-grid mt-10 md:mt-14" data-porov-grid>
@@ -104,7 +104,7 @@ const columns = [
               style="--p: 9"
             >
               <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0" width="12" height="12" />
-              Vybrat službu
+              Chọn dịch vụ
             </a>
           )}
         </article>

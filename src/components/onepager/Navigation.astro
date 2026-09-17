@@ -4,10 +4,10 @@ type NavLink = { href: string; label: string; external?: boolean };
 const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
 
 const navLinks: NavLink[] = [
-  { href: '/#koncept', label: 'Co děláme' },
-  { href: '/#aktualne-pripravujeme', label: 'Předprodej' },
-  { href: '/#specializace', label: 'Specializace' },
-  { href: '/#o-nas', label: 'O nás' },
+  { href: '/#koncept', label: 'Chúng tôi làm gì' },
+  { href: '/#aktualne-pripravujeme', label: 'Pre-sale' },
+  { href: '/#specializace', label: 'Chuyên môn' },
+  { href: '/#o-nas', label: 'Về chúng tôi' },
   { href: '/sluzby#nejcastejsi-otazky', label: 'FAQ' },
 ];
 
@@ -45,21 +45,21 @@ const isCurrent = (href: string) => {
       </a>
       <div class="nav-aside hidden min-w-0 md:block" data-nav-aside>
           <div class="nav-live" data-nav-live>
-            <p class="nav-muted font-yellix text-[10px] font-medium leading-none text-black/50">Aktuální nabídka v Praze a okolí</p>
+            <p class="nav-muted font-yellix text-[10px] font-medium leading-none text-black/50">Nguồn cung hiện tại tại Praha và vùng phụ cận</p>
             <p class="nav-fg mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 font-yellix text-[13px] leading-none text-black">
               <span class="nav-live-dot" aria-hidden="true"></span>
-              <span class="font-medium">562 projektů</span>
-              <span class="nav-muted font-medium text-black/55">9 689 jednotek</span>
+              <span class="font-medium">562 dự án</span>
+              <span class="nav-muted font-medium text-black/55">9.689 căn</span>
             </p>
           </div>
           <p class="nav-title nav-fg font-yellix text-[13px] font-medium leading-[1.2] text-black" data-nav-title aria-hidden="true">
-            Zastupujeme kupující<br />
-            na developerském trhu
+            Đại diện người mua<br />
+            trên thị trường chủ đầu tư
           </p>
         </div>
     </div>
 
-    <nav class="hidden items-center gap-5 xl:gap-9 lg:flex" aria-label="Hlavní">
+    <nav class="hidden items-center gap-5 xl:gap-9 lg:flex" aria-label="Chính">
       {navLinks.map((link) => (
         <a
           href={link.href}
@@ -84,7 +84,7 @@ const isCurrent = (href: string) => {
         aria-current={isCurrent('/sluzby') ? 'page' : undefined}
       >
         <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0" width="12" height="12" />
-        Vybrat službu
+        Chọn dịch vụ
       </a>
     </nav>
 
@@ -115,7 +115,7 @@ const isCurrent = (href: string) => {
     type="button"
     class="absolute inset-0 bg-black/85 opacity-0 transition-opacity duration-300 data-[open]:opacity-100 pointer-events-none data-[open]:pointer-events-auto"
     data-drawer-backdrop
-    aria-label="Zavřít menu"
+    aria-label="Đóng menu"
   ></button>
   <div
     class="absolute right-0 top-0 bottom-0 flex w-full max-w-[360px] min-h-0 flex-col bg-white opacity-0 translate-x-full transition-all duration-300 pointer-events-auto data-[open]:opacity-100 data-[open]:translate-x-0 z-10"
@@ -124,17 +124,17 @@ const isCurrent = (href: string) => {
     <button
       type="button"
       class="flex shrink-0 items-center justify-end gap-2 px-6 pt-6 pb-4 w-full border-0 bg-transparent cursor-pointer hover:opacity-80"
-      aria-label="Zavřít menu"
+      aria-label="Đóng menu"
       data-drawer-close
     >
-      <span class="font-yellix text-[14px] font-medium text-black">Zavřít</span>
+      <span class="font-yellix text-[14px] font-medium text-black">Đóng</span>
       <span class="relative flex h-10 w-10 shrink-0 items-center justify-center">
         <span class="absolute left-1/2 top-1/2 h-px w-5 -translate-x-1/2 -translate-y-1/2 rotate-45 bg-current"></span>
         <span class="absolute left-1/2 top-1/2 h-px w-5 -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-current"></span>
       </span>
     </button>
 
-    <nav class="flex flex-1 flex-col gap-5 overflow-y-auto px-8 pb-10 pt-2" aria-label="Hlavní">
+    <nav class="flex flex-1 flex-col gap-5 overflow-y-auto px-8 pb-10 pt-2" aria-label="Chính">
       {navLinks.map((link) => (
         <a
           href={link.href}
@@ -161,7 +161,7 @@ const isCurrent = (href: string) => {
         data-drawer-close
       >
         <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0" width="12" height="12" />
-        Vybrat službu
+        Chọn dịch vụ
       </a>
     </nav>
   </div>

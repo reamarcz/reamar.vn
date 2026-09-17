@@ -4,37 +4,37 @@ const items = [
     image: '/images/agency/statistiky.webp',
     imageWidth: 1000,
     imageHeight: 760,
-    titleHtml: 'Vlastní software<br />na monitoring trhu',
-    tags: ['99 % trhu', 'AI analýza', '40+ parametrů výběru'],
-    bodyBefore: 'Sbíráme data od partnerů, zpracováváme je pomocí AI a ',
-    bodyEm: 'obohacujeme',
+    titleHtml: 'Phần mềm riêng<br />theo dõi thị trường',
+    tags: ['99 % thị trường', 'Phân tích AI', '40+ tiêu chí lựa chọn'],
+    bodyBefore: 'Chúng tôi thu thập dữ liệu từ đối tác, xử lý bằng AI và ',
+    bodyEm: 'bổ sung',
     bodyAfter:
-      ' o zkušenosti z reálného prodeje developerských projektů. Díky tomu vidíme trh v hloubce, kterou běžné portály ani veřejné ceníky nenabízejí.',
-    nav: 'Monitoring trhu',
+      ' kinh nghiệm từ bán hàng thực tế các dự án chủ đầu tư. Nhờ đó, chúng tôi nhìn thị trường sâu hơn những gì cổng thông tin hay bảng giá công khai mang lại.',
+    nav: 'Theo dõi thị trường',
   },
   {
     image: '/images/agency/vyjednavani.webp',
     imageWidth: 1000,
     imageHeight: 760,
-    titleHtml: 'Vyjednávání s developerem<br />a právní servis',
-    tags: ['Ověření developera', 'Vyjednání podmínek', 'Bezpečný podpis'],
+    titleHtml: 'Đàm phán với chủ đầu tư<br />và hỗ trợ pháp lý',
+    tags: ['Xác minh chủ đầu tư', 'Đàm phán điều kiện', 'Ký kết an toàn'],
     bodyBefore:
-      'Máme za sebou stovky transakcí a jednání s developery. Díky tomu víme, co si v nákupním procesu pohlídat, kde bývá prostor pro úpravu ceny nebo podmínek a kde je naopak lepší neztrácet čas. Klientovi můžeme být po celou dobu nákupu odborným partnerem, nebo celý proces řešit jeho jménem na základě plné moci.',
+      'Chúng tôi đã thực hiện hàng trăm giao dịch và buổi đàm phán với chủ đầu tư. Vì vậy, chúng tôi biết cần kiểm soát điều gì trong quá trình mua, đâu là dư địa để điều chỉnh giá hoặc điều kiện, và đâu không nên lãng phí thời gian. Chúng tôi có thể đồng hành với khách hàng trong suốt quá trình mua với tư cách đối tác chuyên môn, hoặc xử lý toàn bộ quy trình nhân danh khách hàng trên cơ sở ủy quyền.',
     bodyEm: '',
     bodyAfter: '',
-    nav: 'Vyjednávání',
+    nav: 'Đàm phán',
   },
   {
     image: '/images/agency/projekty-seznam.webp',
     imageWidth: 1000,
     imageHeight: 760,
-    titleHtml: 'Předprodej projektů<br />a neveřejné nabídky',
-    tags: ['Přednostní výběr', 'Rezervace před spuštěním'],
+    titleHtml: 'Pre-sale dự án<br />và ưu đãi không công khai',
+    tags: ['Lựa chọn ưu tiên', 'Đặt chỗ trước khi mở bán'],
     bodyBefore:
-      'U vybraných projektů máme často předrezervované jednotky pro naše klienty ještě před oficiálním spuštěním prodeje. Díky široké síti kontaktů se k nabídkám dostáváme za výhodnějších podmínek a ve fázi, kdy ještě nejsou veřejně dostupné.',
+      'Với một số dự án chọn lọc, chúng tôi thường đã giữ chỗ trước các căn cho khách hàng trước khi chính thức mở bán. Nhờ mạng lưới liên hệ rộng, chúng tôi tiếp cận ưu đãi với điều kiện tốt hơn và ở giai đoạn chưa công khai.',
     bodyEm: '',
     bodyAfter: '',
-    nav: 'Předprodej',
+    nav: 'Pre-sale',
   },
 ];
 
@@ -62,9 +62,9 @@ const { showSoftwarePlay = true } = Astro.props;
           width="20"
           height="20"
         />
-        Naše specializace
+        Chuyên môn của chúng tôi
       </h2>
-      <nav class="spec-steps" aria-label="Kroky specializace">
+      <nav class="spec-steps" aria-label="Các bước chuyên môn">
         {items.map((step, stepIndex) => (
           <button
             type="button"
@@ -105,7 +105,7 @@ const { showSoftwarePlay = true } = Astro.props;
                 <svg class="h-3.5 w-3.5 shrink-0" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true">
                   <path d="M3.2 1.6v8.8L10.4 6 3.2 1.6Z"/>
                 </svg>
-                Přehrát ukázku
+                Phát mẫu
               </button>
             )}
           </div>

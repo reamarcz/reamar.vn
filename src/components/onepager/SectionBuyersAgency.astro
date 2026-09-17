@@ -4,24 +4,24 @@ interface Props {
   ctaHref?: string;
 }
 
-const { ctaLabel = 'Jak to funguje', ctaHref = '/sluzby' } = Astro.props;
+const { ctaLabel = 'Cách hoạt động', ctaHref = '/sluzby' } = Astro.props;
 
 const cards = [
   {
-    title: 'Vyhledávání na celém trhu novostaveb',
-    text: 'V Praze sledujeme téměř deset tisíc jednotek napříč stovkami developerských projektů.',
+    title: 'Tìm kiếm trên toàn thị trường nhà mới',
+    text: 'Tại Praha, chúng tôi theo dõi gần mười nghìn căn trên hàng trăm dự án của chủ đầu tư.',
     icon: 'search',
     offset: '',
   },
   {
-    title: 'Zvýhodněné podmínky u developerů',
-    text: 'Díky kontaktům na developerském trhu řešíme předprodeje, neveřejné nabídky a podmínky, ke kterým se kupující sám často nedostane.',
+    title: 'Điều kiện ưu đãi từ chủ đầu tư',
+    text: 'Nhờ mạng lưới trên thị trường chủ đầu tư, chúng tôi tiếp cận pre-sale, ưu đãi không công khai và điều kiện mà người mua thường khó tiếp cận một mình.',
     icon: 'reserve',
     offset: 'lg:mt-8',
   },
   {
-    title: 'Komunikace s developerem a právní servis',
-    text: 'Od rezervace po podpis smluv stojíme na vaší straně. Hlídáme podmínky, termíny, dokumentaci i body, které se v nákupu snadno přehlédnou.',
+    title: 'Liên lạc với chủ đầu tư và hỗ trợ pháp lý',
+    text: 'Từ đặt chỗ đến ký hợp đồng, chúng tôi đứng về phía bạn. Chúng tôi theo dõi điều kiện, tiến độ, hồ sơ và những điểm dễ bị bỏ qua khi mua.',
     icon: 'deal',
     offset: '',
   },
@@ -37,13 +37,13 @@ const cards = [
           class="koncept-copy whitespace-nowrap font-yellix text-[28px] font-medium leading-[1.12] tracking-[-0.02em] text-black md:text-[36px] xl:text-[40px]"
           style="--copy-i: 0"
         >
-          Koncept Buyer’s Agency
+          Khái niệm Buyer’s Agency
         </h2>
         <p class="koncept-copy mt-5 max-w-[36ch] font-yellix text-[16px] font-medium leading-[1.45] text-black md:text-[18px]" style="--copy-i: 1">
-          Buyer’s agent je na západních trzích běžný princip odborného <span class="font-medium">zastoupení kupujícího</span>.
+          Buyer’s agent là nguyên tắc phổ biến trên các thị trường phương Tây về <span class="font-medium">đại diện chuyên nghiệp cho người mua</span>.
         </p>
         <p class="koncept-quote koncept-copy mt-8 ml-6 max-w-[40ch] font-yellix text-[14px] font-medium leading-[1.55] text-black/75 md:ml-10 md:text-[15px]" style="--copy-i: 2">
-          Klient má při nákupu nemovitosti partnera, který nestojí na straně konkrétní nabídky, ale na straně jeho rozhodnutí. Tento přístup přinášíme do Prahy se specializací na developerské projekty.
+          Khi mua bất động sản, khách hàng có một đối tác không đứng về một ưu đãi cụ thể, mà đứng về quyết định của họ. Chúng tôi mang cách tiếp cận này đến Praha, với chuyên môn về các dự án chủ đầu tư.
         </p>
       </div>
 

@@ -8,30 +8,40 @@ import SectionNasPribeh from '../components/onepager/SectionNasPribeh.astro';
 import SectionPorovnani from '../components/onepager/SectionPorovnani.astro';
 import SectionAktualnePripravujeme from '../components/onepager/SectionAktualnePripravujeme.astro';
 import SectionFooter from '../components/onepager/SectionFooter.astro';
+
+const canonical = 'https://www.reamar.vn/';
+const ogImage = '/images/agency/og.png';
+const ogImageAlt = 'George, người đại diện hỗ trợ khách hàng mua căn hộ tại Praha bằng tiếng Việt';
 ---
 <OnepagerLayout
-  title="Agentura pro kupující | REAMAR"
-  description="Zastupujeme kupující na developerském trhu. Sledujeme trh, vybíráme vhodné jednotky a jednáme s developerem na vaší straně."
-  robots="noindex, nofollow, noarchive"
+  title="Mua căn hộ mới tại Praha | Đại diện bên mua"
+  description="Tìm căn hộ mới tại Praha để ở hoặc đầu tư. Đại diện bên mua, đàm phán với chủ đầu tư và tiếp cận giỏ hàng trước khi mở bán. Tư vấn bằng tiếng Việt."
+  ogTitle="Mua căn hộ tại Praha, có người đồng hành cùng bạn"
+  ogDescription="Từ lựa chọn căn hộ đến đàm phán và ký hợp đồng, chúng tôi đồng hành cùng bạn bằng tiếng Việt. Đặt lịch gặp để trao đổi nhu cầu và tìm hiểu các dự án phù hợp."
+  image={ogImage}
+  imageAlt={ogImageAlt}
+  canonical={canonical}
+  ogType="website"
+  locale="vi_VN"
+  hreflang={[
+    { lang: 'vi', href: canonical },
+    { lang: 'x-default', href: canonical },
+  ]}
 >
-  <!-- Předprodej Vinohrady (signal): vrátit actionPlacement="signal" + props níže
-       actionKicker="Aktuální předprodej"
-       actionMeta="Vinohrady | září 2026"
-       actionHref="https://nabidka.reamar.cz/vinohrady"
-       actionImage="/images/agency/vinohrady.webp"
-  -->
   <Hero
     image="/images/agency/georgereamar.webp"
+    title={['Đại diện cho bạn khi mua căn hộ mới tại Praha', '', '']}
+    lead="Tư vấn mua nhà bằng tiếng Việt. Giúp bạn mua căn hộ mới tại Praha để ở hoặc đầu tư — đại diện bên mua bất động sản, đàm phán với chủ đầu tư và tiếp cận giỏ hàng trước khi mở bán trên các căn hộ dự án tại Praha."
     storyHref="#"
-    storyKicker="Osobní schůzka"
-    storyTitle="Domluvit osobní schůzku"
+    storyKicker="Gặp trực tiếp"
+    storyTitle="Đặt lịch gặp trực tiếp"
     storyYt={false}
     storyMeeting={true}
     showPlay={false}
     showProcess={true}
     actionPlacement="none"
-    ctas={[{ href: '/sluzby', label: 'Vybrat službu', primary: true }]}
-    eyebrow="Nákupní agentura pro novostavby"
+    ctas={[{ href: '/sluzby', label: 'Chọn dịch vụ', primary: true }]}
+    eyebrow="Đại diện người mua căn hộ dự án mới"
     cueAfterCtas={true}
     cueHref="#koncept"
     copyLift={false}
@@ -43,7 +53,7 @@ import SectionFooter from '../components/onepager/SectionFooter.astro';
   <SectionSpecializace showSoftwarePlay={false} />
   <SectionNasPribeh
     ctaHref="https://www.reamar.cz/"
-    ctaLabel="O Reamar Invest Group"
+    ctaLabel="Về Reamar Invest Group"
   />
   <SectionPorovnani />
   <SectionFooter />
