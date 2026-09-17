@@ -1,0 +1,15 @@
+---
+import OnepagerLayout from '../layouts/OnepagerLayout.astro';
+import SectionVyberSluzeb from '../components/onepager/SectionVyberSluzeb.astro';
+import SectionFaq from '../components/onepager/SectionFaq.astro';
+import SectionFooter from '../components/onepager/SectionFooter.astro';
+---
+<OnepagerLayout
+  title="Vybrat službu | REAMAR"
+  description="Vyberte službu nákupní agentury: monitoring, výběr jednotek nebo kompletní zastoupení při nákupu novostavby."
+  robots="noindex, nofollow, noarchive"
+>
+  <SectionVyberSluzeb headingAs="h1" compactTop={true} />
+  <SectionFaq />
+  <SectionFooter />
+</OnepagerLayout>

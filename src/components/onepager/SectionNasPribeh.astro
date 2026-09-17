@@ -6,7 +6,7 @@ interface Props {
 
 const { ctaHref = '/#pribeh', ctaLabel = 'Náš příběh' } = Astro.props;
 const ctaExternal = ctaHref.startsWith('http');
-const image = '/images/agency/Storyholder.jpeg';
+const image = '/images/agency/George_14.jpg';
 const lines = [
   { text: 'Nejdřív pro sebe.', em: false, indent: 0 },
   { text: 'Pak pro rodinu.', em: false, indent: 1 },
@@ -15,18 +15,19 @@ const lines = [
 ---
 
 <section id="o-nas" class="pribeh-section relative w-full overflow-hidden" aria-labelledby="pribeh-heading" data-pribeh>
-  <div class="relative h-[64vh] min-h-[520px] max-h-[760px] w-full">
+  <div class="pribeh-media relative h-[95svh] min-h-[700px] max-h-none w-full md:h-[64vh] md:min-h-[520px] md:max-h-[760px]">
     <img
       src={image}
       alt=""
-      class="absolute inset-0 h-full w-full object-cover object-[42%_center]"
-      width="1280"
-      height="853"
+      class="absolute inset-0 h-full w-full object-cover object-[center_42%] md:object-[center_56%]"
+      width="1600"
+      height="1067"
       loading="lazy"
     />
+    <div class="pribeh-scrim pointer-events-none absolute inset-x-0 bottom-0 h-[42%] md:hidden" aria-hidden="true"></div>
 
-    <div class="relative mx-auto flex h-full max-w-[1440px] items-center px-5 py-8 md:px-10 md:py-12 xl:px-14 xl:py-14">
-      <div class="flex w-full max-w-[32rem] flex-col gap-10">
+    <div class="relative mx-auto flex h-full max-w-[1440px] items-end px-5 pb-3 pt-8 md:items-center md:px-10 md:py-12 xl:px-14 xl:py-14">
+      <div class="flex w-full max-w-[32rem] flex-col gap-8 md:gap-10">
         <h2
           id="pribeh-heading"
           class="font-yellix text-[22px] font-medium leading-[1.18] tracking-[-0.02em] text-white md:text-[28px] xl:text-[32px] [text-shadow:0_1px_16px_rgba(0,0,0,0.35)]"
@@ -67,6 +68,9 @@ const lines = [
   .pribeh-section {
     z-index: 40;
   }
+  .pribeh-scrim {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.22) 45%, transparent 100%);
+  }
   .pribeh-line {
     display: block;
     width: fit-content;
@@ -87,7 +91,12 @@ const lines = [
     padding-bottom: 0.02em;
   }
   .pribeh-body {
-    margin-left: 2.5rem;
+    margin-left: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .pribeh-body {
+      margin-left: 2.5rem;
+    }
   }
   @media (prefers-reduced-motion: reduce) {
     .pribeh-line {

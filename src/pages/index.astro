@@ -6,9 +6,7 @@ import SectionPrilecitosti from '../components/onepager/SectionPrilecitosti.astr
 import SectionSpecializace from '../components/onepager/SectionSpecializace.astro';
 import SectionNasPribeh from '../components/onepager/SectionNasPribeh.astro';
 import SectionPorovnani from '../components/onepager/SectionPorovnani.astro';
-import SectionZastoupeni from '../components/onepager/SectionZastoupeni.astro';
-import SectionVyberSluzeb from '../components/onepager/SectionVyberSluzeb.astro';
-import SectionFaq from '../components/onepager/SectionFaq.astro';
+import SectionAktualnePripravujeme from '../components/onepager/SectionAktualnePripravujeme.astro';
 import SectionFooter from '../components/onepager/SectionFooter.astro';
 ---
 <OnepagerLayout
@@ -16,35 +14,37 @@ import SectionFooter from '../components/onepager/SectionFooter.astro';
   description="Zastupujeme kupující na developerském trhu. Sledujeme trh, vybíráme vhodné jednotky a jednáme s developerem na vaší straně."
   robots="noindex, nofollow, noarchive"
 >
+  <!-- Předprodej Vinohrady (signal): vrátit actionPlacement="signal" + props níže
+       actionKicker="Aktuální předprodej"
+       actionMeta="Vinohrady | září 2026"
+       actionHref="https://nabidka.reamar.cz/vinohrady"
+       actionImage="/images/agency/vinohrady.webp"
+  -->
   <Hero
-    image="/images/agency/onepager.webp"
-    storyHref="#vyber-sluzeb"
-    storyKicker="Ceník služeb"
-    storyTitle="Jak to funguje"
+    image="/images/agency/georgereamar.webp"
+    storyHref="#"
+    storyKicker="Osobní schůzka"
+    storyTitle="Domluvit osobní schůzku"
     storyYt={false}
+    storyMeeting={true}
     showPlay={false}
-    actionKicker="Aktuální předprodej"
-    actionMeta="Vinohrady | září 2026"
-    actionHref="https://nabidka.reamar.cz/vinohrady"
-    actionImage="/images/agency/vinohrady.webp"
-    actionPlacement="clients"
-    actionCardGreen={true}
-    ctas={[{ href: '#vyber-sluzeb', label: 'Vybrat službu', primary: true }]}
+    showProcess={true}
+    actionPlacement="none"
+    ctas={[{ href: '/sluzby', label: 'Vybrat službu', primary: true }]}
     eyebrow="Nákupní agentura pro novostavby"
     cueAfterCtas={true}
     cueHref="#koncept"
-    copyLift={true}
+    copyLift={false}
+    prepTicker={true}
   />
-  <SectionBuyersAgency ctaHref="#vyber-sluzeb" />
-  <SectionPrilecitosti ctaHref="#vyber-sluzeb" />
+  <SectionBuyersAgency />
+  <SectionPrilecitosti />
+  <SectionAktualnePripravujeme />
   <SectionSpecializace showSoftwarePlay={false} />
   <SectionNasPribeh
     ctaHref="https://www.reamar.cz/"
     ctaLabel="O Reamar Invest Group"
   />
-  <SectionPorovnani ctaHref="#vyber-sluzeb" />
-  <SectionZastoupeni />
-  <SectionVyberSluzeb headingAs="h2" compactTop={false} />
-  <SectionFaq />
-  <SectionFooter faqHref="#nejcastejsi-otazky" />
+  <SectionPorovnani />
+  <SectionFooter />
 </OnepagerLayout>

@@ -21,17 +21,22 @@ interface Props {
   storyKicker?: string;
   storyTitle?: string;
   storyYt?: boolean;
+  storyMeeting?: boolean;
   showPlay?: boolean;
+  showProcess?: boolean;
   actionKicker?: string;
   actionMeta?: string;
   actionCta?: string;
   actionHref?: string;
   actionImage?: string;
-  actionPlacement?: 'photo' | 'clients' | 'copy';
+  actionPlacement?: 'photo' | 'clients' | 'copy' | 'none' | 'signal';
   eyebrow?: string;
   cueAfterCtas?: boolean;
   cueHref?: string;
   copyLift?: boolean;
+  prepTicker?: boolean;
+  prepItems?: { title: string; subtitle: string }[];
+  mobileImage?: string;
 }
 
 const {
@@ -53,7 +58,9 @@ const {
   storyKicker = 'Příběhy z trhu',
   storyTitle = 'Agent pro kupující',
   storyYt = true,
+  storyMeeting = false,
   showPlay = true,
+  showProcess = false,
   actionKicker = 'Brzy v předprodeji',
   actionMeta = 'Malešice | září 2026',
   actionCta = 'Chci být u toho',
@@ -64,20 +71,44 @@ const {
   cueAfterCtas = false,
   cueHref = '/#koncept',
   copyLift = false,
+  prepTicker = false,
+  prepItems = [
+    { title: 'Vinohrady', subtitle: 'mikrobyty' },
+    { title: 'Holešovice', subtitle: 'investiční byty' },
+    { title: 'Vršovice', subtitle: 'velký projekt' },
+    { title: 'Karlín', subtitle: 'tři nové projekty' },
+  ],
+  mobileImage = '/images/agency/Georgemob.webp',
 } = Astro.props;
 
 const leadHtml = lead ?? null;
 const actionExternal = actionHref.startsWith('http');
+const prepLabels = prepItems.map((item) => `${item.title} · ${item.subtitle}`);
+
+const processSteps = [
+  {
+    title: 'Úvodní konzultace',
+    icon: 'chat',
+  },
+  {
+    title: 'Osobní vyhledání',
+    icon: 'search',
+  },
+  {
+    title: 'Jednání s developerem',
+    icon: 'building',
+  },
+] as const;
 ---
 
 <section class="hero relative w-full overflow-hidden bg-white" aria-label="Úvod">
-  <div class="hero-visual pointer-events-none absolute inset-y-0 right-0 hidden w-[72%] lg:block">
+  <div class="hero-visual pointer-events-none absolute inset-y-0 right-0 z-[5] hidden w-[72%] overflow-hidden lg:block">
     <img
       src={heroImage}
       alt=""
-      class="h-full w-full object-cover object-[58%_center]"
-      width="1600"
-      height="900"
+      class="hero-visual-img absolute left-0 top-0 h-auto w-full"
+      width="2500"
+      height="1877"
       loading="eager"
       fetchpriority="high"
     />
@@ -120,6 +151,69 @@ const actionExternal = actionHref.startsWith('http');
           </span>
         </a>
         )}
+        <div class="hero-agent-stack">
+        <div class="hero-agent-card">
+          <p class="hero-agent-name">George</p>
+          <p class="hero-agent-role">Váš zástupce při koupi bytu</p>
+          <p class="hero-agent-role-vi" lang="vi">Đại diện của bạn khi mua căn hộ</p>
+          <div class="hero-agent-contacts">
+            <a
+              class="hero-agent-contact"
+              href="https://wa.me/420722546666"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg class="hero-agent-wa" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M12.04 2C6.58 2 2.15 6.41 2.15 11.84c0 1.99.59 3.85 1.6 5.42L2 22l4.9-1.58a9.9 9.9 0 0 0 5.14 1.42h.01c5.46 0 9.89-4.41 9.89-9.84C21.94 6.41 17.5 2 12.04 2Zm5.76 14.03c-.24.67-1.4 1.23-1.94 1.31-.5.07-1.13.1-1.82-.11-.42-.13-.96-.31-1.65-.61-2.9-1.25-4.79-4.18-4.93-4.37-.14-.19-1.17-1.55-1.17-2.96 0-1.4.74-2.09 1-2.37.26-.28.57-.35.76-.35h.55c.18 0 .41-.06.64.49.24.56.81 1.97.88 2.11.07.14.12.31.02.5-.1.19-.14.31-.28.48-.14.16-.3.37-.42.49-.14.14-.28.29-.12.56.16.28.7 1.15 1.5 1.86 1.03.92 1.9 1.2 2.17 1.34.27.14.43.12.59-.07.16-.19.68-.79.86-1.06.18-.28.36-.23.61-.14.24.09 1.55.73 1.81.86.27.14.44.2.51.31.07.11.07.64-.17 1.31Z"/>
+              </svg>
+              <span>722 546 666</span>
+            </a>
+            <a class="hero-agent-contact" href="mailto:george@reamar.cz">
+              george@reamar.cz
+            </a>
+          </div>
+          {storyMeeting && (
+            <button
+              type="button"
+              class="hero-agent-cta"
+              data-smart-meeting-open
+              data-smart-meeting-type="client"
+            >
+              <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
+              Domluvit osobní schůzku
+            </button>
+          )}
+        </div>
+        {prepTicker && prepLabels.length > 0 && (
+          <a
+            href="#aktualne-pripravujeme"
+            class="hero-prep"
+            data-hero-prep
+            data-hero-prep-items={JSON.stringify(prepLabels)}
+          >
+            <span class="hero-prep-kicker">
+              <span class="hero-prep-dot" aria-hidden="true"></span>
+              Aktuálně připravujeme
+            </span>
+            <span class="hero-prep-line">
+              <span class="hero-prep-rotate" aria-live="polite">
+                <span class="hero-prep-sizer" aria-hidden="true">
+                  {prepLabels.reduce((a, b) => (a.length >= b.length ? a : b))}
+                </span>
+                <span class="hero-prep-word" data-hero-prep-word>{prepLabels[0]}</span>
+              </span>
+              <img
+                src="/images/arrow-1.svg"
+                alt=""
+                class="hero-prep-arrow"
+                width="11"
+                height="11"
+              />
+            </span>
+          </a>
+        )}
+        </div>
+        {!storyMeeting && (
         <a href={storyHref} class="hero-story-card">
           {storyYt ? (
             <span class="hero-story-yt" aria-hidden="true">
@@ -138,13 +232,14 @@ const actionExternal = actionHref.startsWith('http');
             <span class="hero-story-title">{storyTitle}</span>
           </span>
         </a>
+        )}
       </div>
     </div>
   </div>
 
-  <div class="hero-stage relative mx-auto flex min-h-[calc(100svh-80px)] max-w-[1440px] flex-col md:min-h-[calc(100svh-108px)]">
-    <div class="hero-copy relative z-10 flex w-full flex-1 flex-col px-5 py-8 md:px-10 lg:w-[44%] xl:px-14">
-      <div class:list={['flex flex-1 flex-col justify-center', titleEmBreak ? 'hero-copy-tight' : copyLift ? 'lg:-translate-y-20' : actionPlacement === 'copy' ? '' : 'lg:-translate-y-5']}>
+  <div class="hero-stage pointer-events-none relative mx-auto flex max-w-[1440px] flex-col lg:min-h-[calc(100svh-108px)]">
+    <div class="hero-copy pointer-events-auto relative z-10 flex w-full flex-1 flex-col px-5 py-8 md:px-10 lg:w-[44%] xl:px-14">
+      <div class:list={['flex flex-1 flex-col justify-center', titleEmBreak ? 'hero-copy-tight' : showProcess ? '' : copyLift ? 'lg:-translate-y-20' : actionPlacement === 'copy' ? '' : 'lg:-translate-y-5']}>
       {actionPlacement === 'copy' && (
         <a
           href={actionHref}
@@ -213,6 +308,7 @@ const actionExternal = actionHref.startsWith('http');
           s developerem na vaší straně.
         </p>
       )}
+
       <div class:list={['mt-6 flex flex-wrap items-center', cueAfterCtas ? 'gap-x-4 gap-y-2' : 'gap-2']}>
         {ctas.map((cta) => (
           cta.primary ? (
@@ -268,11 +364,79 @@ const actionExternal = actionHref.startsWith('http');
           </a>
         </div>
       )}
+
+      {showProcess && (
+        <div class="hero-process-wrap">
+          <p class="hero-process-heading">Jak to funguje</p>
+          <div class="hero-process" data-hero-process>
+            <div class="hero-process-track" aria-hidden="true">
+              <span class="hero-process-track-base"></span>
+              <span class="hero-process-track-fill" data-hero-process-fill></span>
+            </div>
+            <ol class="hero-process-list" aria-label="Jak to funguje">
+              {processSteps.map((step, index) => (
+                <li
+                  class:list={['hero-process-step', index === 0 && 'is-active']}
+                  style={`--i: ${index}`}
+                  data-hero-process-step
+                >
+                  <span class="hero-process-icon" aria-hidden="true">
+                    {step.icon === 'chat' && (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 6.2h9.2A1.8 1.8 0 0 1 15 8v5.2a1.8 1.8 0 0 1-1.8 1.8H9.4L6.2 18v-3H4A1.8 1.8 0 0 1 2.2 13.2V8A1.8 1.8 0 0 1 4 6.2Z"/>
+                        <path d="M15.4 9.2H19A1.8 1.8 0 0 1 20.8 11v5.2A1.8 1.8 0 0 1 19 18h-2.2V20l-2.6-2"/>
+                      </svg>
+                    )}
+                    {step.icon === 'search' && (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="6.2"/>
+                        <path d="M16.2 16.2 21 21"/>
+                      </svg>
+                    )}
+                    {step.icon === 'building' && (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 21V5.5A1.5 1.5 0 0 1 6.5 4h7A1.5 1.5 0 0 1 15 5.5V21"/>
+                        <path d="M15 10h3.5A1.5 1.5 0 0 1 20 11.5V21"/>
+                        <path d="M3.5 21h17"/>
+                        <path d="M8 8h2M8 11.5h2M8 15h2M17 14h1.2M17 17.5h1.2"/>
+                      </svg>
+                    )}
+                  </span>
+                  <span class="hero-process-label">{step.title}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      )}
+
       </div>
     </div>
-    {actionPlacement !== 'copy' && (
-    <div class="hero-clients z-10 flex items-center gap-2.5 px-5 pt-8 md:px-10 lg:absolute lg:bottom-10 lg:left-10 lg:min-h-[44px] lg:px-0 lg:pt-0 xl:left-14">
-      {actionPlacement === 'clients' ? (
+    {actionPlacement !== 'copy' && actionPlacement !== 'none' && (
+    <div class="hero-clients pointer-events-auto z-10 flex items-center gap-2.5 px-5 pt-8 md:px-10 lg:absolute lg:bottom-10 lg:left-10 lg:min-h-[44px] lg:px-0 lg:pt-0 xl:left-14">
+      {actionPlacement === 'signal' ? (
+        <a
+          href={actionHref}
+          class="hero-offer-signal"
+          target={actionExternal ? '_blank' : undefined}
+          rel={actionExternal ? 'noopener noreferrer' : undefined}
+        >
+          <img
+            src={actionImage}
+            alt=""
+            class="hero-offer-signal-photo"
+            width="64"
+            height="64"
+          />
+          <span class="hero-offer-signal-copy">
+            <span class="hero-offer-signal-kicker">{actionKicker}</span>
+            <span class="hero-offer-signal-meta">
+              {actionMeta}
+              <img src="/images/arrow-1.svg" alt="" width="11" height="11" />
+            </span>
+          </span>
+        </a>
+      ) : actionPlacement === 'clients' ? (
         <a
           href={actionHref}
           class:list={['hero-action-card', actionCardGreen && 'hero-action-card-green']}
@@ -310,31 +474,34 @@ const actionExternal = actionHref.startsWith('http');
     </div>
     )}
 
-    <div class="relative mt-2 aspect-[16/10] w-full overflow-hidden lg:hidden">
-      <img
-        src={heroImage}
-        alt=""
-        class="h-full w-full object-cover object-[center_30%]"
-        width="1200"
-        height="750"
-        loading="eager"
-      />
-      {showPlay && (
-      <button
-        type="button"
-        class="hero-play absolute left-1/2 top-1/2 inline-flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 rounded-full bg-white/80 px-4 py-2 font-yellix text-[13px] font-medium text-black backdrop-blur-[12px] transition-opacity hover:opacity-85"
-      >
-        <svg class="h-3.5 w-3.5 shrink-0" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true">
-          <path d="M3.2 1.6v8.8L10.4 6 3.2 1.6Z"/>
-        </svg>
-        {playLabel}
-      </button>
-      )}
-      <div class="absolute right-4 bottom-4 flex flex-col items-end gap-2">
+    <div class="hero-mobile-block pointer-events-auto mt-2 w-full lg:hidden">
+      <div class="hero-mobile-visual relative w-full overflow-hidden">
+        <img
+          src={mobileImage}
+          alt=""
+          class="hero-mobile-img h-full w-full object-cover object-[center_20%]"
+          width="1200"
+          height="1600"
+          loading="eager"
+          fetchpriority="high"
+        />
+        {showPlay && (
+        <button
+          type="button"
+          class="hero-play absolute left-1/2 top-1/2 inline-flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 rounded-full bg-white/80 px-4 py-2 font-yellix text-[13px] font-medium text-black backdrop-blur-[12px] transition-opacity hover:opacity-85"
+        >
+          <svg class="h-3.5 w-3.5 shrink-0" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true">
+            <path d="M3.2 1.6v8.8L10.4 6 3.2 1.6Z"/>
+          </svg>
+          {playLabel}
+        </button>
+        )}
+      </div>
+      <div class="hero-mobile-cards relative z-[2] -mt-14 flex flex-col items-stretch gap-2 px-5 pb-2">
         {actionPlacement === 'photo' && (
         <a
           href={actionHref}
-          class:list={['hero-action-card', actionCardGreen && 'hero-action-card-green']}
+          class:list={['hero-action-card self-stretch', actionCardGreen && 'hero-action-card-green']}
           target={actionExternal ? '_blank' : undefined}
           rel={actionExternal ? 'noopener noreferrer' : undefined}
         >
@@ -355,7 +522,70 @@ const actionExternal = actionHref.startsWith('http');
           </span>
         </a>
         )}
-        <a href={storyHref} class="hero-story-card">
+        <div class="hero-agent-stack hero-agent-stack-mobile">
+        <div class="hero-agent-card">
+          <p class="hero-agent-name">George</p>
+          <p class="hero-agent-role">Váš zástupce při koupi bytu</p>
+          <p class="hero-agent-role-vi" lang="vi">Đại diện của bạn khi mua căn hộ</p>
+          <div class="hero-agent-contacts">
+            <a
+              class="hero-agent-contact"
+              href="https://wa.me/420722546666"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg class="hero-agent-wa" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M12.04 2C6.58 2 2.15 6.41 2.15 11.84c0 1.99.59 3.85 1.6 5.42L2 22l4.9-1.58a9.9 9.9 0 0 0 5.14 1.42h.01c5.46 0 9.89-4.41 9.89-9.84C21.94 6.41 17.5 2 12.04 2Zm5.76 14.03c-.24.67-1.4 1.23-1.94 1.31-.5.07-1.13.1-1.82-.11-.42-.13-.96-.31-1.65-.61-2.9-1.25-4.79-4.18-4.93-4.37-.14-.19-1.17-1.55-1.17-2.96 0-1.4.74-2.09 1-2.37.26-.28.57-.35.76-.35h.55c.18 0 .41-.06.64.49.24.56.81 1.97.88 2.11.07.14.12.31.02.5-.1.19-.14.31-.28.48-.14.16-.3.37-.42.49-.14.14-.28.29-.12.56.16.28.7 1.15 1.5 1.86 1.03.92 1.9 1.2 2.17 1.34.27.14.43.12.59-.07.16-.19.68-.79.86-1.06.18-.28.36-.23.61-.14.24.09 1.55.73 1.81.86.27.14.44.2.51.31.07.11.07.64-.17 1.31Z"/>
+              </svg>
+              <span>722 546 666</span>
+            </a>
+            <a class="hero-agent-contact" href="mailto:george@reamar.cz">
+              george@reamar.cz
+            </a>
+          </div>
+          {storyMeeting && (
+            <button
+              type="button"
+              class="hero-agent-cta"
+              data-smart-meeting-open
+              data-smart-meeting-type="client"
+            >
+              <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
+              Domluvit osobní schůzku
+            </button>
+          )}
+        </div>
+        {prepTicker && prepLabels.length > 0 && (
+          <a
+            href="#aktualne-pripravujeme"
+            class="hero-prep"
+            data-hero-prep
+            data-hero-prep-items={JSON.stringify(prepLabels)}
+          >
+            <span class="hero-prep-kicker">
+              <span class="hero-prep-dot" aria-hidden="true"></span>
+              Aktuálně připravujeme
+            </span>
+            <span class="hero-prep-line">
+              <span class="hero-prep-rotate" aria-live="polite">
+                <span class="hero-prep-sizer" aria-hidden="true">
+                  {prepLabels.reduce((a, b) => (a.length >= b.length ? a : b))}
+                </span>
+                <span class="hero-prep-word" data-hero-prep-word>{prepLabels[0]}</span>
+              </span>
+              <img
+                src="/images/arrow-1.svg"
+                alt=""
+                class="hero-prep-arrow"
+                width="11"
+                height="11"
+              />
+            </span>
+          </a>
+        )}
+        </div>
+        {!storyMeeting && (
+        <a href={storyHref} class="hero-story-card self-stretch">
           {storyYt ? (
             <span class="hero-story-yt" aria-hidden="true">
               <svg viewBox="0 0 24 17">
@@ -373,6 +603,7 @@ const actionExternal = actionHref.startsWith('http');
             <span class="hero-story-title">{storyTitle}</span>
           </span>
         </a>
+        )}
       </div>
     </div>
   </div>
@@ -410,6 +641,113 @@ const actionExternal = actionHref.startsWith('http');
   .hero-rotate-word.is-in {
     opacity: 0;
     transform: translateY(0.25em);
+  }
+  .hero-prep {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    width: 100%;
+    padding: 9px 14px;
+    background: #022d20;
+    border: 1px solid transparent;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+    color: #fff;
+    text-decoration: none;
+    transition: background 0.15s ease;
+  }
+  .hero-prep:hover {
+    background: #0b6e4f;
+  }
+  .hero-prep-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .hero-prep-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #4ade80;
+    flex-shrink: 0;
+    animation: hero-prep-pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes hero-prep-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.55; transform: scale(0.85); }
+  }
+  .hero-prep-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    min-width: 0;
+  }
+  .hero-prep-rotate {
+    position: relative;
+    display: block;
+    min-width: 0;
+    flex: 1 1 auto;
+    overflow: hidden;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    color: #fff;
+  }
+  .hero-prep-sizer {
+    visibility: hidden;
+    display: block;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .hero-prep-word {
+    position: absolute;
+    left: 0;
+    top: 0;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: opacity 0.32s ease, transform 0.32s ease;
+    will-change: opacity, transform;
+  }
+  .hero-prep-word.is-out {
+    opacity: 0;
+    transform: translateY(-0.18em);
+  }
+  .hero-prep-word.is-in {
+    opacity: 0;
+    transform: translateY(0.18em);
+  }
+  .hero-prep-arrow {
+    width: 11px;
+    height: 11px;
+    flex-shrink: 0;
+    filter: brightness(0) invert(1);
+    opacity: 0.85;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .hero-prep:hover .hero-prep-arrow {
+    opacity: 1;
+    transform: translateX(2px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-prep-dot {
+      animation: none;
+    }
+    .hero-prep-word,
+    .hero-prep-arrow {
+      transition: none;
+    }
   }
   @media (prefers-reduced-motion: reduce) {
     .hero-rotate-word {
@@ -486,13 +824,6 @@ const actionExternal = actionHref.startsWith('http');
     .hero-clients {
       transform: translateY(-20px);
     }
-    .hero {
-      max-height: 720px;
-    }
-    .hero .hero-stage {
-      min-height: min(calc(100svh - 108px), 720px) !important;
-      max-height: 720px;
-    }
   }
   .hero-scroll-cue span,
   .hero-offer-btn span {
@@ -500,8 +831,125 @@ const actionExternal = actionHref.startsWith('http');
     text-underline-offset: 3px;
     text-decoration-thickness: 1px;
   }
+  .hero-visual {
+    background: #d2cdc4;
+  }
   .hero-fade {
     background: linear-gradient(to right, #fff 0%, rgba(255,255,255,0.85) 28%, rgba(255,255,255,0) 100%);
+  }
+  .hero-agent-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 260px;
+    max-width: calc(100vw - 2rem);
+    gap: 8px;
+  }
+  .hero-agent-stack-mobile {
+    width: 100%;
+    max-width: none;
+  }
+  .hero-mobile-visual {
+    height: min(62svh, 560px);
+    min-height: 360px;
+  }
+  .hero-mobile-img {
+    display: block;
+    height: 100%;
+  }
+  .hero-agent-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    width: 100%;
+    max-width: none;
+    padding: 12px 14px;
+    background: rgba(255, 255, 255, 0.86);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    text-align: left;
+  }
+  .hero-agent-name {
+    margin: 0;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: #000;
+  }
+  .hero-agent-role {
+    margin: 0;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.3;
+    color: #000;
+  }
+  .hero-agent-role-vi {
+    margin: 0;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.3;
+    color: rgba(0, 0, 0, 0.55);
+  }
+  .hero-agent-contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 6px;
+  }
+  .hero-agent-contact {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #000;
+    text-decoration: none;
+    transition: opacity 0.15s ease;
+  }
+  .hero-agent-contact:hover {
+    opacity: 0.7;
+  }
+  .hero-agent-wa {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+  .hero-agent-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    gap: 6px;
+    margin-top: 10px;
+    padding: 8px 12px;
+    border: 0;
+    background: #000;
+    color: #fff;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.2s ease, opacity 0.15s ease;
+  }
+  .hero-agent-cta:hover {
+    background: #0b6e4f;
+    opacity: 1;
+  }
+  .hero-agent-cta img {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+    filter: brightness(0) invert(1);
   }
   .hero-story-card {
     display: inline-flex;
@@ -576,6 +1024,72 @@ const actionExternal = actionHref.startsWith('http');
     font-weight: 500;
     color: #000;
     line-height: 1;
+  }
+  .hero-offer-signal {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: #000;
+    transition: opacity 0.15s ease;
+  }
+  .hero-offer-signal:hover {
+    opacity: 0.72;
+  }
+  .hero-offer-signal-photo {
+    width: 52px;
+    height: 52px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+  .hero-offer-signal-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+  .hero-offer-signal-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.45);
+    line-height: 1;
+  }
+  .hero-offer-signal-kicker::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #022d20;
+    flex-shrink: 0;
+  }
+  .hero-offer-signal-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #000;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+  .hero-offer-signal-meta img {
+    width: 11px;
+    height: 11px;
+    flex-shrink: 0;
+    filter: brightness(0);
+    transition: transform 0.2s ease;
+  }
+  .hero-offer-signal:hover .hero-offer-signal-meta img {
+    transform: translate(1px, 1px);
   }
   .hero-action-card {
     position: relative;
@@ -690,6 +1204,154 @@ const actionExternal = actionHref.startsWith('http');
       animation: none;
     }
   }
+  .hero-process-wrap {
+    width: 100%;
+    max-width: 300px;
+    margin: 2.25rem 0 0;
+  }
+  .hero-process-heading {
+    margin: 0 0 14px;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.45);
+    line-height: 1;
+  }
+  .hero-process {
+    position: relative;
+    width: 100%;
+  }
+  .hero-process-list {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .hero-process-track {
+    position: absolute;
+    top: 17px;
+    left: 17px;
+    right: 17px;
+    height: 1px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .hero-process-track-base,
+  .hero-process-track-fill {
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+  .hero-process-track-base {
+    background: rgba(0, 0, 0, 0.14);
+  }
+  .hero-process-track-fill {
+    right: auto;
+    width: 0%;
+    background: #0b6e4f;
+    transition: width 0.45s ease;
+  }
+  .hero-process-step {
+    position: relative;
+    z-index: 1;
+    flex: 0 1 auto;
+    max-width: 32%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    transform: translateY(8px);
+    animation: hero-process-in 0.55s ease forwards;
+    animation-delay: calc(var(--i, 0) * 120ms + 180ms);
+  }
+  .hero-process-step:first-child {
+    align-items: flex-start;
+  }
+  .hero-process-step:last-child {
+    align-items: flex-end;
+  }
+  .hero-process-step:last-child .hero-process-label {
+    text-align: right;
+    transform-origin: top right;
+  }
+  .hero-process-step:first-child .hero-process-label {
+    text-align: left;
+    transform-origin: top left;
+  }
+  .hero-process-step:nth-child(2) .hero-process-label {
+    text-align: center;
+  }
+  .hero-process-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border: 0;
+    color: rgba(0, 0, 0, 0.45);
+    background: #fff;
+    transform-origin: center center;
+    transition: color 0.3s ease, transform 0.35s ease;
+  }
+  .hero-process-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+  .hero-process-label {
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.25;
+    color: rgba(0, 0, 0, 0.42);
+    max-width: 12ch;
+    transform-origin: top center;
+    transition: color 0.3s ease, transform 0.35s ease;
+  }
+  .hero-process-step.is-active .hero-process-icon {
+    color: #0b6e4f;
+    transform: scale(1.14);
+  }
+  .hero-process-step.is-active .hero-process-label {
+    color: #0b6e4f;
+    transform: scale(1.08);
+  }
+  .hero-process-step.is-done .hero-process-label {
+    color: #000;
+  }
+  .hero-process-step.is-done .hero-process-icon {
+    color: #000;
+    transform: scale(1);
+  }
+  @keyframes hero-process-in {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-process-step {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+    .hero-process-track-fill,
+    .hero-process-icon,
+    .hero-process-label {
+      transition: none;
+    }
+    .hero-process-step.is-active .hero-process-icon,
+    .hero-process-step.is-active .hero-process-label {
+      transform: none;
+    }
+  }
 </style>
 
 <script>
@@ -729,5 +1391,97 @@ const actionExternal = actionHref.startsWith('http');
 
   initHeroWordRotate();
   document.addEventListener('astro:page-load', initHeroWordRotate);
+
+  function initHeroPrepRotate() {
+    if (window.__heroPrepTimeoutId) {
+      clearTimeout(window.__heroPrepTimeoutId);
+      window.__heroPrepTimeoutId = null;
+    }
+    const roots = [...document.querySelectorAll('[data-hero-prep]')];
+    if (!roots.length) return;
+
+    let items = [];
+    try {
+      items = JSON.parse(roots[0].getAttribute('data-hero-prep-items') || '[]');
+    } catch (e) {
+      items = [];
+    }
+    if (!Array.isArray(items) || items.length < 2) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const words = roots
+      .map(function (root) { return root.querySelector('[data-hero-prep-word]'); })
+      .filter(Boolean);
+    if (!words.length) return;
+
+    let i = 0;
+    const DISPLAY_MS = 2800;
+    const SWAP_MS = 300;
+
+    function tick() {
+      if (!words.some(function (el) { return document.body.contains(el); })) return;
+      words.forEach(function (el) { el.classList.add('is-out'); });
+      setTimeout(function () {
+        i = (i + 1) % items.length;
+        words.forEach(function (el) {
+          el.textContent = items[i];
+          el.classList.remove('is-out');
+          el.classList.add('is-in');
+        });
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            words.forEach(function (el) { el.classList.remove('is-in'); });
+          });
+        });
+      }, SWAP_MS);
+      window.__heroPrepTimeoutId = setTimeout(tick, DISPLAY_MS);
+    }
+
+    window.__heroPrepTimeoutId = setTimeout(tick, DISPLAY_MS);
+  }
+
+  initHeroPrepRotate();
+  document.addEventListener('astro:page-load', initHeroPrepRotate);
+
+  function initHeroProcess() {
+    if (window.__heroProcessIntervalId) {
+      clearInterval(window.__heroProcessIntervalId);
+      window.__heroProcessIntervalId = null;
+    }
+    const root = document.querySelector('[data-hero-process]');
+    if (!root) return;
+    const steps = root.querySelectorAll('[data-hero-process-step]');
+    const fill = root.querySelector('[data-hero-process-fill]');
+    if (!steps.length) return;
+
+    function paint(activeIndex) {
+      steps.forEach(function (step, index) {
+        step.classList.toggle('is-active', index === activeIndex);
+        step.classList.toggle('is-done', index < activeIndex);
+      });
+      if (fill) {
+        const max = Math.max(steps.length - 1, 1);
+        fill.style.width = ((activeIndex / max) * 100) + '%';
+      }
+    }
+
+    let active = 0;
+    paint(active);
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      steps.forEach(function (step) { step.classList.add('is-done'); step.classList.remove('is-active'); });
+      steps[steps.length - 1]?.classList.add('is-active');
+      if (fill) fill.style.width = '100%';
+      return;
+    }
+
+    window.__heroProcessIntervalId = setInterval(function () {
+      active = (active + 1) % steps.length;
+      paint(active);
+    }, 2400);
+  }
+
+  initHeroProcess();
+  document.addEventListener('astro:page-load', initHeroProcess);
 </script>
 

@@ -1,15 +1,21 @@
 ---
 type NavLink = { href: string; label: string; external?: boolean };
 
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
+
 const navLinks: NavLink[] = [
-  { href: '#koncept', label: 'Co děláme' },
-  { href: '#specializace', label: 'Specializace' },
-  { href: 'https://www.reamar.cz/', label: 'O nás', external: true },
-  { href: '#nejcastejsi-otazky', label: 'FAQ' },
+  { href: '/#koncept', label: 'Co děláme' },
+  { href: '/#aktualne-pripravujeme', label: 'Předprodej' },
+  { href: '/#specializace', label: 'Specializace' },
+  { href: '/#o-nas', label: 'O nás' },
+  { href: '/sluzby#nejcastejsi-otazky', label: 'FAQ' },
 ];
 
-const sluzbyHref = '#vyber-sluzeb';
-const isCurrent = (_href: string) => false;
+const sluzbyHref = '/sluzby';
+const isCurrent = (href: string) => {
+  if (href === '/sluzby' || href.startsWith('/sluzby#')) return pathname === '/sluzby';
+  return false;
+};
 ---
 
 <header

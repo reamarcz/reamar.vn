@@ -1,0 +1,557 @@
+---
+const projects = [
+  {
+    title: 'Vinohrady',
+    subtitle: 'mikrobyty',
+    image: '/images/agency/vinohrad.webp',
+    items: ['4,5–7 mil. Kč', 'Předprodej', 'Ideální na krátkodobý pronájem'],
+  },
+  {
+    title: 'Holešovice',
+    subtitle: 'investiční byty',
+    image: '/images/agency/holesovice.webp',
+    items: ['4,5–7 mil. Kč', 'Sleva', 'Žádaná lokalita'],
+  },
+  {
+    title: 'Vršovice',
+    subtitle: 'velký projekt',
+    image: '/images/agency/vrsovice.webp',
+    items: ['Od 7 mil. Kč', 'První etapa', 'Předprodej'],
+  },
+  {
+    title: 'Karlín',
+    subtitle: 'tři nové projekty',
+    image: '/images/agency/karlin.webp',
+    items: ['Přístup k předprodeji', 'Žádaná lokalita', 'Vysoký standard'],
+  },
+];
+---
+
+<section
+  id="aktualne-pripravujeme"
+  class="pripr-section"
+  aria-labelledby="pripravujeme-heading"
+  data-pripr-slider
+>
+  <div class="pripr-inner">
+    <div class="pripr-head">
+      <h2
+        id="pripravujeme-heading"
+        class="flex items-center gap-3 font-yellix text-[28px] font-medium leading-[1.12] tracking-[-0.02em] text-black md:gap-3.5 md:text-[36px] xl:text-[40px]"
+      >
+        <img
+          src="/images/arrow-1.svg"
+          alt=""
+          class="h-5 w-5 shrink-0 brightness-0 md:h-6 md:w-6"
+          width="20"
+          height="20"
+        />
+        Aktuálně připravujeme
+      </h2>
+      <div class="pripr-nav" aria-label="Posun nabídek">
+        <button type="button" class="pripr-nav-btn" data-pripr-prev aria-label="Předchozí">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15 5 8 12l7 7"/>
+          </svg>
+        </button>
+        <button type="button" class="pripr-nav-btn" data-pripr-next aria-label="Další">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m9 5 7 7-7 7"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="pripr-stage" data-pripr-stage>
+      {projects.map((project, index) => (
+        <article
+          class:list={['pripr-card', index === 0 && 'is-featured']}
+          data-pripr-card
+          data-pripr-index={index}
+          role="button"
+          tabindex="0"
+          aria-pressed={index === 0 ? 'true' : 'false'}
+        >
+          <div class="pripr-card-media">
+            <img
+              src={project.image}
+              alt=""
+              class="h-full w-full object-cover"
+              width="800"
+              height="1000"
+              loading="lazy"
+            />
+          </div>
+          <div class="pripr-card-body">
+            <h3 class="pripr-card-title">{project.title}</h3>
+            <p class="pripr-card-sub">{project.subtitle}</p>
+            <ul class="pripr-card-list">
+              {project.items.map((item) => (
+                <li>
+                  <span aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M3.2 8.2 6.4 11.4 12.8 4.6"/>
+                    </svg>
+                  </span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </article>
+      ))}
+
+      <article
+        class="pripr-card pripr-card-cta"
+        data-pripr-card
+        data-pripr-index={projects.length}
+        role="button"
+        tabindex="0"
+        aria-pressed="false"
+      >
+        <div class="pripr-card-cta-inner">
+          <h3 class="pripr-card-cta-title">
+            <span class="pripr-card-cta-title-idle">Tady výběr nekončí</span>
+            <span class="pripr-card-cta-title-active">Hledáte něco jiného?</span>
+          </h3>
+          <img
+            src="/images/arrow-1.svg"
+            alt=""
+            class="pripr-card-cta-idle-arrow"
+            width="14"
+            height="14"
+          />
+          <p class="pripr-card-cta-text">
+            Máte jinou lokalitu nebo rozpočet? Projdeme nabídku novostaveb po celé Praze a doporučíme byty, které odpovídají vašim plánům.
+          </p>
+          <button
+            type="button"
+            class="pripr-card-cta-btn"
+            data-smart-meeting-open
+            data-smart-meeting-type="client"
+          >
+            <img src="/images/arrow-1.svg" alt="" width="12" height="12" />
+            Domluvit osobní schůzku
+          </button>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pripr-section {
+    background: #fff;
+    padding: 4rem 0 4.5rem;
+  }
+  @media (min-width: 768px) {
+    .pripr-section {
+      padding: 5.5rem 0 6rem;
+    }
+  }
+  .pripr-inner {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .pripr-inner {
+      padding: 0 2.5rem;
+    }
+  }
+  @media (min-width: 1280px) {
+    .pripr-inner {
+      padding: 0 3.5rem;
+    }
+  }
+  .pripr-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+  }
+  @media (min-width: 768px) {
+    .pripr-head {
+      margin-bottom: 2.25rem;
+    }
+  }
+  .pripr-nav {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .pripr-nav-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(0, 0, 0, 0.22);
+    background: transparent;
+    color: #000;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+  .pripr-nav-btn:hover {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.5);
+  }
+  .pripr-nav-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+  .pripr-stage {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .pripr-stage::-webkit-scrollbar {
+    display: none;
+  }
+  @media (min-width: 768px) {
+    .pripr-stage {
+      gap: 12px;
+      overflow: hidden;
+    }
+  }
+  .pripr-card {
+    flex: 1 1 0;
+    min-width: 128px;
+    display: flex;
+    flex-direction: column;
+    height: 480px;
+    background: #fff;
+    border: 0;
+    overflow: hidden;
+    text-align: left;
+    cursor: pointer;
+    transition: flex-grow 0.65s cubic-bezier(0.22, 1, 0.36, 1), min-width 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .pripr-card.is-featured {
+    flex-grow: 2.45;
+    min-width: min(268px, 68vw);
+  }
+  .pripr-card-cta:not(.is-featured) {
+    flex-grow: 1.12;
+    min-width: 148px;
+  }
+  @media (min-width: 768px) {
+    .pripr-card {
+      min-width: 0;
+      height: 540px;
+    }
+    .pripr-card.is-featured {
+      flex-grow: 2.3;
+      min-width: 0;
+    }
+    .pripr-card-cta:not(.is-featured) {
+      flex-grow: 1.15;
+      min-width: 0;
+    }
+  }
+  @media (min-width: 1280px) {
+    .pripr-card {
+      height: 560px;
+    }
+    .pripr-card.is-featured {
+      flex-grow: 2.2;
+    }
+  }
+  .pripr-card-media {
+    flex: 1 1 auto;
+    min-height: 0;
+    background: #f1f1f1;
+  }
+  .pripr-card-body {
+    flex: 0 0 auto;
+    padding: 1rem 0.95rem 1.15rem;
+    background: #fff;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    transition: padding 0.45s ease;
+  }
+  .pripr-card.is-featured .pripr-card-body {
+    padding: 1.35rem 1.25rem 1.5rem;
+  }
+  .pripr-card-title {
+    margin: 0;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #000;
+    transition: font-size 0.45s ease;
+  }
+  .pripr-card.is-featured .pripr-card-title {
+    font-size: 24px;
+  }
+  .pripr-card-sub {
+    margin: 0.35rem 0 0;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: rgba(0, 0, 0, 0.45);
+  }
+  .pripr-card-list {
+    margin: 0.85rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: none;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .pripr-card.is-featured .pripr-card-list {
+    display: flex;
+    margin-top: 1.1rem;
+  }
+  .pripr-card-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.3;
+    color: #000;
+  }
+  .pripr-card-list svg {
+    width: 14px;
+    height: 14px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .pripr-card-cta {
+    align-items: stretch;
+    justify-content: center;
+    padding: 1.25rem 0.85rem;
+    background: #f1f1f1;
+    cursor: pointer;
+    transition: flex-grow 0.65s cubic-bezier(0.22, 1, 0.36, 1), min-width 0.65s cubic-bezier(0.22, 1, 0.36, 1), background 0.2s ease;
+  }
+  .pripr-card-cta:hover {
+    background: #eaeaea;
+  }
+  .pripr-card-cta-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0.55rem;
+    width: 100%;
+    max-width: 17rem;
+    padding-left: 0.35rem;
+    text-align: left;
+  }
+  .pripr-card-cta-title {
+    margin: 0;
+    width: 100%;
+    max-width: 11ch;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: #000;
+    text-align: left;
+    text-wrap: balance;
+  }
+  .pripr-card-cta-title-active {
+    display: none;
+  }
+  .pripr-card-cta-idle-arrow {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    filter: brightness(0);
+    opacity: 0.85;
+  }
+  .pripr-card-cta.is-featured .pripr-card-cta-title {
+    max-width: 16ch;
+    font-size: 26px;
+  }
+  .pripr-card-cta.is-featured .pripr-card-cta-title-idle {
+    display: none;
+  }
+  .pripr-card-cta.is-featured .pripr-card-cta-title-active {
+    display: block;
+  }
+  .pripr-card-cta.is-featured .pripr-card-cta-idle-arrow {
+    display: none;
+  }
+  .pripr-card-cta-text {
+    display: none;
+    margin: 0;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    color: rgba(0, 0, 0, 0.65);
+    text-align: left;
+  }
+  .pripr-card-cta-btn {
+    margin-top: 0.35rem;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 0.55rem 0.9rem;
+    border: 1px solid #000;
+    background: #000;
+    font-family: 'Yellix', system-ui, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: #fff;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+  }
+  .pripr-card-cta-btn img {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+    filter: brightness(0) invert(1);
+  }
+  .pripr-card-cta-btn:hover {
+    background: #0b6e4f;
+    border-color: #0b6e4f;
+  }
+  .pripr-card-cta.is-featured .pripr-card-cta-text {
+    display: block;
+  }
+  .pripr-card-cta.is-featured .pripr-card-cta-btn {
+    display: inline-flex;
+  }
+  .pripr-card-cta.is-featured .pripr-card-cta-inner {
+    max-width: 20rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pripr-card,
+    .pripr-card-cta,
+    .pripr-card-title,
+    .pripr-card-body {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  function initPriprSlider() {
+    const root = document.querySelector('[data-pripr-slider]');
+    if (!root) return;
+    if (root._priprCleanup) root._priprCleanup();
+
+    const stage = root.querySelector('[data-pripr-stage]');
+    const prev = root.querySelector('[data-pripr-prev]');
+    const next = root.querySelector('[data-pripr-next]');
+    const cards = [...root.querySelectorAll('[data-pripr-card]')];
+    if (!stage || !prev || !next || cards.length < 2) return;
+
+    let active = 0;
+    let timer = null;
+    const AUTO_MS = 4200;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function paint() {
+      cards.forEach(function (card, i) {
+        const on = i === active;
+        card.classList.toggle('is-featured', on);
+        card.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      const featured = cards[active];
+      if (featured && getComputedStyle(stage).overflowX !== 'hidden') {
+        featured.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', inline: 'nearest', block: 'nearest' });
+      }
+    }
+
+    function go(delta) {
+      active = (active + delta + cards.length) % cards.length;
+      paint();
+    }
+
+    function select(index) {
+      active = index;
+      paint();
+    }
+
+    function stopAuto() {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+    }
+
+    function startAuto() {
+      stopAuto();
+      if (reduced) return;
+      timer = setInterval(function () {
+        go(1);
+      }, AUTO_MS);
+    }
+
+    function onPrev() {
+      go(-1);
+      startAuto();
+    }
+    function onNext() {
+      go(1);
+      startAuto();
+    }
+
+    function onCardActivate(event) {
+      const card = event.currentTarget;
+      const index = Number(card.getAttribute('data-pripr-index'));
+      if (Number.isNaN(index)) return;
+      select(index);
+      startAuto();
+    }
+
+    function onCardKey(event) {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      if (event.target.closest('[data-smart-meeting-open]')) return;
+      event.preventDefault();
+      onCardActivate(event);
+    }
+
+    prev.addEventListener('click', onPrev);
+    next.addEventListener('click', onNext);
+    cards.forEach(function (card) {
+      card.addEventListener('click', onCardActivate);
+      card.addEventListener('keydown', onCardKey);
+    });
+    root.addEventListener('mouseenter', stopAuto);
+    root.addEventListener('mouseleave', startAuto);
+    root.addEventListener('focusin', stopAuto);
+    root.addEventListener('focusout', function (event) {
+      if (!root.contains(event.relatedTarget)) startAuto();
+    });
+
+    paint();
+    startAuto();
+
+    root._priprCleanup = function () {
+      stopAuto();
+      prev.removeEventListener('click', onPrev);
+      next.removeEventListener('click', onNext);
+      cards.forEach(function (card) {
+        card.removeEventListener('click', onCardActivate);
+        card.removeEventListener('keydown', onCardKey);
+      });
+      root.removeEventListener('mouseenter', stopAuto);
+      root.removeEventListener('mouseleave', startAuto);
+      root._priprCleanup = null;
+    };
+  }
+
+  initPriprSlider();
+  document.addEventListener('astro:page-load', initPriprSlider);
+</script>
