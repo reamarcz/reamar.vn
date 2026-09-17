@@ -461,16 +461,25 @@ const projects = [
     const AUTO_MS = 4200;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    function scrollFeaturedHorizontally() {
+      // Only scroll the stage track — never the page (scrollIntoView jumps mobile viewport).
+      if (getComputedStyle(stage).overflowX === 'hidden') return;
+      const featured = cards[active];
+      if (!featured) return;
+      const left = Math.max(0, featured.offsetLeft - 12);
+      stage.scrollTo({ left: left, behavior: reduced ? 'auto' : 'smooth' });
+    }
+
     function paint() {
       cards.forEach(function (card, i) {
         const on = i === active;
         card.classList.toggle('is-featured', on);
         card.setAttribute('aria-pressed', on ? 'true' : 'false');
       });
-      const featured = cards[active];
-      if (featured && getComputedStyle(stage).overflowX !== 'hidden') {
-        featured.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', inline: 'nearest', block: 'nearest' });
-      }
+      // Wait a frame so flex width settles before measuring offsetLeft.
+      requestAnimationFrame(function () {
+        requestAnimationFrame(scrollFeaturedHorizontally);
+      });
     }
 
     function go(delta) {
