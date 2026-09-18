@@ -4,16 +4,16 @@ type NavLink = { href: string; label: string; external?: boolean };
 const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
 
 const navLinks: NavLink[] = [
-  { href: '/#koncept', label: 'Chúng tôi làm gì' },
-  { href: '/#aktualne-pripravujeme', label: 'Pre-sale' },
-  { href: '/#specializace', label: 'Chuyên môn' },
-  { href: '/#o-nas', label: 'Về chúng tôi' },
-  { href: '/sluzby#nejcastejsi-otazky', label: 'FAQ' },
+  { href: '/#chung-toi-lam-gi', label: 'Chúng tôi làm gì' },
+  { href: '/#dang-chuan-bi', label: 'Pre-sale' },
+  { href: '/#chuyen-mon', label: 'Chuyên môn' },
+  { href: '/#ve-chung-toi', label: 'Về chúng tôi' },
+  { href: '/dich-vu#faq', label: 'FAQ' },
 ];
 
-const sluzbyHref = '/sluzby';
+const dichVuHref = '/dich-vu';
 const isCurrent = (href: string) => {
-  if (href === '/sluzby' || href.startsWith('/sluzby#')) return pathname === '/sluzby';
+  if (href === '/dich-vu' || href.startsWith('/dich-vu#')) return pathname === '/dich-vu';
   return false;
 };
 ---
@@ -76,12 +76,12 @@ const isCurrent = (href: string) => {
       ))}
 
       <a
-        href={sluzbyHref}
+        href={dichVuHref}
         class:list={[
           'nav-cta inline-flex items-center gap-1.5 bg-black px-3 py-1.5 font-yellix text-[13px] text-white no-underline whitespace-nowrap transition-opacity hover:opacity-85',
-          isCurrent('/sluzby') ? 'font-semibold' : 'font-medium',
+          isCurrent('/dich-vu') ? 'font-semibold' : 'font-medium',
         ]}
-        aria-current={isCurrent('/sluzby') ? 'page' : undefined}
+        aria-current={isCurrent('/dich-vu') ? 'page' : undefined}
       >
         <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0" width="12" height="12" />
         Chọn dịch vụ
@@ -152,12 +152,12 @@ const isCurrent = (href: string) => {
       ))}
 
       <a
-        href={sluzbyHref}
+        href={dichVuHref}
         class:list={[
           'mt-4 inline-flex w-fit items-center gap-1.5 bg-black px-3 py-1.5 font-yellix text-[13px] text-white no-underline',
-          isCurrent('/sluzby') ? 'font-semibold' : 'font-medium',
+          isCurrent('/dich-vu') ? 'font-semibold' : 'font-medium',
         ]}
-        aria-current={isCurrent('/sluzby') ? 'page' : undefined}
+        aria-current={isCurrent('/dich-vu') ? 'page' : undefined}
         data-drawer-close
       >
         <img src="/images/arrow-1.svg" alt="" class="h-3 w-3 shrink-0" width="12" height="12" />

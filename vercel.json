@@ -1,1 +1,7 @@
-{}
+{
+  "redirects": [
+    { "source": "/sluzby", "destination": "/dich-vu", "permanent": true },
+    { "source": "/sluzby/:path*", "destination": "/dich-vu", "permanent": true },
+    { "source": "/ochrana-osobnich-udaju", "destination": "/chinh-sach-bao-mat", "permanent": true }
+  ]
+}

@@ -4,7 +4,7 @@ interface Props {
   ctaLabel?: string;
 }
 
-const { ctaHref = '/#pribeh', ctaLabel = 'Câu chuyện của chúng tôi' } = Astro.props;
+const { ctaHref = '/#ve-chung-toi', ctaLabel = 'Câu chuyện của chúng tôi' } = Astro.props;
 const ctaExternal = ctaHref.startsWith('http');
 const image = '/images/agency/George_14.jpg';
 const lines = [
@@ -14,7 +14,7 @@ const lines = [
 ];
 ---
 
-<section id="o-nas" class="pribeh-section relative w-full overflow-hidden" aria-labelledby="pribeh-heading" data-pribeh>
+<section id="ve-chung-toi" class="pribeh-section relative w-full overflow-hidden" aria-labelledby="pribeh-heading" data-pribeh>
   <div class="pribeh-media relative h-[95svh] min-h-[700px] max-h-none w-full md:h-[64vh] md:min-h-[520px] md:max-h-[760px]">
     <img
       src={image}

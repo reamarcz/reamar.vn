@@ -3,11 +3,11 @@ interface Props {
   faqHref?: string;
 }
 
-const { faqHref = '/sluzby#nejcastejsi-otazky' } = Astro.props;
+const { faqHref = '/dich-vu#faq' } = Astro.props;
 const logo = '/images/logo-rig-w.svg';
 ---
 
-<footer id="kontakt" class="bg-black text-white" role="contentinfo">
+<footer id="lien-he" class="bg-black text-white" role="contentinfo">
   <div class="mx-auto max-w-[1440px] px-5 pt-20 md:px-10 md:pt-28 xl:px-14 xl:pt-32">
     <div class="flex flex-col items-center text-center">
       <h2 class="font-yellix text-[26px] font-medium leading-[1.18] tracking-[-0.02em] text-white md:text-[32px] xl:text-[36px]">
@@ -108,7 +108,7 @@ const logo = '/images/logo-rig-w.svg';
     <div class="mt-10 flex flex-col gap-6 font-yellix text-[12px] font-medium text-[#BFBFBF] md:mt-20 md:flex-row md:items-center md:justify-between md:pt-12 md:text-[13px]">
       <div class="flex flex-wrap items-center gap-x-6 gap-y-1">
         <a href={faqHref} class="transition-colors hover:text-white">Câu hỏi thường gặp</a>
-        <a href="/ochrana-osobnich-udaju" class="transition-colors hover:text-white">Dữ liệu cá nhân</a>
+        <a href="/chinh-sach-bao-mat" class="transition-colors hover:text-white">Dữ liệu cá nhân</a>
         <button type="button" class="cursor-pointer bg-transparent p-0 text-left transition-colors hover:text-white" data-cookie-settings aria-label="Cài đặt cookies">Cookies</button>
         <span>Bảo lưu mọi quyền</span>
       </div>
